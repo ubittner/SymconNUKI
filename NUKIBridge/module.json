@@ -1,0 +1,11 @@
+{
+	"id": "{B41AE29B-39C1-4144-878F-94C0F7EEC725}",
+	"name": "NUKIBridge",
+	"type": 1,
+	"vendor": "NUKI",
+	"aliases": [ "NUKI Bridge" ],
+	"parentRequirements": [],
+	"childRequirements": ["{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}"],
+	"implemented": ["{73188E44-8BBA-4EBF-8BAD-40201B8866B9}"],
+	"prefix": "NUKI"
+}

@@ -1,0 +1,11 @@
+{
+	"id": "{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}",
+	"name": "NUKISmartLock",
+	"type": 3,
+	"vendor": "NUKI",
+	"aliases": [ "NUKI Smart Lock" ],
+	"parentRequirements": ["{73188E44-8BBA-4EBF-8BAD-40201B8866B9}"],
+	"childRequirements": [],
+	"implemented": ["{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}"],
+	"prefix": "NUKI"
+}
