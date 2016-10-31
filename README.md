@@ -1,2 +1,1 @@
-# SymconNUKI
-NUKI SmartLock Module for IP-Symcon 4.x
+NUKI Smart Lock Module Version 1.00 for IP-Symcon 4.x 

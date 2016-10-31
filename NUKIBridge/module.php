@@ -19,6 +19,9 @@
  *          	{73188E44-8BBA-4EBF-8BAD-40201B8866B9} NUKI Bridge (I/O) TX (I)
  *          	{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} NUKI Bridge (I/O) RX (CR)
  *          	{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14} NUKISmartLock
+ * 
+ * @changelog	2016-10-31, 13:50, added smartlock status and update timer
+ * 				2016-10-25, 21:00, initial module script 
  */
 
 
@@ -36,12 +39,15 @@ class NUKIBridge extends IPSModule
 		$this->RegisterPropertyString("NUKIBridgeIP", "");
 		$this->RegisterPropertyString("NUKIBridgePort", "8080");
 		$this->RegisterPropertyString("NUKIBridgeAPIToken", "");
+		$this->RegisterPropertyInteger("NUKIUpdateInterval", "60");
 		$this->RegisterPropertyInteger("NUKISmartLockCategory", 0);
 	}
 
 	public function ApplyChanges()
 	{
 		parent::ApplyChanges();
+
+		$this->registerUpdateTimer("Update", $this->ReadPropertyInteger("NUKIUpdateInterval"));
 		
 		$this->validateBridgeConfiguration();
 	}
@@ -123,7 +129,7 @@ class NUKIBridge extends IPSModule
 	 *		NUKI_syncSmartLocks(int $BridgeInstanceId)
 	 *		sync smartlocks of the bridge
 	 */
-	public function syncSmartLocks ()
+	public function syncSmartLocks()
 	{
 		$SmartLockCategoryId = $this->GetSmartLockCategory();
 		$SmartLocks = $this->getSmartLocks();
@@ -155,7 +161,7 @@ class NUKIBridge extends IPSModule
 	 *		NUKI_getLockStateOfSmartLock(int $BridgeInstanceId, int $SmartLockUniqueId)
 	 *		returns the current lock state of a given smartlock
 	 */
-	public function getLockStateOfSmartLock (int $SmartLockUniqueId)
+	public function getLockStateOfSmartLock(int $SmartLockUniqueId)
 	{
 		$Endpoint = "/lockState?nukiId=".$SmartLockUniqueId."&token=";
 		$BridgeData = $this->sendDataToBridge($Endpoint);
@@ -165,20 +171,20 @@ class NUKIBridge extends IPSModule
 		/**
 		 * 	response example
 		 * 	locked
-		 * 	{“state”: 1, “stateName”: “locked”, “batteryCritical”: false, success: “true”}
+		 *		{“state”: 1, “stateName”: “locked”, “batteryCritical”: false, success: “true”}
 		 * 
 		 * 	possible state values are:
 		 * 	0 uncalibrated
-		 * 	1 locked
-		 * 	2 unlocked
-		 * 	3 unlocked (lock ‘n’ go)
-		 * 	4 unlatched
-		 * 	5 locking
-		 * 	6 unlocking
-		 * 	7 unlatching
-		 * 	254 motor blocked
-		 * 	255 undefined
-    	 */
+		 *		1 locked
+		 *		2 unlocking
+	 	 *		3 unlocked
+		 *		4 locking
+		 *		5 unlatched
+		 *		6 unlocked (lock ‘n’ go)
+		 *		7 unlatching
+		 *		254 motor blocked
+		 *		255 undefined
+    	 */	
 	}
 
 
@@ -186,7 +192,7 @@ class NUKIBridge extends IPSModule
 	 *		NUKI_setLockActionOfSmartLock(int $BridgeInstanceID, int $SmarLockUniqueId, int $LockAction)
 	 *		performs a lock operation on the given smartlock
 	 */
-	public function setLockActionOfSmartLock (int $SmartLockUniqueId, int $LockAction)
+	public function setLockActionOfSmartLock(int $SmartLockUniqueId, int $LockAction)
 	{
 		/**
 		 * 	$LockAction
@@ -206,6 +212,104 @@ class NUKIBridge extends IPSModule
 		 * 	{“success”: true, “batteryCritical”: false}
        */
 	}
+
+
+	/**
+	 * 	NUKI_updateStateOfSmartLocks(int $BridgeInstanceID)
+	 *		updates the state of all smartlocks of a bridge 
+	 */
+	public function updateStateOfSmartLocks() 
+	{
+		$NukiBridgeInstanceId = $this->InstanceID;
+		$SmartLockInstanceIds = IPS_GetInstanceListByModuleID($this->getSmartLockModuleGuid());
+		foreach($SmartLockInstanceIds as $SmartLockInstanceId) {
+	    	if(IPS_GetInstance($SmartLockInstanceId)['ConnectionID'] == $NukiBridgeInstanceId) {
+	      	$SmartLockUniqueId = IPS_GetProperty($SmartLockInstanceId, "NUKISmartLockID");
+			   $SmartLockData = $this->getLockStateOfSmartLock($SmartLockUniqueId);
+			   // {“state”: 1, “stateName”: “locked”, “batteryCritical”: false, success: “true”}
+				$State = $SmartLockData["state"];
+				$StateName = $SmartLockData["stateName"];
+				switch ($State) {
+					// switch off (unlocked) = false, switch on (locked) = true
+					case 0:
+						// uncalibrated
+						$State = true;
+						break;
+					case 1:
+						// locked
+						$State = true;
+						break;
+					case 2:
+						// unlocking
+						$State = false;
+						break;
+					case 3:
+						// unlocked
+						$State = false;
+						break;
+					case 4:
+						// locking
+						$State = true;
+						break;
+					case 5:
+						// unlatched
+						$State = false;
+						break;
+					case 6:
+						// unlocked (lock ‘n’ go)
+						$State = false;
+						break;
+					case 7:
+						// unlatching
+						$State = false;
+						break;
+					default:
+						$State = true;
+						break;
+				}
+				$SmartLockSwitchObjectId = IPS_GetObjectIDByIdent("NUKISmartLockSwitch", $SmartLockInstanceId);
+				$UpdateSmartLockSwitch = SetValue($SmartLockSwitchObjectId, $State);
+				$SmartLockStateObjectId = IPS_GetObjectIDByIdent("NUKISmatLockStatus", $SmartLockInstanceId);
+				$UpdateSmartLockState = SetValue($SmartLockStateObjectId, $StateName);
+			}
+		}
+  	}
+
+
+	########## protected functions ##########
+
+
+	/**
+	 *	 	registers the update timer	 
+	 */
+	protected function registerUpdateTimer(string $UpdateTimerName, int $TimerInterval)
+	{
+		$BridgeInstanceId = $this->InstanceID;
+   	$InstanceId = @IPS_GetObjectIDByIdent($UpdateTimerName, $BridgeInstanceId);
+		if ($InstanceId && IPS_GetEvent($InstanceId)['EventType'] <> 1) {
+      	IPS_DeleteEvent($InstanceId);
+      	$InstanceId = 0;
+    	}
+		if (!$InstanceId) {
+      	$InstanceId = IPS_CreateEvent(1);
+      	IPS_SetParent($InstanceId, $this->InstanceID);
+      	IPS_SetIdent($InstanceId, $UpdateTimerName);
+    	}
+    	IPS_SetName($InstanceId, $UpdateTimerName);
+    	IPS_SetHidden($InstanceId, true);
+    	IPS_SetEventScript($InstanceId, "\$InstanceId = {$BridgeInstanceId};\nNUKI_updateStateOfSmartLocks($BridgeInstanceId);");
+    	if (!IPS_EventExists($InstanceId)) {
+    		IPS_LogMessage("SymconNUKI", "Ident with name $UpdateTimerName is used for wrong object type");
+    	}	
+    	if (!($TimerInterval > 0)) {
+      	IPS_SetEventCyclic($InstanceId, 0, 0, 0, 0, 1, 1);
+      	IPS_SetEventActive($InstanceId, false);
+    	} 
+    	else {
+      	IPS_SetEventCyclic($InstanceId, 0, 0, 0, 0, 1, $TimerInterval);
+      	IPS_SetEventActive($InstanceId, true);
+    	}
+    }
 
 
 	########## private functions ##########
@@ -290,17 +394,19 @@ class NUKIBridge extends IPSModule
 	}
 
 
+	
 	/**
 	 *		gets the instance id of a smartlock by his uniquie id 
 	 */
-	private function getSmartLockInstanceIdByUniqueId($UniqueId) {
-	$SmartLockInstanceIds = IPS_GetInstanceListByModuleID($this->getSmartLockModuleGuid());
-	foreach($SmartLockInstanceIds as $SmartLockInstanceId) {
-		if (IPS_GetProperty($SmartLockInstanceId, "NUKISmartLockID") == $UniqueId) {
-		  return $SmartLockInstanceId;
-		}
-	 }
-  }
+	private function getSmartLockInstanceIdByUniqueId($UniqueId) 
+	{
+		$SmartLockInstanceIds = IPS_GetInstanceListByModuleID($this->getSmartLockModuleGuid());
+		foreach($SmartLockInstanceIds as $SmartLockInstanceId) {
+			if (IPS_GetProperty($SmartLockInstanceId, "NUKISmartLockID") == $UniqueId) {
+		  	return $SmartLockInstanceId;
+			}
+	 	}
+  	}
 
 }
 ?>

@@ -6,6 +6,7 @@
 		{ "type": "ValidationTextBox", "name": "NUKIBridgeIP", "caption": "IP-Adresse" },
 		{ "type": "ValidationTextBox", "name": "NUKIBridgePort", "caption": "Port" },
 		{ "type": "PasswordTextBox", "name": "NUKIBridgeAPIToken", "caption": "API Token"},
+		{ "type": "IntervalBox", "name": "NUKIUpdateInterval",  "caption": "Sekunden" },
 		{ "type": "SelectCategory", "name": "NUKISmartLockCategory", "caption": "Kategorie" }
 	],
 	"actions":

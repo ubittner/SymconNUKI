@@ -10,7 +10,7 @@
  * @version 	1.00
  * @date: 		2016-10-25, 21:00
  *
- * @see        https://gitlab.com/ubittner/ub-nuki
+ * @see        https://github.com/ubittner/SymconNUKI
  *
  * @bridgeapi	Version 1.3, 2016-10-07
  *
@@ -19,6 +19,9 @@
  *          	{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14} NUKISmartLock
  *          	{73188E44-8BBA-4EBF-8BAD-40201B8866B9} NUKISmartLock (I/O) TX (PR)
  *          	{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} NUKISmartLock (I/O) RX (I)
+ * 
+ * @changelog	2016-10-31, 13:50, added smartlock status 
+ * 				2016-10-25, 21:00, initial module script 
  */
 
 
@@ -53,8 +56,8 @@ class NUKISmartLock extends IPSModule
 		$this->EnableAction("NUKISmartLockSwitch");
 		$HideSmartLockSwitchState = $this->ReadPropertyBoolean("HideSmartLockSwitch");
 		IPS_SetHidden($SmartLockSwitchObjectId, $HideSmartLockSwitchState);
-
-		//$this->RegisterVariableString("NUKISmatLockStatus","NUKI SmartLock Status", "", 2);
+		
+		$this->RegisterVariableString("NUKISmatLockStatus","NUKI SmartLock Status", "", 2);
 
 		$this->SetStatus(102);
 	}

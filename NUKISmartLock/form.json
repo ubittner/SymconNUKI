@@ -8,20 +8,20 @@
 		{ "type": "Select", "name": "SwitchOnAction", "caption": "Aktion Schalter an",
     		"options": 
     		[
-        		{ "label": "unlock", "value": 1 },
-        		{ "label": "lock", "value": 2 },
-        		{ "label": "unlatch", "value": 3 },
-        		{ "label": "lock ‘n’ go", "value": 4 },
-        		{ "label": "lock ‘n’ go with unlatch", "value": 5 }
+        		{ "label": "1-unlock", "value": 1 },
+        		{ "label": "2-lock", "value": 2 },
+        		{ "label": "3-unlatch", "value": 3 },
+        		{ "label": "4-lock ‘n’ go", "value": 4 },
+        		{ "label": "5-lock ‘n’ go with unlatch", "value": 5 }
     		]},
     	{ "type": "Select", "name": "SwitchOffAction", "caption": "Aktion Schalter aus",
     		"options": 
     		[
-        		{ "label": "unlock", "value": 1 },
-        		{ "label": "lock", "value": 2 },
-        		{ "label": "unlatch", "value": 3 },
-        		{ "label": "lock ‘n’ go", "value": 4 },
-        		{ "label": "lock ‘n’ go with unlatch", "value": 5 }
+        		{ "label": "1-unlock", "value": 1 },
+        		{ "label": "2-lock", "value": 2 },
+        		{ "label": "3-unlatch", "value": 3 },
+        		{ "label": "4-lock ‘n’ go", "value": 4 },
+        		{ "label": "5-lock ‘n’ go with unlatch", "value": 5 }
     		]},
     	{ "type": "CheckBox", "name": "HideSmartLockSwitch", "caption": "Schalter verbergen" }
 	],
