@@ -19,7 +19,7 @@
 		{ "type": "Button", "label": "Add Callback", "onClick": "$BridgeData=NUKI_addCallback($id);  print_r($BridgeData)" },
 		{ "type": "Button", "label": "List Callback", "onClick": "$BridgeData=NUKI_listCallback($id); print_r($BridgeData)" },
 		{ "type": "NumberSpinner", "name": "NUKICallbackID",  "caption": "Callback ID" },
-		{ "type": "Button", "label": "Delete Callback", "onClick": "$CallbackID = IPS_GetProperty($id, 'CallbackID'); $BridgeData=NUKI_deleteCallback($id, $CallbackID); print_r($BridgeData)" },
+		{ "type": "Button", "label": "Delete Callback", "onClick": "$CallbackID = IPS_GetProperty($id,'NUKICallbackID'); $BridgeData=NUKI_deleteCallback($id, $CallbackID); print_r($BridgeData)" },
 		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
 		{ "type": "Label", "label": "NUKI Bridge Information" },
 		{ "type": "Button", "label": "Show Info", "onClick": "$BridgeData=NUKI_getBridgeInfo($id); print_r($BridgeData);" },
