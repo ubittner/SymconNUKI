@@ -1,12 +1,25 @@
 {
 	"elements":
 	[
-		{ "type": "Label", "label": "NUKI SmartLock Konfiguration Version 1.00"},
-		{ "type": "Label", "label": " "},
-		{ "type": "ValidationTextBox", "name": "NUKISmartLockID", "caption": "SmartLock ID" },
-		{ "type": "ValidationTextBox", "name": "NUKISmartLockName", "caption": "Bezeichnung" },
-		{ "type": "Select", "name": "SwitchOnAction", "caption": "Aktion Schalter an",
-    		"options": 
+		{ "type": "Label", "label": "NUKI Smart Lock Module Version 1.01" },
+		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
+		{ "type": "Label", "label": "NUKI Smart Lock" },
+		{ "type": "ValidationTextBox", "name": "NUKISmartLockUID", "caption": "UID" },
+		{ "type": "ValidationTextBox", "name": "NUKISmartLockName", "caption": "Name" },
+		{ "type": "Button", "label": "Show State", "onClick": "$SmartLockState=NUKI_showLockStateOfSmartLock($id); print_r($SmartLockState)" },
+		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
+		{ "type": "Label", "label": "Switch Action" },
+		{ "type": "Select", "name": "SwitchOffAction", "caption": "Switch Off Action",
+			"options":
+			[
+				{ "label": "1-unlock", "value": 1 },
+				{ "label": "2-lock", "value": 2 },
+				{ "label": "3-unlatch", "value": 3 },
+				{ "label": "4-lock ‘n’ go", "value": 4 },
+				{ "label": "5-lock ‘n’ go with unlatch", "value": 5 }
+			]},
+		{ "type": "Select", "name": "SwitchOnAction", "caption": "Switch On Action",
+    		"options":
     		[
         		{ "label": "1-unlock", "value": 1 },
         		{ "label": "2-lock", "value": 2 },
@@ -14,31 +27,15 @@
         		{ "label": "4-lock ‘n’ go", "value": 4 },
         		{ "label": "5-lock ‘n’ go with unlatch", "value": 5 }
     		]},
-    	{ "type": "Select", "name": "SwitchOffAction", "caption": "Aktion Schalter aus",
-    		"options": 
-    		[
-        		{ "label": "1-unlock", "value": 1 },
-        		{ "label": "2-lock", "value": 2 },
-        		{ "label": "3-unlatch", "value": 3 },
-        		{ "label": "4-lock ‘n’ go", "value": 4 },
-        		{ "label": "5-lock ‘n’ go with unlatch", "value": 5 }
-    		]},
-    	{ "type": "CheckBox", "name": "HideSmartLockSwitch", "caption": "Schalter verbergen" }
+    	{ "type": "CheckBox", "name": "HideSmartLockSwitch", "caption": "Hide Toggle Switch" }
 	],
-	"actions":
+	"status":
 	[
-		{ "type": "Label", "label": "SmartLock" },
-		{ "type": "Button", "label": "Status anzeigen", "onClick": "$SmartLockState=NUKI_showLockStateOfSmartLock($id);" },
-		{ "type": "Label", "label": "Bridge" },
-		{ "type": "Button", "label": "Info anzeigen", "onClick": "$BridgeData=NUKI_showInformationOfBridge($id);" }
-	],
-	"status": 
-	[
-		{ "code": 101, "icon": "active", "caption": "NUKI SmartLock wird erstellt." },
-		{ "code": 102, "icon": "active", "caption": "NUKI SmartLock ist aktiv." },
-		{ "code": 103, "icon": "active", "caption": "NUKI SmartLock wird gelöscht." },
-		{ "code": 104, "icon": "inactive", "caption": "NUKI SmartLock ist inaktiv." },
-		{ "code": 201, "icon": "error", "caption": "NUKI SmartLock Konfiguration ist fehlerhaft." },
-		{ "code": 299, "icon": "error", "caption": "Es ist ein unbekannter Fehler aufgetreten." }
+		{ "code": 101, "icon": "active", "caption": "NUKI Smart Lock will be created.." },
+		{ "code": 102, "icon": "active", "caption": "NUKI Smart Lock is active." },
+		{ "code": 103, "icon": "active", "caption": "NUKI Smart Lock will be deleted." },
+		{ "code": 104, "icon": "inactive", "caption": "NUKI Smart Lock is inactive." },
+		{ "code": 201, "icon": "error", "caption": "NUKI Smart Lock configuration has an error!" },
+		{ "code": 299, "icon": "error", "caption": "An unknown error has occurred!" }
   ]
 }

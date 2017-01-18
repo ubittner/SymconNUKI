@@ -1,0 +1,25 @@
+{
+    "translations": {
+        "de": {
+            "NUKI Bridge Module Version 1.01": "NUKI Bridge Modul Version 1.01",
+         	"IP-Address": "IP-Adresse",
+            "Show Smart Locks": "Smart Locks anzeigen",
+            "Category": "Kategorie",
+            "Sync Smart Locks": "Smart Locks abgleichen",
+            "Add Callback": "Callback anlegen",
+            "List Callback": "Callback anzeigen",
+            "Delete Callback": "Callback löschen",
+            "NUKI Bridge Information": "NUKI Bridge Informationen",
+         	"Show Info": "Info anzeigen",
+         	"Show Log": "Logdatei anzeigen",
+         	"Delete Log": "Logdatei löschen",
+            "NUKI Bridge will be created.": "NUKI Bridge wird erstellt.",
+            "NUKI Bridge is active.": "NUKI Bridge ist aktiv.",
+            "NUKI Bridge will be deleted.": "NUKI Bridge wird gelöscht.",
+            "Please edit all configuration parameters of the NUKI Bridge.": "Bitte alle Konfigurationsparameter der NUKI Bridge eintragen.",
+            "NUKI Bridge is inactive.": "NUKI Bridge ist inaktiv.",
+            "NUKI Bridge configuration has an error!": "NUKI Bridge Konfiguration hat einen Fehler!",
+            "An unknown error has occurred!": "Es ist ein unbekannter Fehler aufgetreten!"
+        }
+    }
+}

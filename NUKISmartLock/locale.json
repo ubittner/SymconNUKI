@@ -1,0 +1,24 @@
+{
+    "translations": {
+        "de": {
+         	"NUKI Smart Lock Module Version 1.01": "NUKI Smart Lock Modul Version 1.01",
+         	"Switch Action": "Schaltvorgänge",
+         	"Switch On Action": "Schaltvorgang EIN",
+         	"1-unlock": "1-aufschließen",
+         	"2-lock": "2-abschließen",
+         	"3-unlatch": "3-entriegeln",
+         	"4-lock ‘n’ go": "4-automatisch schließen",
+         	"5-lock ‘n’ go with unlatch": "5-automatisch schließen, entriegeln",
+            "Switch Off Action": "Schaltvorgang AUS",
+            "Hide Toggle Switch": "Schalter verbergen",
+            "Show State": "Status anzeigen",
+         	"Show Info": "Info anzeigen",
+            "NUKI SmartLock will be created.": "NUKI Smart Lock wird erstellt.",
+            "NUKI SmartLock is active.": "NUKI Smart Lock ist aktiv.",
+            "NUKI SmartLock will be deleted.": "NUKI Smart Lock wird gelöscht.",
+            "NUKI SmartLock is inactive.": "NUKI Smart Lock ist inaktiv.",
+            "NUKI SmartLock configuration has an error!": "NUKI Smart Lock Konfiguration hat einen Fehler!",
+            "An unknown error has occurred!": "Es ist ein unbekannter Fehler aufgetreten!"
+        }
+    }
+}
