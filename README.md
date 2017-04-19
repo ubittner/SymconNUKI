@@ -118,6 +118,20 @@ Folgende Instanzen stehen dann in IP-Symcon zur Verfügung:
 
 	Über `Schalter verbergen` kann man den Schalter im WebFront verbergen oder anzeigen lassen.
 
+## Bridge Callback Simulation (Entwicklungsumgebung / Develop environment)
+
+Mit einem curl Befehl kann der Callback einer NUKI Bridge im Rahmen einer Entwicklungsumgebung simuliert werden. Für den normalen Gebrauch oder Einsatz der NUKI Bridge ist der curl Befehl nicht notwendig.
+
+Für die Verwendung von curl über die Konsole des entsprechenden Betriebssystems informieren Sie sich bitte im Internet.
+
+`curl  -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: application/json;charset=utf-8" -X POST -d '{"nukiId":987654321,"state":1,"stateName":"locked","batteryCritical":true}' http://127.0.0.1:8081`
+
+"NukiBridge_12345678" ist die ID der NUKI Bridge
+
+"nukiId":987654321 ist die ID des NUKI Smartlocks
+
+http://127.0.0.1:8081 ist die IP-Adresse und Port des Server Sockets
+
 ## Funktionen innerhalb von IP-Symcon
 
 Präfix der Funktionen in IP-Symcon: NUKI
@@ -127,51 +141,51 @@ Präfix der Funktionen in IP-Symcon: NUKI
 	Zeigt alle Smart Locks in der Nähe an und liefert Informationen zur Bridge
 
 * NUKI_getBridgeLog(int $BridgeInstanceID)
-		
+
 	Zeigt das Log der Bridge an
 
 * NUKI_clearBridgeLog(int $BridgeInstanceID)
-	
+
 	Löscht das Log der Bridge
 
 * NUKI_updateBridgeFirmware(int $BridgeInstanceID)
-	
+
 	Prüft auf ein neues Firmware Update der Bridge und installiert es
 
 * NUKI_getSmartLocks(int $BridgeInstanceID)
-	
+
 	Liefert eine Liste aller verfügbaren Smart Locks
 
 * NUKI_syncSmartLocks(int $BridgeInstanceID)
-	
+
 	Gleicht alle Smart Locks der Bridge ab und legt diese in IP-Symcon an
 
 * NUKI_getLockStateOfSmartLock(int $BridgeInstanceID, int $SmartLockUniqueID)
-	
+
 	Zeigt den aktuellen Status eines Smart Locks an
 
 * NUKI_setLockActionOfSmartLock(int $BridgeInstanceID, int $SmarLockUniqueID, int $LockAction)
-	
+
 	Führt eine Aktion für ein Smart Lock aus
 
 * NUKI_updateStateOfSmartLocks(int $BridgeInstanceID)
-	
+
 	Aktualisiert den Status aller Smart Locks
 
 * NUKI_addCallback(int $BridgeInstanceID)
-	
+
 	Legt einen Callback auf der Bridge an
 
 * NUKI_listCallback(int $BridgeInstanceID)
-	
+
 	Zeigt die angelegten Callbacks auf der Bridge an
 
 * NUKI_deleteCallback(int $BridgeInstanceID, int $CallbackID)
-	
+
 	Löscht den Callback mit der $CallbackID auf der Bridge
 
 * NUKI_showLockStateOfSmartLock($SmartLockInstanceID)
-	
+
 	Zeigt den Status eines Smart Locks an
 
 ## GUIDs
