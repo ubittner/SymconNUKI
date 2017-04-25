@@ -8,12 +8,12 @@
  * @author 		Ulrich Bittner
  * @license		CCBYNC4.0
  * @copyright  (c) 2016, 2017
- * @version 	1.01
- * @date: 		2017-01-18, 13:00
+ * @version 	1.02
+ * @date: 		2017-04-19, 23:00
  *
  * @see        https://github.com/ubittner/SymconNUKI
  *
- * @bridgeapi	Version 1.03, 2016-10-07
+ * @bridgeapi	Version 1.5, 2016-12-22
  *
  * @guids 		{752C865A-5290-4DBE-AC30-01C7B1C3312F} NUKI Library
  *
@@ -25,7 +25,8 @@
  *
  * 				{8062CF2B-600E-41D6-AD4B-1BA66C32D6ED} NUKI Socket (Server Socket)
  *
- * @changelog	2017-01-18, 13:00, initial module script version 1.01
+ * @changelog	2017-04-19, 23:00, update to API Version 1.5 and some improvements
+ * 				2017-01-18, 13:00, initial module script version 1.01
  *
  */
 
@@ -83,8 +84,10 @@ class NUKISmartLock extends IPSModule
 
 		$this->RegisterVariableBoolean("NUKISmartLockBatteryState", "Batterie", "~Battery", 3);
 
-		$UpdateState = NUKI_updateStateOfSmartLocks($this->getBridgeInstanceID());
-		
+		$SmartLockUniqueID = $this->ReadPropertyString("NUKISmartLockUID");
+		if (!empty($SmartLockUniqueID)) {
+			$UpdateState = NUKI_updateStateOfSmartLocks($this->getBridgeInstanceID());
+		}
 		$this->SetStatus(102);
 	}
 
@@ -97,7 +100,7 @@ class NUKISmartLock extends IPSModule
 
   	/**
   	 *		NUKI_showLockStateOfSmartLock($SmartLockInstanceID)
-  	 *		Shows the lock state of a smartlock
+  	 *  	Shows the lock state of a smartlock
   	 */
 
 	public function showLockStateOfSmartLock ()
@@ -107,6 +110,19 @@ class NUKISmartLock extends IPSModule
 		$UpdateState = NUKI_updateStateOfSmartLocks($this->getBridgeInstanceID());
 		return $SmartLockState;
    }
+
+	/**
+  	 *		NUKI_unpairSmarLock($SmartLockInstanceID)
+  	 *		Removes the smartlock from the bridge
+  	 */
+
+	public function unpairSmartlock ()
+	{
+		$SmartLockUniqueID = $this->ReadPropertyString("NUKISmartLockUID");
+		$UnpairState = NUKI_unpairSmartLockFromBridge($this->getBridgeInstanceID(), $SmartLockUniqueID);
+		return $UnpairState;
+
+	}
 
 	public function RequestAction($Ident, $Value)
 	{

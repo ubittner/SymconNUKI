@@ -6,6 +6,13 @@
 
 SymconNUKI ist ein PHP Modul für IP-Symcon ab Version 4.1 zur Einbindung und Steuerung eines NUKI Smart Locks
 
+## Release 1.02
+Version 1.02 - NUKI API 1.5 22.12.2016
+
+Änderungen:
+- Update auf API 1.5
+- Callback wird jetzt schneller ausgewertet, damit dir der Status nun schneller angezeigt.
+
 ## Entwicklung
 Die Entwicklung dieses Moduls verfolgt keinen kommerziellen Zweck. Ziel ist es, den Funktionsumfang von IP-Symcon zu erweitern. Die Entwicklung dieses Moduls findet in der Freizeit als Hobby statt und stellt keinen Anspruch auf Fehlerfreiheit, Weiterentwicklung oder sonstige Unterstützung dar.
 
@@ -130,15 +137,43 @@ Für die Verwendung von curl über die Konsole des entsprechenden Betriebssystem
 
 "nukiId":987654321 ist die ID des NUKI Smartlocks
 
-http://127.0.0.1:8081 ist die IP-Adresse und Port des Server Sockets
+http:<span></span>//127.0.0.1:8081 ist die IP-Adresse und Port des Server Sockets
 
 ## Funktionen innerhalb von IP-Symcon
 
 Präfix der Funktionen in IP-Symcon: NUKI
 
+* NUKI_getSmartLocks(int $BridgeInstanceID)
+
+	Liefert eine Liste aller verfügbaren Smart Locks
+
+* NUKI_getLockStateOfSmartLock(int $BridgeInstanceID, int $SmartLockUniqueID)
+
+   Zeigt den aktuellen Status eines Smart Locks an
+
+* NUKI_setLockActionOfSmartLock(int $BridgeInstanceID, int $SmarLockUniqueID, int $LockAction)
+
+   Führt eine Aktion für ein Smart Lock aus 
+
+*	NUKI_unpairSmartLockFromBridge(int $BridgeInstanceID, int $SmarLockUniqueID)
+
+   Löscht das Smart Lock aus der Bridge
+
 * NUKI_getBridgeInfo(int $BridgeInstanceID)
 
 	Zeigt alle Smart Locks in der Nähe an und liefert Informationen zur Bridge
+
+* NUKI_addCallback(int $BridgeInstanceID)
+
+	Legt einen Callback auf der Bridge an
+
+* NUKI_listCallback(int $BridgeInstanceID)
+
+   Zeigt die angelegten Callbacks auf der Bridge an
+
+* NUKI_deleteCallback(int $BridgeInstanceID, int $CallbackID)
+
+   Löscht den Callback mit der $CallbackID auf der Bridge
 
 * NUKI_getBridgeLog(int $BridgeInstanceID)
 
@@ -152,37 +187,21 @@ Präfix der Funktionen in IP-Symcon: NUKI
 
 	Prüft auf ein neues Firmware Update der Bridge und installiert es
 
-* NUKI_getSmartLocks(int $BridgeInstanceID)
+*	NUKI_rebootBridge(int $BridgeInstanceID)
 
-	Liefert eine Liste aller verfügbaren Smart Locks
+   Starte die Brdige neu
+
+ *	NUKI_factoryResetBridge(int $BridgeInstanceID)
+
+   Setzt die Bridge auf Werkseinstellungen
 
 * NUKI_syncSmartLocks(int $BridgeInstanceID)
 
 	Gleicht alle Smart Locks der Bridge ab und legt diese in IP-Symcon an
 
-* NUKI_getLockStateOfSmartLock(int $BridgeInstanceID, int $SmartLockUniqueID)
-
-	Zeigt den aktuellen Status eines Smart Locks an
-
-* NUKI_setLockActionOfSmartLock(int $BridgeInstanceID, int $SmarLockUniqueID, int $LockAction)
-
-	Führt eine Aktion für ein Smart Lock aus
-
 * NUKI_updateStateOfSmartLocks(int $BridgeInstanceID)
 
 	Aktualisiert den Status aller Smart Locks
-
-* NUKI_addCallback(int $BridgeInstanceID)
-
-	Legt einen Callback auf der Bridge an
-
-* NUKI_listCallback(int $BridgeInstanceID)
-
-	Zeigt die angelegten Callbacks auf der Bridge an
-
-* NUKI_deleteCallback(int $BridgeInstanceID, int $CallbackID)
-
-	Löscht den Callback mit der $CallbackID auf der Bridge
 
 * NUKI_showLockStateOfSmartLock($SmartLockInstanceID)
 
@@ -203,6 +222,8 @@ Präfix der Funktionen in IP-Symcon: NUKI
 {8062CF2B-600E-41D6-AD4B-1BA66C32D6ED} NUKI Socket (Server Socket)
 
 ## Versionen
+
+1.02, 19.04.2017, Update auf API 1.5
 
 1.01, 31.01.2017, Erweiterung von Funktionen
 

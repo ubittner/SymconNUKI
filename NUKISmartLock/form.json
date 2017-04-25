@@ -1,12 +1,14 @@
 {
 	"elements":
 	[
-		{ "type": "Label", "label": "NUKI Smart Lock Module Version 1.01" },
+		{ "type": "Label", "label": "NUKI Smart Lock Module Version 1.02" },
+		{ "type": "Label", "label": "NUKI API 1.5 (22.12.2016)" },
 		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
 		{ "type": "Label", "label": "NUKI Smart Lock" },
 		{ "type": "ValidationTextBox", "name": "NUKISmartLockUID", "caption": "UID" },
 		{ "type": "ValidationTextBox", "name": "NUKISmartLockName", "caption": "Name" },
 		{ "type": "Button", "label": "Show State", "onClick": "$SmartLockState=NUKI_showLockStateOfSmartLock($id); print_r($SmartLockState)" },
+		{ "type": "Button", "label": "Unpair", "onClick": "$UnpairSmartLock=NUKI_unpairSmartLock($id); print_r($UnpairSmartLock)" },
 		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
 		{ "type": "Label", "label": "Switch Action" },
 		{ "type": "Select", "name": "SwitchOffAction", "caption": "Switch Off Action",

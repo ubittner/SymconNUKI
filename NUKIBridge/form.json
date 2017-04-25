@@ -1,7 +1,8 @@
 {
 	"elements":
 	[
-		{ "type": "Label", "label": "NUKI Bridge Module Version 1.01" },
+		{ "type": "Label", "label": "NUKI Bridge Module Version 1.02" },
+		{ "type": "Label", "label": "NUKI API 1.5 (22.12.2016)" },
 		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
 		{ "type": "Label", "label": "NUKI Bridge" },
 		{ "type": "ValidationTextBox", "name": "NUKIBridgeIP", "caption": "IP-Address" },
@@ -25,7 +26,9 @@
 		{ "type": "Button", "label": "Show Info", "onClick": "$BridgeData=NUKI_getBridgeInfo($id); print_r($BridgeData);" },
 		{ "type": "Button", "label": "Show Log", "onClick": "$BridgeData=NUKI_getBridgeLog($id); print_r($BridgeData);" },
 		{ "type": "Button", "label": "Delete Log", "onClick": "NUKI_clearBridgeLog($id);" },
-		{ "type": "Button", "label": "Update Firmware", "onClick": "NUKI_updateBridgeFirmware($id);" }
+		{ "type": "Button", "label": "Update Firmware", "onClick": "NUKI_updateBridgeFirmware($id);" },
+		{ "type": "Button", "label": "Reboot", "onClick": "NUKI_rebootBridge($id);" },
+		{ "type": "Button", "label": "Factory Reset", "onClick": "NUKI_factoryResetBridge($id);" }
 	],
 	"status":
 	[
