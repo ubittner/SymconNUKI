@@ -12,7 +12,7 @@ Version 1.02 - NUKI API 1.5 22.12.2016
 
 Änderungen:
 - Update auf API 1.5
-- Callback wird jetzt schneller ausgewertet, damit dir der Status nun schneller angezeigt.
+- Callback wird jetzt schneller ausgewertet, damit wird der Status nun schneller angezeigt.
 
 ## Entwicklung
 Die Entwicklung dieses Moduls verfolgt keinen kommerziellen Zweck. Ziel ist es, den Funktionsumfang von IP-Symcon zu erweitern. Die Entwicklung dieses Moduls findet in der Freizeit als Hobby statt und stellt keinen Anspruch auf Fehlerfreiheit, Weiterentwicklung oder sonstige Unterstützung dar.
