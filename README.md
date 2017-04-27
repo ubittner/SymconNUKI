@@ -1,6 +1,6 @@
 # SymconNUKI
 [![Version](https://img.shields.io/badge/Symcon-Modul-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Version-1.01-blue.svg)]()
+[![Version](https://img.shields.io/badge/Version-1.02-blue.svg)]()
 [![Version](https://img.shields.io/badge/Code-php-blue.svg)]()
 [![Version](https://img.shields.io/badge/License-CCBYNC4.0-green.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 [![Downloads](https://img.shields.io/github/downloads/ubittner/SymconNUKI/latest/total.svg)](https://github.com/ubittner/SymconNUKI/releases/latest)
