@@ -3,6 +3,7 @@
 [![Version](https://img.shields.io/badge/Version-1.01-blue.svg)]()
 [![Version](https://img.shields.io/badge/Code-php-blue.svg)]()
 [![Version](https://img.shields.io/badge/License-CCBYNC4.0-green.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
+[![Downloads](https://img.shields.io/github/downloads/ubittner/SymconNUKI/latest/total.svg)](https://github.com/ubittner/SymconNUKI/releases/latest)
 
 SymconNUKI ist ein PHP Modul für IP-Symcon ab Version 4.1 zur Einbindung und Steuerung eines NUKI Smart Locks
 
