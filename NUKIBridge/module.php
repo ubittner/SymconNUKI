@@ -430,7 +430,7 @@ class NUKIBridge extends IPSModule
 	 *	Sends data to the bridge endpoint
 	 */
 
-	private function sendDataToBridge(int $Endpoint)
+	private function sendDataToBridge(string $Endpoint)
 	{
 		$Bridge = $this->getBridgeAccessInformation();
 		$BridgeData = false;
