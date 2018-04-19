@@ -400,9 +400,9 @@ class NUKIBridge extends IPSModule
 
 	private function getSmartLockCategory()
 	{
-   	if ($this->NUKISmartLockCategory == "") {
-   		$this->NUKISmartLockCategory = $this->ReadPropertyString('NUKISmartLockCategory');
-    	}
+   	//if ($this->NUKISmartLockCategory == "") {
+   		$this->NUKISmartLockCategory = $this->ReadPropertyInteger('NUKISmartLockCategory');
+    	//}
     	return $this->NUKISmartLockCategory;
   	}
 
