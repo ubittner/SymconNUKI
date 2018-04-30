@@ -1,42 +1,182 @@
 {
-	"elements":
-	[
-		{ "type": "Label", "label": "NUKI Bridge Module Version 1.02" },
-		{ "type": "Label", "label": "NUKI API 1.5 (22.12.2016)" },
-		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
-		{ "type": "Label", "label": "NUKI Bridge" },
-		{ "type": "ValidationTextBox", "name": "NUKIBridgeIP", "caption": "IP-Address" },
-		{ "type": "ValidationTextBox", "name": "NUKIBridgePort", "caption": "Port" },
-		{ "type": "PasswordTextBox", "name": "NUKIBridgeAPIToken", "caption": "API Token"},
-		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
-		{ "type": "Label", "label": "NUKI Smart Locks" },
-		{ "type": "Button", "label": "Show Smart Locks", "onClick": "$BridgeData=NUKI_getSmartLocks($id); print_r($BridgeData)" },
-		{ "type": "SelectCategory", "name": "NUKISmartLockCategory", "caption": "Category" },
-		{ "type": "Button", "label": "Sync Smart Locks", "onClick": "NUKI_syncSmartLocks($id);" },
-		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
-		{ "type": "Label", "label": "NUKI Socket" },
-		{ "type": "ValidationTextBox", "name": "NUKISocketIP", "caption": "IP-Address" },
-		{ "type": "ValidationTextBox", "name": "NUKISocketPort", "caption": "Port" },
-		{ "type": "Button", "label": "Add Callback", "onClick": "$BridgeData=NUKI_addCallback($id);  print_r($BridgeData)" },
-		{ "type": "Button", "label": "List Callback", "onClick": "$BridgeData=NUKI_listCallback($id); print_r($BridgeData)" },
-		{ "type": "NumberSpinner", "name": "NUKICallbackID",  "caption": "Callback ID" },
-		{ "type": "Button", "label": "Delete Callback", "onClick": "$CallbackID = IPS_GetProperty($id,'NUKICallbackID'); $BridgeData=NUKI_deleteCallback($id, $CallbackID); print_r($BridgeData)" },
-		{ "type": "Label", "label": "----------------------------------------------------------------------------------------------------------------------------------" },
-		{ "type": "Label", "label": "NUKI Bridge Information" },
-		{ "type": "Button", "label": "Show Info", "onClick": "$BridgeData=NUKI_getBridgeInfo($id); print_r($BridgeData);" },
-		{ "type": "Button", "label": "Show Log", "onClick": "$BridgeData=NUKI_getBridgeLog($id); print_r($BridgeData);" },
-		{ "type": "Button", "label": "Delete Log", "onClick": "NUKI_clearBridgeLog($id);" },
-		{ "type": "Button", "label": "Update Firmware", "onClick": "NUKI_updateBridgeFirmware($id);" },
-		{ "type": "Button", "label": "Reboot", "onClick": "NUKI_rebootBridge($id);" },
-		{ "type": "Button", "label": "Factory Reset", "onClick": "NUKI_factoryResetBridge($id);" }
-	],
-	"status":
-	[
-		{ "code": 101, "icon": "active", "caption": "NUKI Bridge will be created." },
-		{ "code": 102, "icon": "active", "caption": "NUKI Bridge is active." },
-		{ "code": 103, "icon": "active", "caption": "NUKI Bridge will be deleted." },
-		{ "code": 104, "icon": "inactive", "caption": "Please edit all configuration parameters of the NUKI Bridge." },
-		{ "code": 201, "icon": "error", "caption": "NUKI Bridge configuration has an error!" },
-		{ "code": 299, "icon": "error", "caption": "An unknown error has occurred!" }
+  "elements": [
+    {
+      "type": "Label",
+      "label": "NUKI Bridge Module - Version 1.03 (21.04.2018, 12:30)"
+    },
+    {
+      "type": "Label",
+      "label": "NUKI API 1.7 (30.03.2018)"
+    },
+    {
+      "type": "Label",
+      "label": " "
+    },
+    {
+      "type": "Label",
+      "label": "(1) NUKI Bridge"
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "BridgeIP",
+      "caption": "IP-Address"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "BridgePort",
+      "caption": "Port"
+    },
+    {
+      "type": "PasswordTextBox",
+      "name": "BridgeAPIToken",
+      "caption": "API Token"
+    },
+    {
+      "type": "Label",
+      "label": " "
+    },
+    {
+      "type": "Label",
+      "label": "(2) NUKI Smart Locks"
+    },
+    {
+      "type": "SelectCategory",
+      "name": "SmartLockCategory",
+      "caption": "Category"
+    },
+    {
+      "type": "Label",
+      "label": " "
+    },
+    {
+      "type": "Label",
+      "label": "(3) NUKI Callback Socket"
+    },
+    {
+      "type": "CheckBox",
+      "name": "UseCallback",
+      "caption": "Use Callback"
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "SocketIP",
+      "caption": "IP-Address"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "SocketPort",
+      "caption": "Port"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "CallbackID",
+      "caption": "Callback ID"
+    }
+  ],
+  "actions": [
+    {
+      "type": "Label",
+      "label": "(1) NUKI Bridge"
+    },
+    {
+      "type": "Button",
+      "label": "Discover",
+      "onClick": "$data=NUKI_DiscoverBridges($id); print_r($data);"
+    },
+    {
+      "type": "Button",
+      "label": "Show Info",
+      "onClick": "$data=NUKI_GetBridgeInfo($id); print_r($data);"
+    },
+    {
+      "type": "Button",
+      "label": "Show Log",
+      "onClick": "$data=NUKI_GetBridgeLog($id); print_r($data);"
+    },
+    {
+      "type": "Button",
+      "label": "Delete Log",
+      "onClick": "NUKI_ClearBridgeLog($id);"
+    },
+    {
+      "type": "Button",
+      "label": "Update Firmware",
+      "onClick": "NUKI_UpdateBridgeFirmware($id);"
+    },
+    {
+      "type": "Button",
+      "label": "Reboot",
+      "onClick": "NUKI_RebootBridge($id);"
+    },
+    {
+      "type": "Button",
+      "label": "Factory Reset",
+      "onClick": "NUKI_FactoryResetBridge($id);"
+    },
+    {
+      "type": "Label",
+      "label": "(2) NUKI Smart Locks"
+    },
+    {
+      "type": "Button",
+      "label": "Show Smart Locks",
+      "onClick": "$data=NUKI_GetSmartLocks($id); print_r($data)"
+    },
+    {
+      "type": "Button",
+      "label": "Sync Smart Locks",
+      "onClick": "NUKI_SyncSmartLocks($id);"
+    },
+    {
+      "type": "Label",
+      "label": "(3) NUKI Callback Socket"
+    },
+    {
+      "type": "Button",
+      "label": "Add Callback",
+      "onClick": "$data=NUKI_AddCallback($id);  print_r($data)"
+    },
+    {
+      "type": "Button",
+      "label": "List Callback",
+      "onClick": "$data=NUKI_ListCallback($id); print_r($data)"
+    },
+    {
+      "type": "Button",
+      "label": "Delete Callback",
+      "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r($data)"
+    }
+  ],
+  "status": [
+    {
+      "code": 101,
+      "icon": "active",
+      "caption": "NUKI Bridge will be created."
+    },
+    {
+      "code": 102,
+      "icon": "active",
+      "caption": "NUKI Bridge is active."
+    },
+    {
+      "code": 103,
+      "icon": "active",
+      "caption": "NUKI Bridge will be deleted."
+    },
+    {
+      "code": 104,
+      "icon": "inactive",
+      "caption": "Please edit all configuration parameters of the NUKI Bridge."
+    },
+    {
+      "code": 201,
+      "icon": "error",
+      "caption": "NUKI Bridge configuration has an error!"
+    },
+    {
+      "code": 299,
+      "icon": "error",
+      "caption": "An unknown error has occurred!"
+    }
   ]
 }
