@@ -7,7 +7,7 @@
  *
  * @author		Ulrich Bittner
  * @license		CCBYNC4.0
- * @copyright	(c) 2016, 2017, 2018
+ * @copyright		(c) 2016, 2017, 2018
  * @version		1.02
  * @date:		2018-04-21, 12:30
  *
