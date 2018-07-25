@@ -105,9 +105,8 @@ class NUKIBridge extends IPSModule
         IPS_LogMessage("ReceiveData", utf8_decode($data->Buffer));
         $data = utf8_decode($data->Buffer);
         preg_match_all("/\\{(.*?)\\}/", $data, $match);
-        $smartLockData = json_decode(implode($match[0]), true);
+        $smartLockData = json_encode(json_decode(implode($match[0]), true));
         $this->SetStateOfSmartLock($smartLockData, true);
-
     }
 
 
@@ -172,9 +171,12 @@ class NUKIBridge extends IPSModule
          */
     }
 
-
     /**
-     *  Enables or disables the authorization via /auth and the publication of the local IP and port to the discovery URL
+     * Enables or disables the authorization via /auth and the publication of the local IP and port to the discovery URL
+     *
+     * @param bool $Enable
+     *
+     * @return bool|mixed|null
      */
     public function ToggleConfigAuth(bool $Enable)
     {
@@ -473,6 +475,7 @@ class NUKIBridge extends IPSModule
                 if (!empty($uniqueID)) {
                     $data = $this->GetLockStateOfSmartLock($uniqueID);
                     $data["nukiId"] = $uniqueID;
+                    $data = json_encode($data);
                     $this->SetStateOfSmartLock($data, false);
                 }
             }
@@ -554,13 +557,15 @@ class NUKIBridge extends IPSModule
   	}
 
 
-    private function SetStateOfSmartLock(array $SmartLockData, bool $ProtocolMode)
+    private function SetStateOfSmartLock(string $SmartLockData, bool $ProtocolMode)
     {
+        $this->SendDebug("Test", $SmartLockData, 0);
         if (!empty($SmartLockData)) {
-            $nukiID = $SmartLockData["nukiId"];
-            $state = $SmartLockData["state"];
-            $stateName = $this->Translate($SmartLockData["stateName"]);
-            $batteryState = $SmartLockData["batteryCritical"];
+            $data = json_decode($SmartLockData);
+            $nukiID = $data->nukiId;
+            $state = $data->state;
+            $stateName = $this->Translate($data->stateName);
+            $batteryState = $data->batteryCritical;
             switch ($state) {
                 // switch off (locked) = false, switch on (unlocked) = true
                 case 0:
