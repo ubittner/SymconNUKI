@@ -7,7 +7,7 @@
  *
  * @author		Ulrich Bittner
  * @license		CCBYNC4.0
- * @copyright		(c) 2016, 2017, 2018
+ * @copyright	(c) 2016, 2017, 2018
  * @version		1.02
  * @date:		2018-04-21, 12:30
  *
@@ -109,7 +109,7 @@ class NUKISmartLock extends IPSModule
 
 		$uniqueID = $this->ReadPropertyString("SmartLockUID");
 		if (!empty($uniqueID)) {
-		    NUKI_UpdateStateOfSmartLocks($this->GetBridgeInstanceID());
+		    NUKI_UpdateStateOfSmartLocks($this->GetBridgeInstanceID(), false);
 		}
 
 		$this->SetStatus(102);
@@ -133,7 +133,7 @@ class NUKISmartLock extends IPSModule
     {
         $bridgeID = $this->GetBridgeInstanceID();
         $state = NUKI_GetLockStateOfSmartLock($bridgeID, $this->ReadPropertyString("SmartLockUID"));
-        NUKI_UpdateStateOfSmartLocks($bridgeID);
+        NUKI_UpdateStateOfSmartLocks($bridgeID, true);
         return $state;
     }
 
@@ -168,6 +168,7 @@ class NUKISmartLock extends IPSModule
                 $action = $this->ReadPropertyString("SwitchOnAction");
             }
             NUKI_SetLockActionOfSmartLock($this->GetBridgeInstanceID(), $smartLockUniqueID, $action);
+            $this->ShowLockStateOfSmartLock();
         }
     }
 

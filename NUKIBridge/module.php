@@ -7,7 +7,7 @@
  *
  * @author		Ulrich Bittner
  * @license		CCBYNC4.0
- * @copyright		(c) 2016, 2017, 2018
+ * @copyright	(c) 2016, 2017, 2018
  * @version		1.02
  * @date:		2018-04-21, 12:30
  *
@@ -461,12 +461,12 @@ class NUKIBridge extends IPSModule
         IPS_LogMessage("SymconNUKI", "Syncronisierung der Smart Locks abgeschlossen.");
     }
 
-
-	/**
-	 *	NUKI_UpdateStateOfSmartLocks(int $BridgeInstanceID)
-	 *	updates the state of all smartlocks of a bridge
-	 */
-    public function UpdateStateOfSmartLocks()
+    /**
+     * Updates the state of all smartlocks of a bridge.
+     *
+     * @param bool $ProtocolMode
+     */
+	public function UpdateStateOfSmartLocks(bool $ProtocolMode)
     {
         $instanceIDs = IPS_GetInstanceListByModuleID(SMARTLOCK_MODULE_GUID);
         if (!empty($instanceIDs)) {
@@ -476,12 +476,11 @@ class NUKIBridge extends IPSModule
                     $data = $this->GetLockStateOfSmartLock($uniqueID);
                     $data["nukiId"] = $uniqueID;
                     $data = json_encode($data);
-                    $this->SetStateOfSmartLock($data, false);
+                    $this->SetStateOfSmartLock($data, $ProtocolMode);
                 }
             }
         }
     }
-
 
 	########## Protected functions ##########
 

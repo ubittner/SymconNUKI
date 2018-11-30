@@ -267,7 +267,7 @@ Setzt die Bridge auf Werkseinstellungen.
 
 Gleicht alle smarten NUKI Türschlösser der Bridge ab und legt diese in IP-Symcon automatisch an.
 
-`NUKI_UpdateStateOfSmartLocks(integer $BridgeInstanceID)`
+`NUKI_UpdateStateOfSmartLocks(integer $BridgeInstanceID, bool $ProtocolMode)`
 
 Aktualisiert den Status aller smarten NUKI Türschlösser.
 
