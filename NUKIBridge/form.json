@@ -120,7 +120,7 @@
     {
       "type": "Button",
       "label": "Show Smart Locks",
-      "onClick": "$data=NUKI_GetSmartLocks($id); print_r($data)"
+      "onClick": "$data=NUKI_GetSmartLocks($id); print_r($data);"
     },
     {
       "type": "Button",
@@ -134,17 +134,17 @@
     {
       "type": "Button",
       "label": "Add Callback",
-      "onClick": "$data=NUKI_AddCallback($id);  print_r($data)"
+      "onClick": "$data=NUKI_AddCallback($id);  print_r($data);"
     },
     {
       "type": "Button",
       "label": "List Callback",
-      "onClick": "$data=NUKI_ListCallback($id); print_r($data)"
+      "onClick": "$data=NUKI_ListCallback($id); print_r($data);"
     },
     {
       "type": "Button",
       "label": "Delete Callback",
-      "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r($data)"
+      "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r($data);"
     }
   ],
   "status": [
