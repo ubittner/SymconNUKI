@@ -3,7 +3,7 @@
 // Declare
 declare(strict_types=1);
 
-trait BridgeAPI
+trait bridgeAPI
 {
     /**
      * Discovers the bridges.
@@ -15,13 +15,13 @@ trait BridgeAPI
      */
     public function DiscoverBridges(): string
     {
-        $endpoint = "https://api.nuki.io/discover/bridges";
+        $endpoint = 'https://api.nuki.io/discover/bridges';
         $cURLHandle = curl_init();
-        curl_setopt_array($cURLHandle, array(
-            CURLOPT_URL => $endpoint,
-            CURLOPT_HEADER => 0,
+        curl_setopt_array($cURLHandle, [
+            CURLOPT_URL            => $endpoint,
+            CURLOPT_HEADER         => 0,
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_TIMEOUT, 20));
+            CURLOPT_TIMEOUT, 20]);
         $response = curl_exec($cURLHandle);
         if ($response == false) {
             $response = '';
@@ -29,9 +29,9 @@ trait BridgeAPI
         curl_close($cURLHandle);
         if (!empty($response)) {
             $data = json_decode($response, true);
-            $bridges = $data["bridges"];
+            $bridges = $data['bridges'];
             foreach ($bridges as $bridge) {
-                $this->SendDebug("DiscoverBridges", "Bridge ID: " . $bridge["bridgeId"] . " , IP-Address: " . $bridge["ip"] . " , Port: " . $bridge["port"], 0);
+                $this->SendDebug('DiscoverBridges', 'Bridge ID: ' . $bridge['bridgeId'] . ' , IP-Address: ' . $bridge['ip'] . ' , Port: ' . $bridge['port'], 0);
             }
         }
         return $response;
@@ -51,11 +51,11 @@ trait BridgeAPI
      */
     public function EnableAPI(): string
     {
-        $endpoint = "/auth";
+        $endpoint = '/auth';
         $data = $this->SendDataToBridge($endpoint);
         if (!empty($data)) {
             $data = json_decode($data, true);
-            if ($data["success"]) {
+            if ($data['success']) {
                 $token = $data['token'];
                 $this->SendDebug('EnableAPI', 'Token: ' . $token, 0);
             }
@@ -69,11 +69,12 @@ trait BridgeAPI
      * Enables or disables the authorization via /auth and the publication of the local IP and port to the discovery URL.
      *
      * @param bool $Enable
+     *
      * @return string
      */
     public function ToggleConfigAuth(bool $Enable): string
     {
-        $endpoint = "/configAuth?enable=" . $Enable . "&token=";
+        $endpoint = '/configAuth?enable=' . $Enable . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
     }
@@ -85,7 +86,7 @@ trait BridgeAPI
      */
     public function GetSmartLocks(): string
     {
-        $endpoint = "/list?token=";
+        $endpoint = '/list?token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
     }
@@ -94,11 +95,12 @@ trait BridgeAPI
      * Returns the current lock state of a given Smart Lock.
      *
      * @param int $SmartLockUniqueID
+     *
      * @return string
      */
     public function GetLockStateOfSmartLock(int $SmartLockUniqueID): string
     {
-        $endpoint = "/lockState?nukiId=" . $SmartLockUniqueID . "&token=";
+        $endpoint = '/lockState?nukiId=' . $SmartLockUniqueID . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
         /*
@@ -125,6 +127,7 @@ trait BridgeAPI
      *
      * @param int $SmartLockUniqueID
      * @param int $LockAction
+     *
      * @return string
      */
     public function SetLockActionOfSmartLock(int $SmartLockUniqueID, int $LockAction): string
@@ -137,7 +140,7 @@ trait BridgeAPI
          *	4 lock ‘n’ go
          * 	5 lock ‘n’ go with unlatch
          */
-        $endpoint = "/lockAction?nukiId=" . $SmartLockUniqueID . "&action=" . $LockAction . "&token=";
+        $endpoint = '/lockAction?nukiId=' . $SmartLockUniqueID . '&action=' . $LockAction . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
         /*
@@ -148,12 +151,14 @@ trait BridgeAPI
 
     /**
      * Removes the pairing with a given Smart Lock.
+     *
      * @param int $SmartLockUniqueID
+     *
      * @return string
      */
     public function UnpairSmartLockFromBridge(int $SmartLockUniqueID): string
     {
-        $endpoint = "/unpair?nukiId=" . $SmartLockUniqueID . "&token=";
+        $endpoint = '/unpair?nukiId=' . $SmartLockUniqueID . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
     }
@@ -167,7 +172,7 @@ trait BridgeAPI
      */
     public function GetBridgeInfo(): string
     {
-        $endpoint = "/info?token=";
+        $endpoint = '/info?token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
     }
@@ -180,14 +185,14 @@ trait BridgeAPI
     public function AddCallback(): string
     {
         $data = '';
-        $callbackIP = $this->ReadPropertyString("SocketIP");
-        $callbackPort = $this->ReadPropertyInteger("SocketPort");
+        $callbackIP = $this->ReadPropertyString('SocketIP');
+        $callbackPort = $this->ReadPropertyInteger('SocketPort');
         if (!empty($callbackIP) && !empty($callbackPort)) {
-            $endpoint = "/callback/add?url=http%3A%2F%2F" . $callbackIP . "%3A" . $callbackPort . "&token=";
+            $endpoint = '/callback/add?url=http%3A%2F%2F' . $callbackIP . '%3A' . $callbackPort . '&token=';
             $data = $this->SendDataToBridge($endpoint);
         }
         if (empty($callbackIP) || empty($callbackPort)) {
-            echo $this->Translate("Please enter the IP address of the IP-Symcon server and the port of the NUKI server socket!");
+            echo $this->Translate('Please enter the IP address of the IP-Symcon server and the port of the NUKI server socket!');
         }
         return $data;
     }
@@ -199,7 +204,7 @@ trait BridgeAPI
      */
     public function ListCallback(): string
     {
-        $endpoint = "/callback/list?token=";
+        $endpoint = '/callback/list?token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
     }
@@ -208,11 +213,12 @@ trait BridgeAPI
      * Removes a previously added callback.
      *
      * @param int $CallbackID
+     *
      * @return string
      */
     public function DeleteCallback(int $CallbackID): string
     {
-        $endpoint = "/callback/remove?id=" . $CallbackID . "&token=";
+        $endpoint = '/callback/remove?id=' . $CallbackID . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
     }
@@ -224,28 +230,26 @@ trait BridgeAPI
      */
     public function GetBridgeLog(): string
     {
-        $endpoint = "/log?token=";
+        $endpoint = '/log?token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
     }
 
     /**
      * Clears the log of the bridge.
-     *
      */
     public function ClearBridgeLog()
     {
-        $endpoint = "/clearlog?token=";
+        $endpoint = '/clearlog?token=';
         $this->SendDataToBridge($endpoint);
     }
 
     /**
      * Immediately checks for a new firmware update and installs it.
-     *
      */
     public function UpdateBridgeFirmware()
     {
-        $endpoint = "/fwupdate?token=";
+        $endpoint = '/fwupdate?token=';
         $this->SendDataToBridge($endpoint);
     }
 
@@ -254,16 +258,16 @@ trait BridgeAPI
      */
     public function RebootBridge()
     {
-        $endpoint = "/reboot?token=";
+        $endpoint = '/reboot?token=';
         $this->SendDataToBridge($endpoint);
     }
 
     /**
-     * Performs a factory reset
+     * Performs a factory reset.
      */
     public function FactoryResetBridge()
     {
-        $endpoint = "factoryReset?token=";
+        $endpoint = 'factoryReset?token=';
         $this->sendDataToBridge($endpoint);
     }
 
@@ -271,19 +275,20 @@ trait BridgeAPI
      * Sends data to the bridge.
      *
      * @param string $Endpoint
+     *
      * @return string
      */
     private function SendDataToBridge(string $Endpoint): string
     {
-        $bridgeIP = $this->ReadPropertyString("BridgeIP");
-        $bridgePort = $this->ReadPropertyInteger("BridgePort");
-        $token = $this->ReadPropertyString("BridgeAPIToken");
+        $bridgeIP = $this->ReadPropertyString('BridgeIP');
+        $bridgePort = $this->ReadPropertyInteger('BridgePort');
+        $token = $this->ReadPropertyString('BridgeAPIToken');
         $cURLHandle = curl_init();
-        curl_setopt_array($cURLHandle, array(
-            CURLOPT_URL => "http://" . $bridgeIP . ":" . $bridgePort . $Endpoint . $token,
-            CURLOPT_HEADER => 0,
+        curl_setopt_array($cURLHandle, [
+            CURLOPT_URL            => 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . $token,
+            CURLOPT_HEADER         => 0,
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_TIMEOUT, 40));
+            CURLOPT_TIMEOUT, 40]);
         $response = curl_exec($cURLHandle);
         if ($response == false) {
             $response = '';

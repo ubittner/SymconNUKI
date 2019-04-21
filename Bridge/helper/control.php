@@ -3,7 +3,7 @@
 // Declare
 declare(strict_types=1);
 
-trait Control
+trait control
 {
     /**
      * Syncs the Smart Locks of the bridge.
@@ -15,8 +15,8 @@ trait Control
         if (!empty($smartLocks)) {
             $smartLocks = json_decode($smartLocks, true);
             foreach ($smartLocks as $smartLock) {
-                $uniqueID = $smartLock["nukiId"];
-                $name = utf8_decode((string)$smartLock["name"]);
+                $uniqueID = $smartLock['nukiId'];
+                $name = utf8_decode((string) $smartLock['name']);
                 $instanceID = $this->GetSmartLockInstanceIdByUniqueId($uniqueID);
                 if ($instanceID == 0) {
                     $instanceID = IPS_CreateInstance(SMARTLOCK_MODULE_GUID);
@@ -25,13 +25,13 @@ trait Control
                 IPS_SetProperty($instanceID, 'SmartLockName', $name);
                 IPS_SetName($instanceID, $name);
                 IPS_SetParent($instanceID, $categoryID);
-                if (IPS_GetInstance($instanceID)['ConnectionID'] <> $this->InstanceID) {
+                if (IPS_GetInstance($instanceID)['ConnectionID'] != $this->InstanceID) {
                     @IPS_DisconnectInstance($instanceID);
                     IPS_ConnectInstance($instanceID, $this->InstanceID);
                 }
                 IPS_ApplyChanges($instanceID);
             }
-            echo $this->Translate("Smart Locks have been matched / created!");
+            echo $this->Translate('Smart Locks have been matched / created!');
         }
     }
 
@@ -39,6 +39,7 @@ trait Control
      * Gets the instance id of the smartlock by UID.
      *
      * @param $UniqueID
+     *
      * @return int
      */
     private function GetSmartLockInstanceIdByUniqueId($UniqueID): int
@@ -46,7 +47,7 @@ trait Control
         $id = 0;
         $instanceIDs = IPS_GetInstanceListByModuleID(SMARTLOCK_MODULE_GUID);
         foreach ($instanceIDs as $instanceID) {
-            if (IPS_GetProperty($instanceID, "SmartLockUID") == $UniqueID) {
+            if (IPS_GetProperty($instanceID, 'SmartLockUID') == $UniqueID) {
                 $id = $instanceID;
             }
         }
@@ -57,16 +58,16 @@ trait Control
      * Sets the state of a smartlock.
      *
      * @param string $SmartLockData
-     * @param bool $ProtocolMode
+     * @param bool   $ProtocolMode
      */
     private function SetStateOfSmartLock(string $SmartLockData, bool $ProtocolMode)
     {
         if (!empty($SmartLockData)) {
             $data = json_decode($SmartLockData, true);
-            $nukiID = $data["nukiId"];
-            $state = $data-["state"];
-            $stateName = $this->Translate($data["stateName"]);
-            $batteryState = $data["batteryCritical"];
+            $nukiID = $data['nukiId'];
+            $state = $data - ['state'];
+            $stateName = $this->Translate($data['stateName']);
+            $batteryState = $data['batteryCritical'];
             switch ($state) {
                 // switch off (locked) = false, switch on (unlocked) = true
                 case 0:
@@ -107,21 +108,21 @@ trait Control
             }
             $instanceIDs = IPS_GetInstanceListByModuleID(SMARTLOCK_MODULE_GUID);
             foreach ($instanceIDs as $instanceID) {
-                $uniqueID = IPS_GetProperty($instanceID, "SmartLockUID");
+                $uniqueID = IPS_GetProperty($instanceID, 'SmartLockUID');
                 if ($nukiID == $uniqueID) {
                     $smartLockName = IPS_GetName($instanceID);
-                    $switchID = IPS_GetObjectIDByIdent("SmartLockSwitch", $instanceID);
+                    $switchID = IPS_GetObjectIDByIdent('SmartLockSwitch', $instanceID);
                     SetValue($switchID, $state);
-                    $stateID = IPS_GetObjectIDByIdent("SmartLockStatus", $instanceID);
+                    $stateID = IPS_GetObjectIDByIdent('SmartLockStatus', $instanceID);
                     SetValue($stateID, $stateName);
-                    $batteryStateID = IPS_GetObjectIDByIdent("SmartLockBatteryState", $instanceID);
+                    $batteryStateID = IPS_GetObjectIDByIdent('SmartLockBatteryState', $instanceID);
                     SetValue($batteryStateID, $batteryState);
                     if ($ProtocolMode == true) {
-                        if (IPS_GetProperty($instanceID, "UseProtocol") == true) {
-                            $date = date("d.m.Y");
-                            $time = date("H:i:s");
+                        if (IPS_GetProperty($instanceID, 'UseProtocol') == true) {
+                            $date = date('d.m.Y');
+                            $time = date('H:i:s');
                             $string = "{$date}, {$time}, {$smartLockName}, UID: {$nukiID}, Status: {$stateName}.";
-                            $protocolID = IPS_GetObjectIDByIdent("Protocol", $instanceID);
+                            $protocolID = IPS_GetObjectIDByIdent('Protocol', $instanceID);
                             $entries = json_decode(IPS_GetConfiguration($instanceID))->ProtocolEntries;
                             if ($entries == 1) {
                                 SetValue($protocolID, $string);
@@ -152,12 +153,12 @@ trait Control
         $instanceIDs = IPS_GetInstanceListByModuleID(SMARTLOCK_MODULE_GUID);
         if (!empty($instanceIDs)) {
             foreach ($instanceIDs as $instanceID) {
-                $uniqueID = (int) IPS_GetProperty($instanceID, "SmartLockUID");
+                $uniqueID = (int) IPS_GetProperty($instanceID, 'SmartLockUID');
                 if (!empty($uniqueID)) {
                     $data = $this->GetLockStateOfSmartLock($uniqueID);
                     if (!empty($data)) {
                         $data = json_encode($data, true);
-                        $data["nukiId"] = $uniqueID;
+                        $data['nukiId'] = $uniqueID;
                         $data = json_encode($data);
                         $this->SetStateOfSmartLock($data, $ProtocolMode);
                     }
