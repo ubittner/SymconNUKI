@@ -7,6 +7,8 @@
 [![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
 [![Version](https://img.shields.io/badge/License-CCBYNC4.0-green.svg)](https://creativecommons.org/licenses/by-nc/4.0/)
 
+![Image](../imgs/nuki-logo-black.png)
+
 Das Modul integriert das smarte Türschloss NUKI (https://nuki.io/de/) in IP-Symcon (https://www.symcon.de).
 Für die Nutzung dieses Moduls wird mindestens die Version 5.0 von IP-Symcon vorausgesetzt.
 Neben dem NUKI Türschloss (https://nuki.io/de/shop/nuki-smart-lock/) muss eine NUKI Bridge (https://nuki.io/de/shop/nuki-bridge/) vorhanden sein und über die NUKI iOS / Android App bereits konfiguriert sein.

@@ -2,7 +2,7 @@
   "elements": [
     {
       "type": "Image",
-      "image": "data:image/png;base64,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"
+      "image": "data:image/png;base64,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"
     },
     {
       "type": "Label",
@@ -22,7 +22,7 @@
     },
     {
       "type": "Label",
-      "caption": "You can open and close your door lock in conjunction with the NUKI SmartLock."
+      "caption": "You can open and close your door lock in conjunction with a NUKI SmartLock."
     },
     {
       "type": "Label",
@@ -189,12 +189,12 @@
     {
       "type": "Button",
       "caption": "Discover",
-      "onClick": "$data=NUKI_DiscoverBridges($id); print_r($data);"
+      "onClick": "$data=NUKI_DiscoverBridges($id); print_r(json_decode($data, true));"
     },
     {
       "type": "Button",
       "caption": "Show Info",
-      "onClick": "$data=NUKI_GetBridgeInfo($id); print_r($data);"
+      "onClick": "$data=NUKI_GetBridgeInfo($id); print_r(json_decode($data, true));"
     },
     {
       "type": "RowLayout",
@@ -202,7 +202,7 @@
         {
           "type": "Button",
           "caption": "Show Log",
-          "onClick": "$data=NUKI_GetBridgeLog($id); print_r($data);"
+          "onClick": "$data=NUKI_GetBridgeLog($id); print_r(json_decode($data, true));"
         },
         {
           "type": "Button",
@@ -236,7 +236,7 @@
         {
           "type": "Button",
           "caption": "Show",
-          "onClick": "$data=NUKI_GetSmartLocks($id); print_r($data);"
+          "onClick": "$data=NUKI_GetSmartLocks($id); print_r(json_decode($data, true));"
         },
         {
           "type": "Button",
@@ -255,17 +255,17 @@
         {
           "type": "Button",
           "caption": "Add",
-          "onClick": "$data=NUKI_AddCallback($id);  print_r($data);"
+          "onClick": "$data=NUKI_AddCallback($id);  print_r(json_decode($data, true));"
         },
         {
           "type": "Button",
           "caption": "List",
-          "onClick": "$data=NUKI_ListCallback($id); print_r($data);"
+          "onClick": "$data=NUKI_ListCallback($id); print_r(json_decode($data, true));"
         },
         {
           "type": "Button",
           "caption": "Delete",
-          "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r($data);"
+          "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r(json_decode($data, true));"
         }
       ]
     }

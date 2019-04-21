@@ -1,6 +1,6 @@
 # NUKI
 
-![Image](imgs/nuki-logo-white.png)
+![Image](imgs/nuki-logo-black.png)
 
 Folgende Module beinhaltet das NUKI Repository:
 

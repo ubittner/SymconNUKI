@@ -7,8 +7,9 @@
 [![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
 [![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
+[![StyleCI](https://github.styleci.io/repos/71931303/shield?branch=develop&style=flat)](https://github.styleci.io/repos/71931303)
 
-![Image](../imgs/nuki-logo-white.png)
+![Image](../imgs/nuki-logo-black.png)
 
 Dieses Modul integriert die [NUKI Bridge](https://nuki.io/de/bridge/) in [IP-Symcon](https://www.symcon.de).
 
