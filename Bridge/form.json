@@ -1,0 +1,305 @@
+{
+  "elements": [
+    {
+      "type": "Image",
+      "image": "data:image/png;base64,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"
+    },
+    {
+      "type": "Label",
+      "caption": "NUKI Bridge - A project of Ulrich Bittner"
+    },
+    {
+      "type": "Label",
+      "caption": " "
+    },
+    {
+      "type": "Label",
+      "caption": "Description:"
+    },
+    {
+      "type": "Label",
+      "caption": "This instance integrates the NUKI Bridge into IP-Symcon."
+    },
+    {
+      "type": "Label",
+      "caption": "You can open and close your door lock in conjunction with the NUKI SmartLock."
+    },
+    {
+      "type": "Label",
+      "caption": "For further information, please refer to the documentation or the notes here in the configuration."
+    },
+    {
+      "type": "Label",
+      "caption": " "
+    },
+    {
+      "type": "Label",
+      "caption": "Configuration:"
+    },
+    {
+      "type": "ExpansionPanel",
+      "caption": "(0) Instance information",
+      "items": [
+        {
+          "type": "Label",
+          "caption": "Symcon version:\t5.1>"
+        },
+        {
+          "type": "Label",
+          "caption": "Module version:\t1.04-1004"
+        },
+        {
+          "type": "Label",
+          "caption": "Date:\t\t\tApril 21, 2019"
+        },
+        {
+          "type": "Label",
+          "caption": "Time:\t\t\t10:00"
+        },
+        {
+          "type": "Label",
+          "caption": "Developer:\t\tUlrich Bittner"
+        },
+        {
+          "type": "Label",
+          "caption": "Prefix:\t\t\tNUKI"
+        }
+      ]
+    },
+    {
+      "type": "ExpansionPanel",
+      "caption": "(1) Bridge",
+      "items": [
+        {
+          "type": "Label",
+          "caption": "Please enter the IP-Address of your bridge:"
+        },
+        {
+          "type": "ValidationTextBox",
+          "name": "BridgeIP",
+          "caption": "IP-Address"
+        },
+        {
+          "type": "Label",
+          "caption": "Please enter the Port of your bridge:"
+        },
+        {
+          "type": "NumberSpinner",
+          "name": "BridgePort",
+          "caption": "Port"
+        },
+        {
+          "type": "Label",
+          "caption": "Please enter your API Token:"
+        },
+        {
+          "type": "PasswordTextBox",
+          "name": "BridgeAPIToken",
+          "caption": "API Token"
+        }
+      ]
+    },
+    {
+      "type": "ExpansionPanel",
+      "caption": "(2) SmartLocks",
+      "items": [
+        {
+          "type": "Label",
+          "caption": "Please select the category for your SmartLocks:"
+        },
+        {
+          "type": "SelectCategory",
+          "name": "SmartLockCategory",
+          "caption": "Category"
+        }
+      ]
+    },
+    {
+      "type": "ExpansionPanel",
+      "caption": "(3) Callback Socket",
+      "items": [
+        {
+          "type": "Label",
+          "caption": "With a callback you receive information from your bridge."
+        },
+        {
+          "type": "Label",
+          "caption": " "
+        },
+        {
+          "type": "Label",
+          "caption": "Please select if you want to use a callback:"
+        },
+        {
+          "type": "CheckBox",
+          "name": "UseCallback",
+          "caption": "Use Callback"
+        },
+        {
+          "type": "Label",
+          "caption": "Please enter the IP-Address of your Symcon server:"
+        },
+        {
+          "type": "ValidationTextBox",
+          "name": "SocketIP",
+          "caption": "IP-Address"
+        },
+        {
+          "type": "Label",
+          "caption": "Please enter a free Port of your Symcon server:"
+        },
+        {
+          "type": "NumberSpinner",
+          "name": "SocketPort",
+          "caption": "Port"
+        },
+        {
+          "type": "Label",
+          "caption": "Please specify the callback ID for changes or deletions:"
+        },
+        {
+          "type": "NumberSpinner",
+          "name": "CallbackID",
+          "caption": "Callback ID"
+        },
+        {
+          "type": "Label",
+          "caption": " "
+        },
+        {
+          "type": "Label",
+          "caption": "After accepting possible changes, you can use the ADD button under point (3) Callback Socket to create a callback."
+        },
+        {
+          "type": "Label",
+          "caption": "With the button LIST under point (3) Callback Socket, you can display the created callbacks."
+        },
+        {
+          "type": "Label",
+          "caption": "Use the DELETE button under point (3) Callback Socket to delete the callback with the specified ID."
+        }
+      ]
+    }
+  ],
+  "actions": [
+    {
+      "type": "Label",
+      "caption": "(1) Bridge"
+    },
+    {
+      "type": "Button",
+      "caption": "Discover",
+      "onClick": "$data=NUKI_DiscoverBridges($id); print_r($data);"
+    },
+    {
+      "type": "Button",
+      "caption": "Show Info",
+      "onClick": "$data=NUKI_GetBridgeInfo($id); print_r($data);"
+    },
+    {
+      "type": "RowLayout",
+      "items": [
+        {
+          "type": "Button",
+          "caption": "Show Log",
+          "onClick": "$data=NUKI_GetBridgeLog($id); print_r($data);"
+        },
+        {
+          "type": "Button",
+          "caption": "Delete Log",
+          "onClick": "NUKI_ClearBridgeLog($id);"
+        }
+      ]
+    },
+    {
+      "type": "Button",
+      "caption": "Update Firmware",
+      "onClick": "NUKI_UpdateBridgeFirmware($id);"
+    },
+    {
+      "type": "Button",
+      "caption": "Reboot",
+      "onClick": "NUKI_RebootBridge($id);"
+    },
+    {
+      "type": "Button",
+      "caption": "Factory Reset",
+      "onClick": "NUKI_FactoryResetBridge($id);"
+    },
+    {
+      "type": "Label",
+      "caption": "(2) SmartLocks"
+    },
+    {
+      "type": "RowLayout",
+      "items": [
+        {
+          "type": "Button",
+          "caption": "Show",
+          "onClick": "$data=NUKI_GetSmartLocks($id); print_r($data);"
+        },
+        {
+          "type": "Button",
+          "caption": "Sync",
+          "onClick": "NUKI_SyncSmartLocks($id);"
+        }
+      ]
+    },
+    {
+      "type": "Label",
+      "caption": "(3) Callback Socket"
+    },
+    {
+      "type": "RowLayout",
+      "items": [
+        {
+          "type": "Button",
+          "caption": "Add",
+          "onClick": "$data=NUKI_AddCallback($id);  print_r($data);"
+        },
+        {
+          "type": "Button",
+          "caption": "List",
+          "onClick": "$data=NUKI_ListCallback($id); print_r($data);"
+        },
+        {
+          "type": "Button",
+          "caption": "Delete",
+          "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r($data);"
+        }
+      ]
+    }
+  ],
+  "status": [
+    {
+      "code": 101,
+      "icon": "active",
+      "caption": "NUKI Bridge will be created"
+    },
+    {
+      "code": 102,
+      "icon": "active",
+      "caption": "NUKI Bridge is active"
+    },
+    {
+      "code": 103,
+      "icon": "active",
+      "caption": "NUKI Bridge will be deleted"
+    },
+    {
+      "code": 104,
+      "icon": "inactive",
+      "caption": "Please edit all configuration parameters of the NUKI Bridge."
+    },
+    {
+      "code": 201,
+      "icon": "error",
+      "caption": "NUKI Bridge configuration has an error!"
+    },
+    {
+      "code": 299,
+      "icon": "error",
+      "caption": "An unknown error has occurred!"
+    }
+  ]
+}
