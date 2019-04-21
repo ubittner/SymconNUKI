@@ -86,7 +86,7 @@ class NUKIBridge extends IPSModule
 
         $parentID = $this->GetParent();
         if ($parentID > 0) {
-            if (IPS_GetProperty($parentID, 'Port') <> $this->ReadPropertyInteger('SocketPort')) {
+            if (IPS_GetProperty($parentID, 'Port') != $this->ReadPropertyInteger('SocketPort')) {
                 IPS_SetProperty($parentID, 'Port', $this->ReadPropertyInteger('SocketPort'));
             }
             IPS_SetName($parentID, 'NUKI Socket');
@@ -121,6 +121,7 @@ class NUKIBridge extends IPSModule
      * Receives data from the server socket.
      *
      * @param $JSONString
+     *
      * @return bool|void
      */
     public function ReceiveData($JSONString)
@@ -128,7 +129,7 @@ class NUKIBridge extends IPSModule
         $data = json_decode($JSONString);
         $this->SendDebug('ReceiveData', utf8_decode($data->Buffer), 0);
         $data = utf8_decode($data->Buffer);
-        preg_match_all("/\\{(.*?)\\}/", $data, $match);
+        preg_match_all('/\\{(.*?)\\}/', $data, $match);
         // ToDo: Check for encode / decode !
         $smartLockData = json_encode(json_decode(implode($match[0]), true));
         $this->SetStateOfSmartLock($smartLockData, true);
@@ -147,24 +148,23 @@ class NUKIBridge extends IPSModule
 
     /**
      * Validates the configuration form.
-     *
      */
     private function ValidateBridgeConfiguration()
     {
         $this->SetStatus(102);
         // Check callback
-        if ($this->ReadPropertyBoolean("UseCallback") == true) {
-            if ($this->ReadPropertyString("SocketIP") == "" || $this->ReadPropertyInteger("SocketPort") == "") {
+        if ($this->ReadPropertyBoolean('UseCallback') == true) {
+            if ($this->ReadPropertyString('SocketIP') == '' || $this->ReadPropertyInteger('SocketPort') == '') {
                 $this->SetStatus(104);
             }
         }
         // Check bridge data
-        if ($this->ReadPropertyString("BridgeIP") == "" || $this->ReadPropertyInteger("BridgePort") == "" || $this->ReadPropertyString("BridgeAPIToken") == "") {
+        if ($this->ReadPropertyString('BridgeIP') == '' || $this->ReadPropertyInteger('BridgePort') == '' || $this->ReadPropertyString('BridgeAPIToken') == '') {
             $this->SetStatus(104);
         } else {
             $reachable = false;
             $timeout = 1000;
-            if ($timeout && Sys_Ping($this->ReadPropertyString("BridgeIP"), $timeout) == true) {
+            if ($timeout && Sys_Ping($this->ReadPropertyString('BridgeIP'), $timeout) == true) {
                 $data = $this->GetBridgeInfo();
                 if ($data != false) {
                     $reachable = true;
