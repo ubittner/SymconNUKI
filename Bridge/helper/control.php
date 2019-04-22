@@ -63,10 +63,8 @@ trait Control
     private function SetStateOfSmartLock(string $SmartLockData, bool $ProtocolMode)
     {
         if (!empty($SmartLockData)) {
-            IPS_LogMessage('SmartLockData', $SmartLockData);
-            //$data = json_decode($SmartLockData, true);
-            //IPS_LogMessage('SetStateOfSmartLock', 'Data:'.print_r($data));
             $data = json_decode($SmartLockData, true);
+            IPS_LogMessage('SmartLockData', print_r($data));
             $nukiID = $data['nukiId'];
             IPS_LogMessage('SetStateOfSmartLock', 'Nuki ID:'.$nukiID);
             $state = $data['state'];
