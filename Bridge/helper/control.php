@@ -64,14 +64,14 @@ trait Control
     {
         if (!empty($SmartLockData)) {
             IPS_LogMessage('SmartLockData', $SmartLockData);
-            $data = json_decode($SmartLockData, true);
-            IPS_LogMessage('SetStateOfSmartLock', 'Data:'.print_r($data));
-            $nukiID = $data['nukiId'];
+            //$data = json_decode($SmartLockData, true);
+            //IPS_LogMessage('SetStateOfSmartLock', 'Data:'.print_r($data));
+            $nukiID = $SmartLockData['nukiId'];
             IPS_LogMessage('SetStateOfSmartLock', 'Nuki ID:'.$nukiID);
-            $state = $data['state'];
+            $state = $SmartLockData['state'];
             IPS_LogMessage('SetStateOfSmartLock', 'State:'.$nukiID);
-            $stateName = $this->Translate($data['stateName']);
-            $batteryState = $data['batteryCritical'];
+            $stateName = $this->Translate($SmartLockData['stateName']);
+            $batteryState = $SmartLockData['batteryCritical'];
             switch ($state) {
                 // switch off (locked) = false, switch on (unlocked) = true
                 case 0:
