@@ -218,16 +218,20 @@ class NUKISmartLock extends IPSModule
      */
     public function ToggleSmartLock(bool $State)
     {
-        $this->SetValue('SmartLockSwitch', $State);
-        $smartLockUniqueID = $this->ReadPropertyString('SmartLockUID');
-        $action = false;
+        $action = 255;
         if ($State == false) {
             $action = $this->ReadPropertyString('SwitchOffAction');
         }
         if ($State == true) {
             $action = $this->ReadPropertyString('SwitchOnAction');
         }
+        // Set values
+        $this->SetValue('SmartLockSwitch', $State);
+        $stateName = [ 0 => 'unlock', 1 => 'lock', 3 => 'unlatch', 4 => 'lock ‘n’ go', 5 => 'lock ‘n’ go with unlatch', 255 => 'undefined' ];
+        $this->SetValue('SmartLockStatus', $this->Translate($stateName[$action]));
+        // Send data to bridge
         $bridgeID = $this->GetBridgeInstanceID();
+        $smartLockUniqueID = $this->ReadPropertyString('SmartLockUID');
         if ($bridgeID > 0) {
             NUKI_SetLockActionOfSmartLock($bridgeID, $smartLockUniqueID, $action);
             // Only use if no callback is set
