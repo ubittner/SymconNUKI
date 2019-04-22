@@ -3,7 +3,7 @@
 // Declare
 declare(strict_types=1);
 
-trait bridgeAPI
+trait BridgeAPI
 {
     /**
      * Discovers the bridges.
