@@ -78,7 +78,7 @@ class NUKIBridge extends IPSModule
         parent::ApplyChanges();
 
         // Check kernel runlevel
-        if (IPS_GetKernelRunlevel() <> KR_READY) {
+        if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
 
