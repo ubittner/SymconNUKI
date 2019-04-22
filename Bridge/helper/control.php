@@ -65,7 +65,9 @@ trait Control
         if (!empty($SmartLockData)) {
             $data = json_decode($SmartLockData, true);
             $nukiID = $data['nukiId'];
+            IPS_LogMessage('SetStateOfSmartLock', 'Nuki ID:'.$nukiID);
             $state = $data['state'];
+            IPS_LogMessage('SetStateOfSmartLock', 'State:'.$nukiID);
             $stateName = $this->Translate($data['stateName']);
             $batteryState = $data['batteryCritical'];
             switch ($state) {

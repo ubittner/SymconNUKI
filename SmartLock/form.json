@@ -200,12 +200,12 @@
     {
       "type": "Button",
       "caption": "Show State",
-      "onClick": "$state=NUKI_ShowLockStateOfSmartLock($id); print_r($state);"
+      "onClick": "$state=NUKI_ShowLockStateOfSmartLock($id);print_r(json_decode($state, true));"
     },
     {
       "type": "Button",
       "caption": "Unpair",
-      "onClick": "$unpair=NUKI_UnpairSmartLock($id); print_r($unpair);"
+      "onClick": "$unpair=NUKI_UnpairSmartLock($id); print_r(json_decode($unpair, true));"
     }
   ],
   "status": [
