@@ -221,17 +221,17 @@ class NUKISmartLock extends IPSModule
         $action = 255;
         if ($State == false) {
             $action = $this->ReadPropertyString('SwitchOffAction');
-            IPS_LogMessage('Off', $action);
+            //IPS_LogMessage('Off', $action);
         }
         if ($State == true) {
             $action = $this->ReadPropertyString('SwitchOnAction');
-            IPS_LogMessage('On', $action);
+            //IPS_LogMessage('On', $action);
         }
         // Set values
         $this->SetValue('SmartLockSwitch', $State);
         $stateName = [ 1 => 'unlock', 2 => 'lock', 3 => 'unlatch', 4 => 'lock ‘n’ go', 5 => 'lock ‘n’ go with unlatch', 255 => 'undefined' ];
         $name = $stateName[$action];
-        IPS_LogMessage('Name', $name);
+        //IPS_LogMessage('Name', $name);
         $this->SetValue('SmartLockStatus', $this->Translate($name));
         // Send data to bridge
         $bridgeID = $this->GetBridgeInstanceID();

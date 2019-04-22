@@ -53,7 +53,12 @@
       "NUKI SmartLock will be deleted": "NUKI Smart Lock wird gelöscht",
       "NUKI SmartLock is inactive": "NUKI Smart Lock ist inaktiv",
       "NUKI SmartLock configuration has an error!": "NUKI Smart Lock Konfiguration hat einen Fehler!",
-      "An unknown error has occurred!": "Es ist ein unbekannter Fehler aufgetreten!"
+      "An unknown error has occurred!": "Es ist ein unbekannter Fehler aufgetreten!",
+      "unlock": "entriegeln",
+      "lock": "verriegeln",
+      "unlatch": "entriegeln",
+      "lock ‘n’ go": "verriegeln bei verlassen",
+      "lock ‘n’ go with unlatch ": "entriegeln bei Ankunft"
     }
   }
 }
