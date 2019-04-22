@@ -77,6 +77,11 @@ class NUKIBridge extends IPSModule
 
         parent::ApplyChanges();
 
+        // Check kernel runlevel
+        if (IPS_GetKernelRunlevel() <> KR_READY) {
+            return;
+        }
+
         $callback = false;
         if ($this->ReadPropertyBoolean('UseCallback')) {
             $callback = true;
@@ -131,7 +136,11 @@ class NUKIBridge extends IPSModule
         $data = utf8_decode($data->Buffer);
         preg_match_all('/\\{(.*?)\\}/', $data, $match);
         // ToDo: Check for encode / decode !
+        $smartLockData = implode($match[0]);
+        $this->SendDebug('Data', $smartLockData, 0);
+        /* old !
         $smartLockData = json_encode(json_decode(implode($match[0]), true));
+        */
         $this->SetStateOfSmartLock($smartLockData, true);
     }
 

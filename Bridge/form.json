@@ -101,7 +101,7 @@
     },
     {
       "type": "ExpansionPanel",
-      "caption": "(2) SmartLocks",
+      "caption": "(2) Smart Locks",
       "items": [
         {
           "type": "Label",
@@ -228,7 +228,7 @@
     },
     {
       "type": "Label",
-      "caption": "(2) SmartLocks"
+      "caption": "(2) Smart Locks"
     },
     {
       "type": "RowLayout",

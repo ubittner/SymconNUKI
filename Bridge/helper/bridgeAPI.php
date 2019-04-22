@@ -80,7 +80,7 @@ trait bridgeAPI
     }
 
     /**
-     * Returns a list of all available smartlocks.
+     * Returns a list of all available Smart Locks.
      *
      * @return string
      */
