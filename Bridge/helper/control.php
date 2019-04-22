@@ -62,15 +62,13 @@ trait Control
      */
     private function SetStateOfSmartLock(string $SmartLockData, bool $ProtocolMode)
     {
+        $this->SendDebug("Test", $SmartLockData, 0);
         if (!empty($SmartLockData)) {
-            $data = json_decode($SmartLockData, true);
-            var_dump($data);
-            $nukiID = $data['nukiId'];
-            IPS_LogMessage('SetStateOfSmartLock', 'Nuki ID:'.$nukiID);
-            $state = $data['state'];
-            IPS_LogMessage('SetStateOfSmartLock', 'State:'.$nukiID);
-            $stateName = $this->Translate($data['stateName']);
-            $batteryState = $data['batteryCritical'];
+            $data = json_decode($SmartLockData);
+            $nukiID = $data->nukiId;
+            $state = $data->state;
+            $stateName = $this->Translate($data->stateName);
+            $batteryState = $data->batteryCritical;
             switch ($state) {
                 // switch off (locked) = false, switch on (unlocked) = true
                 case 0:
