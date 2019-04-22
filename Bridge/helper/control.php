@@ -157,7 +157,7 @@ trait control
                 if (!empty($uniqueID)) {
                     $data = $this->GetLockStateOfSmartLock($uniqueID);
                     if (!empty($data)) {
-                        $data = json_encode($data, true);
+                        $data = json_decode($data, true);
                         $data['nukiId'] = $uniqueID;
                         $data = json_encode($data);
                         $this->SetStateOfSmartLock($data, $ProtocolMode);
