@@ -218,25 +218,22 @@ class NUKISmartLock extends IPSModule
      */
     public function ToggleSmartLock(bool $State)
     {
-        $switchState = GetValue($this->GetIDForIdent('SmartLockSwitch'));
         $this->SetValue('SmartLockSwitch', $State);
-        if ($State != $switchState) {
-            $smartLockUniqueID = $this->ReadPropertyString('SmartLockUID');
-            $action = false;
-            if ($State == false) {
-                $action = $this->ReadPropertyString('SwitchOffAction');
-            }
-            if ($State == true) {
-                $action = $this->ReadPropertyString('SwitchOnAction');
-            }
-            $bridgeID = $this->GetBridgeInstanceID();
-            if ($bridgeID > 0) {
-                NUKI_SetLockActionOfSmartLock($bridgeID, $smartLockUniqueID, $action);
-                // Only use if no callback is set
-                $useCallback = (bool)IPS_GetProperty($bridgeID, 'UseCallback');
-                if (!$useCallback) {
-                    $this->ShowLockStateOfSmartLock();
-                }
+        $smartLockUniqueID = $this->ReadPropertyString('SmartLockUID');
+        $action = false;
+        if ($State == false) {
+            $action = $this->ReadPropertyString('SwitchOffAction');
+        }
+        if ($State == true) {
+            $action = $this->ReadPropertyString('SwitchOnAction');
+        }
+        $bridgeID = $this->GetBridgeInstanceID();
+        if ($bridgeID > 0) {
+            NUKI_SetLockActionOfSmartLock($bridgeID, $smartLockUniqueID, $action);
+            // Only use if no callback is set
+            $useCallback = (bool)IPS_GetProperty($bridgeID, 'UseCallback');
+            if (!$useCallback) {
+                $this->ShowLockStateOfSmartLock();
             }
         }
     }
