@@ -62,13 +62,12 @@ trait Control
      */
     private function SetStateOfSmartLock(string $SmartLockData, bool $ProtocolMode)
     {
-        $this->SendDebug("Test", $SmartLockData, 0);
         if (!empty($SmartLockData)) {
-            $data = json_decode($SmartLockData);
-            $nukiID = $data->nukiId;
-            $state = $data->state;
-            $stateName = $this->Translate($data->stateName);
-            $batteryState = $data->batteryCritical;
+            $data = json_decode($SmartLockData, true);
+            $nukiID = $data['nukiId'];
+            $state = $data['state'];
+            $stateName = $this->Translate($data['stateName']);
+            $batteryState = $data['batteryCritical'];
             switch ($state) {
                 // switch off (locked) = false, switch on (unlocked) = true
                 case 0:
@@ -102,6 +101,12 @@ trait Control
                 case 7:
                     // unlatching
                     $state = true;
+                    break;
+                case 254:
+                    // motor blocked
+                    break;
+                case 255:
+                    // undefined
                     break;
                 default:
                     $state = false;

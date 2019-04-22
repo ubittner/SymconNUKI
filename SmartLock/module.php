@@ -232,7 +232,11 @@ class NUKISmartLock extends IPSModule
             $bridgeID = $this->GetBridgeInstanceID();
             if ($bridgeID > 0) {
                 NUKI_SetLockActionOfSmartLock($bridgeID, $smartLockUniqueID, $action);
-                $this->ShowLockStateOfSmartLock();
+                // Only use if no callback is set
+                $useCallback = (bool)IPS_GetProperty($bridgeID, 'UseCallback');
+                if (!$useCallback) {
+                    $this->ShowLockStateOfSmartLock();
+                }
             }
         }
     }
