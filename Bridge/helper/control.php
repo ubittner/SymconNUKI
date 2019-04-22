@@ -66,12 +66,13 @@ trait Control
             IPS_LogMessage('SmartLockData', $SmartLockData);
             //$data = json_decode($SmartLockData, true);
             //IPS_LogMessage('SetStateOfSmartLock', 'Data:'.print_r($data));
-            $nukiID = $SmartLockData['nukiId'];
+            $data = json_decode($SmartLockData, true);
+            $nukiID = $data['nukiId'];
             IPS_LogMessage('SetStateOfSmartLock', 'Nuki ID:'.$nukiID);
-            $state = $SmartLockData['state'];
+            $state = $data['state'];
             IPS_LogMessage('SetStateOfSmartLock', 'State:'.$nukiID);
             $stateName = $this->Translate($SmartLockData['stateName']);
-            $batteryState = $SmartLockData['batteryCritical'];
+            $batteryState = $data['batteryCritical'];
             switch ($state) {
                 // switch off (locked) = false, switch on (unlocked) = true
                 case 0:
