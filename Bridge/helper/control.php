@@ -71,7 +71,7 @@ trait Control
             IPS_LogMessage('SetStateOfSmartLock', 'Nuki ID:'.$nukiID);
             $state = $data['state'];
             IPS_LogMessage('SetStateOfSmartLock', 'State:'.$nukiID);
-            $stateName = $this->Translate($SmartLockData['stateName']);
+            $stateName = $this->Translate($data['stateName']);
             $batteryState = $data['batteryCritical'];
             switch ($state) {
                 // switch off (locked) = false, switch on (unlocked) = true
