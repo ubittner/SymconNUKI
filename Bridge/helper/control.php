@@ -64,7 +64,7 @@ trait Control
     {
         if (!empty($SmartLockData)) {
             $data = json_decode($SmartLockData, true);
-            IPS_LogMessage('SmartLockData', print_r($data));
+            var_dump($data);
             $nukiID = $data['nukiId'];
             IPS_LogMessage('SetStateOfSmartLock', 'Nuki ID:'.$nukiID);
             $state = $data['state'];

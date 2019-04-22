@@ -136,6 +136,7 @@ class NUKIBridge extends IPSModule
         $data = utf8_decode($data->Buffer);
         preg_match_all('/\\{(.*?)\\}/', $data, $match);
         $smartLockData = json_encode(json_decode(implode($match[0]), true));
+        var_dump($smartLockData);
         $this->SetStateOfSmartLock($smartLockData, true);
     }
 
