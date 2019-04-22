@@ -65,7 +65,7 @@ trait control
         if (!empty($SmartLockData)) {
             $data = json_decode($SmartLockData, true);
             $nukiID = $data['nukiId'];
-            $state = $data - ['state'];
+            $state = $data['state'];
             $stateName = $this->Translate($data['stateName']);
             $batteryState = $data['batteryCritical'];
             switch ($state) {
