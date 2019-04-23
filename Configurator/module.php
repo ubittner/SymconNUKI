@@ -106,6 +106,7 @@ class NUKIConfigurator extends IPSModule
     {
         // Get already existing Smart Locks
         $smartLockDevices = IPS_GetInstanceListByModuleID('{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}');
+        $this->SendDebug('ExistingDevices', json_encode($smartLockDevices), 0);
         // Get available Smart Locks from the Bridge
         // ToDo: Check if Status = 102 (active)
         $availableDevices = NUKI_GetSmartLocks(IPS_GetInstance($this->InstanceID)['ConnectionID']);
@@ -128,11 +129,15 @@ class NUKIConfigurator extends IPSModule
             $smartLockName = $device['name'];
             $smartLockID = $device['nukiId'];
             $firmwareVersion = $device['firmwareVersion'];
-            $parentID = IPS_GetInstance($this->InstanceID)['ConnectionID'];
             foreach ($smartLockDevices as $smartLockDevice) {
-                if (($smartLockID === IPS_GetProperty($smartLockDevice, 'SmartLockUID'))
-                    /*&& (IPS_GetInstance($smartLockDevice)['ConnectionID'] === $parentID)*/) {
+                $smartLockUID = IPS_GetProperty($smartLockDevice, 'SmartLockUID');
+                $this->SendDebug('SmartLockUID', $smartLockUID, 0);
+                if ($smartLockID === $smartLockUID) {
+                   //&& (IPS_GetInstance($smartLockDevice)['ConnectionID'] === $parentID)) {
                     $instanceID = $smartLockDevice;
+                    $this->SendDebug('InstanceID', $instanceID, 0);
+                } else {
+                    $this->SendDebug('InstanceID', 'nicht gefunden', 0);
                 }
             }
             $configurationlist[] = [
