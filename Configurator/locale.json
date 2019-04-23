@@ -1,0 +1,11 @@
+{
+  "translations": {
+    "de": {
+      "Category": "Kategorie",
+      "NUKI Configurator - A project of Ulrich Bittner": "NUKI Konfigurator - Ein Projekt von Ulrich Bittner",
+      "NUKI Configurator": "NUKI Konfigurator",
+      "Smart Lock name": "Smart Lock Name",
+      "Firmware version": "Firmware Version"
+    }
+  }
+}
