@@ -55,6 +55,9 @@ class NUKIConfigurator extends IPSModule
 
         // Register properties
         $this->RegisterPropertyInteger('CategoryID', 0);
+
+        // Connect to parent
+        $this->ConnectParent('{B41AE29B-39C1-4144-878F-94C0F7EEC725}');
     }
 
     public function ApplyChanges()
