@@ -52,8 +52,8 @@ include_once __DIR__ . '/helper/autoload.php';
 class NUKIBridge extends IPSModule
 {
     // Helper
-    use BridgeAPI;
-    use Control;
+    use bridgeAPI;
+    use control;
 
     public function Create()
     {
