@@ -107,6 +107,7 @@ class NUKIConfigurator extends IPSModule
         // Get already existing Smart Locks
         $smartLockDevices = IPS_GetInstanceListByModuleID('{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}');
         // Get available Smart Locks from the Bridge
+        // ToDo: Check if Status = 102 (active)
         $availableDevices = NUKI_GetSmartLocks(IPS_GetInstance($this->InstanceID)['ConnectionID']);
         // ToDo: check if we can get the data via socket
         //$availableDevices = $this->SendData('GetSmartLocks');
@@ -145,10 +146,23 @@ class NUKIConfigurator extends IPSModule
                     'configuration' => [
                         'SmartLockUID' => $smartLockID,
                         'SmartLockName' => $smartLockName],
-                    'location' => $this->ReadPropertyInteger('CategoryID')]];
+                    'location' =>  $this->GetCategoryPath($this->ReadPropertyInteger('targetCategoryID'))]];
         }
         return $configurationlist;
     }
 
+    private function GetCategoryPath(int $CategoryID): array
+    {
+        if ($CategoryID === 0) {
+            return [];
+        }
+        $path[]   = IPS_GetName($CategoryID);
+        $parentID = IPS_GetObject($CategoryID)['ParentID'];
+        while ($parentID > 0) {
+            $path[]   = IPS_GetName($parentID);
+            $parentID = IPS_GetObject($parentID)['ParentID'];
+        }
+        return array_reverse($path);
+    }
 
 }
