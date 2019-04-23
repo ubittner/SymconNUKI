@@ -1,4 +1,3 @@
-
 # NUKI Bridge
 
 [![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
@@ -7,7 +6,7 @@
 [![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
 [![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![StyleCI](https://github.styleci.io/repos/71931303/shield?branch=develop&style=flat)](https://github.styleci.io/repos/71931303)
+[![StyleCI](https://github.styleci.io/repos/71931303/shield?branch=master&style=flat)](https://github.styleci.io/repos/71931303)
 
 ![Image](../imgs/nuki-logo-black.png)
 
@@ -30,182 +29,99 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 5. [Statusvariablen und Profile](#5-statusvariablen-und-profile)
 6. [WebFront](#6-webfront)
 7. [PHP-Befehlsreferenz](#7-php-befehlsreferenz)
-8. [GUIDs](#8-guids)
-9. [Changelog](#9-changelog)
-
-
-
-########################################################### 
-
-# OLD to be edited
-
-
-##### Hinweis !
-In der Version 1.03 wurden gegenüber der Vorversion wesentliche Änderungen vorgenommen.
-Der Entwickler empfiehlt vor einem Update auf Version 1.03 alte Versionsstände und das Modul zu löschen.
-Hierfür sind die bereits vorhandenen NUKI Instanzen in IP-Symcon zu löschen und anschließend über die [Modulverwaltung](https://www.symcon.de/service/dokumentation/modulreferenz/module-control/) das Modul in IP-Symcon zu entfernen.
-Damit die Änderungen wirksam werden muss IP-Symcon einmal neu gestartet werden.
-Im Anschluß kann unter Punkt 3 [Software-Installation](#3-software-installation) das Modul wieder neu hinzugefügt werden.
-
-Da nur wenige Konfigurationen notwendig sind, hält sich der Arbeitsaufwand in Grenzen.
-
-### Inhaltverzeichnis
-
-1. [Funktionsumfang](#1-funktionsumfang)
-2. [Voraussetzungen](#2-voraussetzungen)
-3. [Software-Installation](#3-software-installation)
-4. [Einrichten der Instanzen in IP-Symcon](#4-einrichten-der-instanzen-in-ip-symcon)
-5. [Variablen und Profile](#5-statusvariablen-und-profile)
-6. [WebFront](#6-webfront)
-7. [PHP-Befehlsreferenz](#7-php-befehlsreferenz)
 8. [Bridge Callback Simulation](#8-bridge-callback-simulation)
 9. [GUIDs](#9-guids)
 10. [Changelog](#10-changelog)
-11. [Lizenz](#11-lizenz)
-12. [Author](#12-author)
-
 
 ### 1. Funktionsumfang
 
-- Öffnen / Schließen des NUKI Smart Locks via WebFront-Button oder über Skript-Funktionen.
-- Anzeige von Statusinformationen
-- Protokollierung der Schließvorgänge
+* Ermitteln und anlegen der verfügbaren Smart Locks
+* Empfang von Statusinformationen der Samrt Locks via Webhook
+* Öffnen und schließen des Smart Locks 
 
 ### 2. Voraussetzungen
 
-- IP-Symcon ab Version 5.0
+- IP-Symcon ab Version 5.1
+- NUKI Bridge
+- NUKI Smart Lock
+
+Hier finden Sie die [Dokumentation](../SmartLock) zum NUKI Smart Lock.  
 
 ### 3. Software-Installation
 
-Bei kommerzieller Nutzung (z.B. als Errichter oder Integrator) wenden Sie sich bitte an den Autor.
-
-Bei privater Nutzung:
-
-Nachfolgend wird die Installation dieses Moduls anhand der neuen Web-Console der Version 5.0 beschrieben.
-Folgende Instanzen stehen dann in IP-Symcon zur Verfügung:
-
-- [x] NUKI Bridge
-
-- [x] NUKI SmartLock
-
-- [x] NUKI Socket
-
-Im Objektbaum von IP-Symcon die Kern-Instanzen aufrufen. Danach die [Modulverwaltung](https://www.symcon.de/service/dokumentation/modulreferenz/module-control/) aufrufen. Sie sehen nun die bereits installierten Module.
-Fügen Sie über das `+` Symbol (unten rechts) ein neues Modul hinzu.
-Wählen Sie als URL:
-
-`https://github.com/ubittner/SymconNUKI`  
-
-Anschließend klicken Sie auf `OK`, um das SymconNUKI Modul zu installieren.
-
+- Bei kommerzieller Nutzung (z.B. als Einrichter oder Integrator) wenden Sie sich bitte zunächst an den Autor.
+  
+- Bei privater Nutzung wird das Modul über den Modul Store installiert.
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-### NUKI Bridge Instanz
-Fangen Sie mit der NUKI Bridge an. Die NUKI Bridge ist eine Splitter Instanz und wird für die Kommunikation mit dem smarten NUKI Türschloss benötigt.
-
-Klicken Sie in der Objektbaumansicht unten links auf das `+` Symbol. Wählen Sie anschließen `Instanz` aus. Geben Sie im Schnellfiler das Wort "NUKI" ein oder wählen den Hersteller "NUKI" aus. Wählen Sie aus der Ihnen angezeigten Liste "NUKI Bridge" aus und klicken Sie anschließend auf `OK`, um die NUKI Bridge Instanz zu installieren. Sie finden die Instanz unter der Rubrik "Splitter Instanzen".
-
-Nach dem die NUKI Bridge Splitter Instanz erstellt wurde, müssen noch Konfigurationsdaten im Instanzeditor eingetragen werden.
-
-Hier zunächst die Übersicht der Konfigurationsfelder.
+- In IP-Symcon an beliebiger Stelle `Instanz hinzufügen` auswählen und `NUKI Bridge` auswählen, welches unter dem Hersteller `NUKI` aufgeführt ist. Es wird eine NUKI Bridge Instanz angelegt, in der die Eigenschaften zur Steuerung des NUKI Bridge gesetzt werden können.
 
 __Konfigurationsseite__:
 
-Name | Beschreibung
-------------------------------- | ---------------------------------------------
-(1) NUKI Bridge                 |
-IP-Adresse                      | IP-Adresse der NUKI Bridge.<br>Beispiel: 192.168.1.123<br>Die IP-Adresse, kann aus der NUKI iOS / Android App entnommen werden oder<br> über den Button "Suchen" angezeigt werden.
-Port                            | Port der NUKI Bridge.<br>Standard: 8080
-API-Token                       | API Token, kann aus der NUKI iOS / Android App entnommen und eingetragen werden.
-(2) NUKI Türschloss             |
-Kategorie                       | Kategorie für die smarten NUKI Türschlösser
-(3) NUKI Callback               |
-Callback benutzen               | Callback funktion aktivieren / deaktivieren. <br>Falls Schaltvorgänge über die Nuki iOS / Android App erfolgen,<br>benötigt IP-Symcon eine Information über den aktuellen Zustand. Dafür wird ein Callback benötigt. <br>Wird der Callback aktiviert, so wird automatisch ein NUKI Server Socket für die Kommunikation erstellt.
-IP-Adresse                      | IP-Adresse des IP-Symcon Servers.
-Port                            | Port für den Callback Server Socket. Standard: 8081
-CallbackID                      | Nur notwendig, falls ein auf der NUKI Bridge konfigurierter Callback gelöscht werden soll.
-Buttons                         |
-Button "Suchen"                 | Sucht nach vorhandenen NUKI Bridges im Netzwerk, sofern erlaubt.
-Button "Info anzeigen"          | Zeigt Informationen der NUKI Bridge an.
-Button "Logdatei anzeigen"      | Zeigt die Logdatei der NUKI Bridge an.
-Button "Logdatei löschen"       | Löscht die Logdatei der NUKI Bridge.
-Button "Update Firmware"        | Führt ein Firmwareupdate für die NUKI Bridge aus.
-Button "Reboot"                 | Führt ein Neustart der NUKI Bridge durch.
-Button "Factory Reset"          | Die Werkseinstellungen der NUKI Bridge werden geladen,<br>vorhandenen Konfigurationen werden von der NUKI Bridge gelöscht.
-Button "Türschlösser anzeigen"  | Zeigt die mit der NUKI Bridge gekoppelten Türschlösser an.
-Button "Türschlösser abgleichen"| Legt die Türschlösser in IP-Symcon an,<br>sofern noch nicht vorhanden.<br>Die Smartlock Instanzen werden unter der angegebenen Kategorie angelegt.       
-Button "Callback anlegen"       | Legt einen Callback auf der NUKI Bridge an.
-Button "Callback anzeigen"      | Zeigt die vorhandenen Callbacks der NUKI Bridge an.
-Button Callback löschen         |  Löscht die Callback ID auf der NUKI Bridge.
+Name                                | Beschreibung
+----------------------------------- | ---------------------------------
+(0) Instanzinformationen            | Informationen zu der Instanz.
+(1) Bridge                          | Eigenschaften der NUKI Bridge.
+(2) Smart Lock                      | Kategorie für die Smart Locks.
+(3) Callback Socket                 | Eigenschaften zum Callback Socket.
 
-Geben Sie  mindestens die IP-Adresse, den Port und den API Token der NUKI Bridge ein. Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt. 
+__Schaltflächen__:
 
-Über das Konfigurationsfeld `Kategorie` können Sie festlegen, in welche Kategorie die smarten NUKI Türschlösser installiert / angelegt werden sollen. Es kann auch die Hauptkategorie genutzt werden.
+Name                                | Beschreibung
+----------------------------------- | ---------------------------------
+(0) Instanzinformationen            |
+Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an.
+(1) Bridge                          | 
+Suchen                              | Sucht die Bridge im Netzwerk und zeigt Informationen zur Bridge an.
+Info anzeigen                       | Zeigt weitere Informationen der Bridge an.
+Logdatei anzeigen                   | Zeigt die Logdatei der Bridge an.
+Logdatei löschen                    | Löscht die Logdatei der Bridge.
+Update Firmware                     | Führt eine aktualisierung der Firmware durch.
+Neustart                            | Starte die Bridge neu.
+Werkseinstellungen                  | Setzt die Brige zurück in die Werkseinstellungen.
+(2) Smart Locks                     | 
+Anzeigen                            | Zeigt die verfügbaren Smart Locks der Bridge an.
+Abgleichen                          | Legt die Smart Locks automatisch in IP-Symcon an.
+(3) Callback Socket                 | 
+Anlegen                             | Legt den Callback an.
+Anzeigen                            | Zeigt die angelegten Callbacks an.
+Löschen                             | Löscht den Callback mit der definierten ID.
 
-Wenn Sie die Daten eingetragen erscheint unten im Instanzeditor eine Meldung `Die Instanz hat noch ungespeicherte Änderungen`. Klicken Sie auf den Button `Änderungen übernehmen`, um die Konfigurationsdaten zu übernehmen und zu speichern.
+__Vorgehensweise__:
 
-Mit dem Button `Türschlösser anzeigen` werden Ihnen alle smarten NUKI Türschlösser die mit der NUKI Bridge verbunden sind angezeigt.
-
-Um die smarten NUKI Türschlösser anzulegen klicken Sie auf `Türschlösser abgleichen`. Es werden nun automatisch alle smarten NUKI Türschlösser angelegt, die mit der NUKI Bridge verbunden sind.
+Geben Sie die IP-Adresse, den Port und den API Token der NUKI Bridge an. 
+Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt. 
+Über das Konfigurationsfeld `Kategorie` können Sie festlegen, in welche Kategorie die Smart Locks angelegt werden sollen. Es kann auch die Hauptkategorie genutzt werden.  
+Übernehmen Sie die Änderungen und drücken unter Punkt (2) Smart Locks die Schaltfläche `ABGLEICHEN`.  
+Die Smart Locks werden dann automatisch angelegt.
 
 __Callback__:
 
-Für die Aktualisierung der Informationen des smarten NUKI Türschlosses wird ein Callback genutzt.
+Für die Aktualisierung von Informationen der Smart Locks wird ein Callback genutzt.  
+Geben Sie unter Punkt (3) Callback Sockets die IP-Adresse des IP-Symcon Servers ein und einen freien Port.  
+Übernehmen Sie die Änderungen und drücken anschließend unter Punkt (3) Callback Sockets die Schaltfläche `ANLEGEN`.  
+Der Callback wird automatisch auf der NUKI Bridge eingetragen und in IP-Symcon wird autmatisch der entsprschende NUKI Socket (Server Socket) angelegt, sofern die Option `Callback benutzen` aktiviert wurde.  
+Über den Button `ANZEIGEN` werden die registrierten Callbacks angezeigt.
+Mit der `Callback ID`, und unter Punkt (3) Callback Socket kann mittels der Schaltfläche `LÖSCHEN` der entsprechende Callback von der NUKI Bridge wieder gelöscht werden.
 
-Geben Sie die IP-Adresse des IP-Symcon Servers ein und den Callback Port, den Sie nutzen möchten. Wenn Sie die Daten eingetragen erscheint unten im Instanzeditor eine Meldung `Die Instanz hat noch ungespeicherte Änderungen`. Klicken Sie auf den Button `Änderungen übernehmen`, um die Konfigurationsdaten zu übernehmen und zu speichern.
-Anschließend klicken Sie auf den Button `Callback anlegen`. Der Callback wird automatisch auf der NUKI Bridge eingetragen und in IP-Symcon wird autmatisch der entsprschende NUKI Socket (Server Socket)angelegt, sofern die Option `Callback benutzen` aktiviert wurde!
-
-Über den Button `Callback anzeigen` werden die registrierten Callbacks angezeigt.
-
-Über die Auswahl der `Callback ID`, sowie Übernahme der geänderten Konfigurationsdaten kann anschließend über den Button `Callback löschen` der entsprechende Callback von der NUKI Bridge wieder gelöscht werden.
-
-### NUKI SmartLock Instanz:
-
-Das manuelle Anlegen einer smarten NUKI Türschloss Instanz ist nicht zwingend erforderlich. Über die Konfigurationsseite der NUKI Bridge Instanz kann durch den Button `Türschlösser abgleichen` die smarten NUKI Türschlösser automatisch angelegt werden.
-
-__Konfigurationsseite__:
-
-Name | Beschreibung
-------------------------------- | ---------------------------------------------
-(1) Allgemeine Einstellungen    |
-UID                             | UID des smarten NUKI Türschlosses, wird im Regefall automatisch hinterlegt.
-Bezeichnung                     | Hier kann eine Bezeichnung für das smarte NUKI Türschloss vergeben werden.
-(2) Schaltvorgänge              |
-Schaltvorgang AUS               | Hier kann definiert werden, welche Aktion ausgeführt werden soll, wenn <br> der Schalter im Webfront auf AUS gestellt wird.
-Schaltvorgang EIN               | Hier kann definiert werden, welche Aktion ausgeführt werden soll, wenn <br> der Schalter im Webfront auf EIN gestellt wird.
-Schalter verbergen              | Aus Sicherheitsgründen kann der Schalter im Webfront deaktiviert werden.
-(3) Protokoll                   |
-Protokoll aktiviert             | Hier kann ein Protokoll für die Schließvorgänge aktiviert werden.
-Anzahl der Einträge             | Die Anzahl der letzten Schließvorgänge.
-Button "Status anzeigen"        | Gibt den Status des smarten NUKI Türschlosses aus.
-Button "Unpair"                 | Entfernt das smarte NUKI Türschloss von der Bridge.
-
-### 5. Variablen und Profile
-
-##### Variablen:
+### 5. Statusvariablen und Profile
 
 Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
 
-Name            | Typ       | Beschreibung
---------------- | --------- | ----------------
-NUKI Snart Lock | Boolean   | Schalter zum ver- und entriegeln des Türschlosses.
-Status          | String    | Zeigt den Status des Türschlosses an.
-Batterie        | Boolean   | Zeigt den Batteriezustand des Türschlosses an.
-Protokoll       | String    | Zeigt die letzten Protokolleinträge an.
+##### Statusvariablen
+
+Es werden keine Statusvariablen angelegt.
 
 ##### Profile:
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
-NUKI.SmartLockSwitch
-
-Werden alle NUKI SmartLock Instanzen gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
+Es werden keine neuen Profile angelegt.
 
 ### 6. WebFront
 
-Über das WebFront kann das smarte Türschloss ver- oder entriegelt werden.
-Weiherhin werden Statusinformationen über das Türschloss und ein Protokoll angezeigt.
+Die NUKI Bridge ist im WebFront nicht nutzbar.  
 
 ### 7. PHP-Befehlsreferenz
 
@@ -297,20 +213,17 @@ Aktualisiert den Status aller smarten NUKI Türschlösser.
 
 Zeigt den Status eines smarten NUKI Türschlosses an.
 
+
 ### 8. Bridge Callback Simulation
 
-Mit einem curl Befehl kann der Callback einer NUKI Bridge im Rahmen einer Entwicklungsumgebung simuliert werden. Für den normalen Gebrauch oder Einsatz der NUKI Bridge ist der curl Befehl nicht notwendig.
+Mit einem curl Befehl kann der Callback einer NUKI Bridge im Rahmen einer Entwicklungsumgebung simuliert werden. Für den normalen Gebrauch oder Einsatz der NUKI Bridge ist der curl Befehl nicht notwendig.  
+Für die Verwendung von curl über die Konsole des entsprechenden Betriebssystems informieren Sie sich bitte im Internet.  
 
-Für die Verwendung von curl über die Konsole des entsprechenden Betriebssystems informieren Sie sich bitte im Internet.
+`curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: application/json;charset=utf-8" -X POST -d '{"nukiId":987654321,"state":1,"stateName":"locked","batteryCritical":true}' http://127.0.0.1:8081`  
 
-`curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: application/json;charset=utf-8" -X POST -d '{"nukiId":987654321,"state":1,"stateName":"locked","batteryCritical":true}' http://127.0.0.1:8081`
-
-"NukiBridge_12345678" ist die ID der NUKI Bridge
-
-"nukiId":987654321 ist die ID des NUKI Smartlocks
-
+"NukiBridge_12345678" ist die ID der NUKI Bridge  
+"nukiId":987654321 ist die ID des NUKI Smartlocks  
 http://127.0.0.1:8081 ist die IP-Adresse und Port des Server Sockets
-
 
 ### 9. GUIDs
 
@@ -337,15 +250,9 @@ http://127.0.0.1:8081 ist die IP-Adresse und Port des Server Sockets
 
 Version     | Datum      | Beschreibung
 ----------- | -----------| -------------------
+1.04-1004   | 21.04.2019 | Version für Module-Store
 1.03        | 27.04.2018 | Update auf API 1.7
 1.02        | 19.04.2017 | Update auf API 1.5
 1.01        | 31.01.2017 | Erweiterung von Funktionen
 1.00        | 01.11.2016 | Modulerstellung
 
-### 11. Lizenz
-
-CC BY-NC 4.0
-
-### 12. Author
-
-Ulrich Bittner
