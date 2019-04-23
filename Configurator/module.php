@@ -146,7 +146,7 @@ class NUKIConfigurator extends IPSModule
                     'configuration' => [
                         'SmartLockUID' => $smartLockID,
                         'SmartLockName' => $smartLockName],
-                    'location' =>  $this->GetCategoryPath($this->ReadPropertyInteger('targetCategoryID'))]];
+                    'location' =>  $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
         }
         return $configurationlist;
     }
