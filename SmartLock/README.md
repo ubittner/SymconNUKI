@@ -55,26 +55,26 @@ Hier finden Sie die [Dokumentation](../Bridge) zur NUKI Bridge.
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
-- In IP-Symcon an beliebiger Stelle `Instanz hinzufügen` auswählen und `NUKI Bridge` auswählen, welches unter dem Hersteller `NUKI` aufgeführt ist. Es wird eine NUKI Bridge Instanz angelegt, in der die Eigenschaften zur Steuerung des NUKI Bridge gesetzt werden können.
+- In IP-Symcon an beliebiger Stelle `Instanz hinzufügen` auswählen und `NUKI Smart Lock` auswählen, welches unter dem Hersteller `NUKI` aufgeführt ist. Es wird eine NUKI Smart Lock Instanz angelegt, in der die Eigenschaften zur Steuerung des NUKI Smart Locks gesetzt werden können.
 
 __Konfigurationsseite__:
 
 Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
-(0) Instanzinformationen            | Informationen zu der Instanz.
-(1) Smart Lock                      | Eigenschaften des Smart Locks.
-(2) Schaltvorgänge                  | Definieren der Schaltvorgänge.
-(3) Protokoll                       | Eigenschaften zum Protokoll.
+(0) Instanzinformationen            | Informationen zu der Instanz
+(1) Smart Lock                      | Eigenschaften des Smart Locks
+(2) Schaltvorgänge                  | Definieren der Schaltvorgänge
+(3) Protokoll                       | Eigenschaften zum Protokoll
 
 __Schaltflächen__:
 
 Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
 (0) Instanzinformationen            |
-Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an.
+Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an
 (1) Smart Lock                      | 
-Status anzeigen                     | Zeigt den Status des Smart Locks an.
-Unpair                              | Entfernt das Smart Lock von der Bridge.
+Status anzeigen                     | Zeigt den Status des Smart Locks an
+Unpair                              | Entfernt das Smart Lock von der Bridge
 
 __Vorgehensweise__:
 
@@ -88,10 +88,10 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 Name                    | Typ       | Beschreibung
 ----------------------- | --------- | ----------------
-SmartLockSwitch         | Boolean   | Schalter zum ver- und entriegeln des Türschlosses.
-SmartLockStatus         | String    | Zeigt den Status des Türschlosses an.
-SmartLockBatteryState   | Boolean   | Zeigt den Batteriezustand des Türschlosses an.
-Protocol                | String    | Zeigt die letzten Protokolleinträge an.
+SmartLockSwitch         | Boolean   | Schalter zum ver- und entriegeln des Türschlosses
+SmartLockStatus         | String    | Zeigt den Status des Türschlosses an
+SmartLockBatteryState   | Boolean   | Zeigt den Batteriezustand des Türschlosses an
+Protocol                | String    | Zeigt die letzten Protokolleinträge an
 
 ##### Profile:
 
@@ -122,24 +122,23 @@ Löscht das Smart Lock von der Bridge.
 
 ### 8. GUIDs
 
-*       Bibliothek
-        {752C865A-5290-4DBE-AC30-01C7B1C3312F}
-
-*       Virtual I/O (Server Socket NUKI Callback)
-        {018EF6B5-AB94-40C6-AA53-46943E824ACF} (CR: IO_RX)
-        {79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (I: IO_TX)
-
-*       Spliter (NUKI Bridge)
-        {B41AE29B-39C1-4144-878F-94C0F7EEC725} (Module GUID)
-        {79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (PR: IO_TX)
-        {3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (CR: Device_RX)
-        {018EF6B5-AB94-40C6-AA53-46943E824ACF} (I: IO_RX)
-        {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (I: Device_TX)
-
-*       Device (NUKI Smartlock)
-        {37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14} (Module GUID)
-        {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
-        {3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: Device_RX)
+Bezeichnung / GUID                          | Beschreibung
+--------------------------------------------| --------------------------------------
+Bibliothek                                  |
+{752C865A-5290-4DBE-AC30-01C7B1C3312F}      |
+Virtual I/O (Server Socket NUKI Callback)   |
+{018EF6B5-AB94-40C6-AA53-46943E824ACF}      | (CR: IO_RX)
+{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      | (I: IO_TX)
+Spliter (NUKI Bridge)                       |
+{B41AE29B-39C1-4144-878F-94C0F7EEC725}      | (Module GUID)
+{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      | (PR: IO_TX)
+{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      | (CR: Device_RX)
+{018EF6B5-AB94-40C6-AA53-46943E824ACF}      | (I: IO_RX)
+{73188E44-8BBA-4EBF-8BAD-40201B8866B9}      | (I: Device_TX)
+Device (NUKI Smartlock)                     |
+{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}      | (Module GUID)
+{73188E44-8BBA-4EBF-8BAD-40201B8866B9}      | (PR: Device_TX)
+{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      | (I: Device_RX)
 
 ### 9. Changelog
 

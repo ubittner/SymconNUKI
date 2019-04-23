@@ -61,49 +61,49 @@ __Konfigurationsseite__:
 
 Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
-(0) Instanzinformationen            | Informationen zu der Instanz.
-(1) Bridge                          | Eigenschaften der NUKI Bridge.
-(2) Smart Lock                      | Kategorie für die Smart Locks.
-(3) Callback Socket                 | Eigenschaften zum Callback Socket.
+(0) Instanzinformationen            | Informationen zu der Instanz
+(1) Bridge                          | Eigenschaften der NUKI Bridge
+(2) Smart Lock                      | Kategorie für die Smart Locks
+(3) Callback Socket                 | Eigenschaften zum Callback Socket
 
 __Schaltflächen__:
 
 Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
 (0) Instanzinformationen            |
-Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an.
+Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an
 (1) Bridge                          | 
-Suchen                              | Sucht die Bridge im Netzwerk und zeigt Informationen zur Bridge an.
-Info anzeigen                       | Zeigt weitere Informationen der Bridge an.
-Logdatei anzeigen                   | Zeigt die Logdatei der Bridge an.
-Logdatei löschen                    | Löscht die Logdatei der Bridge.
-Update Firmware                     | Führt eine aktualisierung der Firmware durch.
-Neustart                            | Starte die Bridge neu.
-Werkseinstellungen                  | Setzt die Brige zurück in die Werkseinstellungen.
+Suchen                              | Sucht die Bridge im Netzwerk und zeigt Informationen zur Bridge an
+Info anzeigen                       | Zeigt weitere Informationen der Bridge an
+Logdatei anzeigen                   | Zeigt die Logdatei der Bridge an
+Logdatei löschen                    | Löscht die Logdatei der Bridge
+Update Firmware                     | Führt eine aktualisierung der Firmware durch
+Neustart                            | Starte die Bridge neu
+Werkseinstellungen                  | Setzt die Brige zurück in die Werkseinstellungen
 (2) Smart Locks                     | 
-Anzeigen                            | Zeigt die verfügbaren Smart Locks der Bridge an.
-Abgleichen                          | Legt die Smart Locks automatisch in IP-Symcon an.
+Anzeigen                            | Zeigt die verfügbaren Smart Locks der Bridge an
+Abgleichen                          | Legt die Smart Locks automatisch in IP-Symcon an
 (3) Callback Socket                 | 
-Anlegen                             | Legt den Callback an.
-Anzeigen                            | Zeigt die angelegten Callbacks an.
-Löschen                             | Löscht den Callback mit der definierten ID.
+Anlegen                             | Legt den Callback an
+Anzeigen                            | Zeigt die angelegten Callbacks an
+Löschen                             | Löscht den Callback mit der definierten ID
 
 __Vorgehensweise__:
 
 Geben Sie die IP-Adresse, den Port und den API Token der NUKI Bridge an. 
 Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt. 
 Über das Konfigurationsfeld `Kategorie` können Sie festlegen, in welche Kategorie die Smart Locks angelegt werden sollen. Es kann auch die Hauptkategorie genutzt werden.  
-Übernehmen Sie die Änderungen und drücken unter Punkt (2) Smart Locks die Schaltfläche `ABGLEICHEN`.  
+Übernehmen Sie die Änderungen und drücken Sie unter Punkt (2) Smart Locks die Schaltfläche `ABGLEICHEN`.  
 Die Smart Locks werden dann automatisch angelegt.
 
 __Callback__:
 
 Für die Aktualisierung von Informationen der Smart Locks wird ein Callback genutzt.  
 Geben Sie unter Punkt (3) Callback Sockets die IP-Adresse des IP-Symcon Servers ein und einen freien Port.  
-Übernehmen Sie die Änderungen und drücken anschließend unter Punkt (3) Callback Sockets die Schaltfläche `ANLEGEN`.  
+Übernehmen Sie die Änderungen und drücken Sie anschließend unter Punkt (3) Callback Sockets die Schaltfläche `ANLEGEN`.  
 Der Callback wird automatisch auf der NUKI Bridge eingetragen und in IP-Symcon wird autmatisch der entsprschende NUKI Socket (Server Socket) angelegt, sofern die Option `Callback benutzen` aktiviert wurde.  
-Über den Button `ANZEIGEN` werden die registrierten Callbacks angezeigt.
-Mit der `Callback ID`, und unter Punkt (3) Callback Socket kann mittels der Schaltfläche `LÖSCHEN` der entsprechende Callback von der NUKI Bridge wieder gelöscht werden.
+Über die Schaltfläche `ANZEIGEN` unter Punkt (3) Callback Socket werden die registrierten Callbacks angezeigt.
+Unter Punkt (3) Callback Socket kann mittels der Schaltfläche `LÖSCHEN` der entsprechende Callback (definierte Callback ID aus der Instantkonfiguration) von der NUKI Bridge wieder gelöscht werden.
 
 ### 5. Statusvariablen und Profile
 
@@ -209,42 +209,37 @@ Gleicht alle smarten NUKI Türschlösser der Bridge ab und legt diese in IP-Symc
 
 Aktualisiert den Status aller smarten NUKI Türschlösser.
 
-`NUKI_ShowLockStateOfSmartLock(integer $SmartLockInstanceID)`
-
-Zeigt den Status eines smarten NUKI Türschlosses an.
-
-
 ### 8. Bridge Callback Simulation
 
 Mit einem curl Befehl kann der Callback einer NUKI Bridge im Rahmen einer Entwicklungsumgebung simuliert werden. Für den normalen Gebrauch oder Einsatz der NUKI Bridge ist der curl Befehl nicht notwendig.  
 Für die Verwendung von curl über die Konsole des entsprechenden Betriebssystems informieren Sie sich bitte im Internet.  
+```Text
+curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: application/json;charset=utf-8" -X POST -d '{"nukiId": 987654321, "state": 1, "stateName": "locked", "batteryCritical": false}' http://127.0.0.1:8081
+```  
 
-`curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: application/json;charset=utf-8" -X POST -d '{"nukiId":987654321,"state":1,"stateName":"locked","batteryCritical":true}' http://127.0.0.1:8081`  
-
-"NukiBridge_12345678" ist die ID der NUKI Bridge  
-"nukiId":987654321 ist die ID des NUKI Smartlocks  
-http://127.0.0.1:8081 ist die IP-Adresse und Port des Server Sockets
+* `NukiBridge_12345678` ist die ID der NUKI Bridge  
+* `nukiId: 987654321` ist die ID des NUKI Smartlocks  
+* `http://127.0.0.1:8081` ist die IP-Adresse und Port des Server Sockets
 
 ### 9. GUIDs
 
-*       Bibliothek
-        {752C865A-5290-4DBE-AC30-01C7B1C3312F}
-
-*       Virtual I/O (Server Socket NUKI Callback)
-        {018EF6B5-AB94-40C6-AA53-46943E824ACF} (CR: IO_RX)
-        {79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (I: IO_TX)
-
-*       Spliter (NUKI Bridge)
-        {B41AE29B-39C1-4144-878F-94C0F7EEC725} (Module GUID)
-        {79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (PR: IO_TX)
-        {3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (CR: Device_RX)
-        {018EF6B5-AB94-40C6-AA53-46943E824ACF} (I: IO_RX)
-        {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (I: Device_TX)
-
-*       Device (NUKI Smartlock)
-        {37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14} (Module GUID)
-        {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
-        {3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: Device_RX)
+Bezeichnung / GUID                          | Beschreibung
+--------------------------------------------| --------------------------------------
+Bibliothek                                  |
+{752C865A-5290-4DBE-AC30-01C7B1C3312F}      |
+Virtual I/O (Server Socket NUKI Callback)   |
+{018EF6B5-AB94-40C6-AA53-46943E824ACF}      | (CR: IO_RX)
+{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      | (I: IO_TX)
+Spliter (NUKI Bridge)                       |
+{B41AE29B-39C1-4144-878F-94C0F7EEC725}      | (Module GUID)
+{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      | (PR: IO_TX)
+{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      | (CR: Device_RX)
+{018EF6B5-AB94-40C6-AA53-46943E824ACF}      | (I: IO_RX)
+{73188E44-8BBA-4EBF-8BAD-40201B8866B9}      | (I: Device_TX)
+Device (NUKI Smartlock)                     |
+{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}      | (Module GUID)
+{73188E44-8BBA-4EBF-8BAD-40201B8866B9}      | (PR: Device_TX)
+{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      | (I: Device_RX)
 
 ### 10. Changelog
 
