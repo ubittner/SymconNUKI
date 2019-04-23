@@ -91,9 +91,9 @@ class NUKIConfigurator extends IPSModule
                 'column' => 'SmartLockName',
                 'direction' => 'ascending'],
             'columns' => [
-                ['caption' => 'Smart Lock name', 'name' => 'SmartLockName', 'width' => '300px'],
-                ['caption' => 'Smart Lock ID', 'name' => 'SmartLockID', 'width' => '250px'],
-                ['caption' => 'Firmware version', 'name' => 'FirmwareVersion', 'width' => '250px']],
+                ['caption' => 'Smart Lock name', 'name' => 'SmartLockName', 'width' => 'auto'],
+                ['caption' => 'Smart Lock ID', 'name' => 'SmartLockID', 'width' => '300px'],
+                ['caption' => 'Firmware version', 'name' => 'FirmwareVersion', 'width' => '300px']],
             'values' => $this->GetListConfiguration()];
         $jsonForm = json_encode($form);
         $this->SendDebug('FORM', $jsonForm, 0);
@@ -130,7 +130,7 @@ class NUKIConfigurator extends IPSModule
             $parentID = IPS_GetInstance($this->InstanceID)['ConnectionID'];
             foreach ($smartLockDevices as $smartLockDevice) {
                 if (($smartLockID === IPS_GetProperty($smartLockDevice, 'SmartLockUID'))
-                    && (IPS_GetInstance($smartLockDevice)['ConnectionID'] === $parentID)) {
+                    /*&& (IPS_GetInstance($smartLockDevice)['ConnectionID'] === $parentID)*/) {
                     $instanceID = $smartLockDevice;
                 }
             }
