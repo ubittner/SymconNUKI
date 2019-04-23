@@ -1,9 +1,13 @@
-{  
-"id": "{752C865A-5290-4DBE-AC30-01C7B1C3312F}",  
-"author": "Ulrich Bittner",  
-"name": "NUKISmartLock",  
-"url": "",  
-"version": "1.03",
-"build": 20181130,
-"date": 1543575903
+{
+  "id": "{752C865A-5290-4DBE-AC30-01C7B1C3312F}",
+  "author": "Ulrich Bittner",
+  "name": "NUKI",
+  "url": "https://nuki.io/de/",
+  "compatibility": {
+    "version": "5.1",
+    "date": 1554076800
+  },
+  "version": "1.04",
+  "build": 1004,
+  "date": 1555840800
 }
