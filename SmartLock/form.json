@@ -200,7 +200,7 @@
     {
       "type": "Button",
       "caption": "Manual",
-      "onClick": "echo 'https://git.ubittner.de/ubittner/SymconNUKI';"
+      "onClick": "echo 'https://github.com/ubittner/SymconNUKI';"
     },
     {
       "type": "Label",
