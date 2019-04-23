@@ -172,7 +172,7 @@
         },
         {
           "type": "Label",
-          "caption": "With the button LIST under point (3) Callback Socket, you can display the created callbacks."
+          "caption": "With the button LIST under point (3) Callback Socket you can list the existing callbacks."
         },
         {
           "type": "Label",

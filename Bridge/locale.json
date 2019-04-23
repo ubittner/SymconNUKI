@@ -27,7 +27,7 @@
       "Please enter a free Port of your Symcon server:": "Bitte geben Sie einen freien Port Ihres IP-Symcon Servers an:",
       "Please specify the callback ID for changes or deletions:": "Bitte geben Sie die Callback ID für Änderungen oder Löschungen an:",
       "After accepting possible changes, you can use the ADD button under point (3) Callback Socket to create a callback.": "Nach Übernahme eventueller Änderungen können Sie die Schaltfläche ANLEGEN unter Punkt (3) Callback Socket nutzen, um einen Callback anzulegen.",
-      "With the button LIST under point (3) Callback Socket, you can display the created callbacks.": "Mit der Schaltfläche ANZEIGEN unter Punkt (3) Callback Socket, können Sie sich die angelegten Callbacks anzeigen lassen.",
+      "With the button LIST under point (3) Callback Socket you can list the existing callbacks.": "Mit der Schaltfläche ANZEIGEN unter Punkt (3) Callback Socket können Sie sich die existierenden Callbacks anzeigen lassen.",
       "Use the DELETE button under point (3) Callback Socket to delete the callback with the specified ID.": "Mit der Schaltfläche LÖSCHEN unter Punkt (3) Callback Socket löschen Sie den Callback mit der angegebenen ID.",
       "Manual": "Bedienungsanleitung",
       "Discover": "Suchen",
