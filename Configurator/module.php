@@ -131,6 +131,7 @@ class NUKIConfigurator extends IPSModule
             $this->SendDebug('1. SmartLockID', $smartLockID, 0);
             $firmwareVersion = $device['firmwareVersion'];
             foreach ($smartLockDevices as $smartLockDevice) {
+                $this->SendDebug('Device', $smartLockDevice, 0);
                 $smartLockUID = IPS_GetProperty($smartLockDevice, 'SmartLockUID');
                 $this->SendDebug('2. SmartLockUID', $smartLockUID, 0);
                 if ($smartLockID === $smartLockUID) {
