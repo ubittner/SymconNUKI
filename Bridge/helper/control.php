@@ -3,7 +3,7 @@
 // Declare
 declare(strict_types=1);
 
-trait Control
+trait control
 {
     /**
      * Syncs the Smart Locks of the bridge.

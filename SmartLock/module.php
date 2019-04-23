@@ -229,7 +229,7 @@ class NUKISmartLock extends IPSModule
         }
         // Set values
         $this->SetValue('SmartLockSwitch', $State);
-        $stateName = [ 1 => 'unlock', 2 => 'lock', 3 => 'unlatch', 4 => 'lock ‘n’ go', 5 => 'lock ‘n’ go with unlatch', 255 => 'undefined' ];
+        $stateName = [1 => 'unlock', 2 => 'lock', 3 => 'unlatch', 4 => 'lock ‘n’ go', 5 => 'lock ‘n’ go with unlatch', 255 => 'undefined'];
         $name = $stateName[$action];
         //IPS_LogMessage('Name', $name);
         $this->SetValue('SmartLockStatus', $this->Translate($name));
@@ -239,7 +239,7 @@ class NUKISmartLock extends IPSModule
         if ($bridgeID > 0) {
             NUKI_SetLockActionOfSmartLock($bridgeID, $smartLockUniqueID, $action);
             // Only use if no callback is set
-            $useCallback = (bool)IPS_GetProperty($bridgeID, 'UseCallback');
+            $useCallback = (bool) IPS_GetProperty($bridgeID, 'UseCallback');
             if (!$useCallback) {
                 $this->ShowLockStateOfSmartLock();
             }
