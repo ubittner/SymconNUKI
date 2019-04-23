@@ -184,6 +184,15 @@
   "actions": [
     {
       "type": "Label",
+      "caption": "(0) Instance information"
+    },
+    {
+      "type": "Button",
+      "caption": "Manual",
+      "onClick": "echo 'https://git.ubittner.de/ubittner/SymconNUKI';"
+    },
+    {
+      "type": "Label",
       "caption": "(1) Bridge"
     },
     {
@@ -222,9 +231,18 @@
       "onClick": "NUKI_RebootBridge($id);"
     },
     {
-      "type": "Button",
+      "type": "PopupButton",
       "caption": "Factory Reset",
-      "onClick": "NUKI_FactoryResetBridge($id);"
+      "popup": {
+        "caption": "Do you really want to perform a factory reset?",
+        "items": [
+          {
+            "type": "Button",
+            "caption": "Factory Reset",
+            "onClick": "NUKI_FactoryResetBridge($id);"
+          }
+        ]
+      }
     },
     {
       "type": "Label",
@@ -263,9 +281,18 @@
           "onClick": "$data=NUKI_ListCallback($id); print_r(json_decode($data, true));"
         },
         {
-          "type": "Button",
+          "type": "PopupButton",
           "caption": "Delete",
-          "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r(json_decode($data, true));"
+          "popup": {
+            "caption": "Do you really want to delete the callback?",
+            "items": [
+              {
+                "type": "Button",
+                "caption": "Delete",
+                "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r(json_decode($data, true));"
+              }
+            ]
+          }
         }
       ]
     }

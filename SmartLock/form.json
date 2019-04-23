@@ -195,6 +195,15 @@
   "actions": [
     {
       "type": "Label",
+      "caption": "(0) Instance information"
+    },
+    {
+      "type": "Button",
+      "caption": "Manual",
+      "onClick": "echo 'https://git.ubittner.de/ubittner/SymconNUKI';"
+    },
+    {
+      "type": "Label",
       "caption": "(1) Smart Lock"
     },
     {
@@ -203,9 +212,18 @@
       "onClick": "$state=NUKI_ShowLockStateOfSmartLock($id);print_r(json_decode($state, true));"
     },
     {
-      "type": "Button",
+      "type": "PopupButton",
       "caption": "Unpair",
-      "onClick": "$unpair=NUKI_UnpairSmartLock($id); print_r(json_decode($unpair, true));"
+      "popup": {
+        "caption": "Do you really want to unpair the Smart Lock from the Bridge?",
+        "items": [
+          {
+            "type": "Button",
+            "caption": "Unpair",
+            "onClick": "$unpair=NUKI_UnpairSmartLock($id); print_r(json_decode($unpair, true));"
+          }
+        ]
+      }
     }
   ],
   "status": [

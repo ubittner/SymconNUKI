@@ -223,23 +223,22 @@ curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: applic
 
 ### 9. GUIDs
 
-Bezeichnung / GUID                          | Beschreibung
+Bezeichnung                                 | GUID
 --------------------------------------------| --------------------------------------
-Bibliothek                                  |
-{752C865A-5290-4DBE-AC30-01C7B1C3312F}      |
+Bibliothek                                  | {752C865A-5290-4DBE-AC30-01C7B1C3312F}      
 Virtual I/O (Server Socket NUKI Callback)   |
-{018EF6B5-AB94-40C6-AA53-46943E824ACF}      | (CR: IO_RX)
-{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      | (I: IO_TX)
+CR: IO_RX                                   | {018EF6B5-AB94-40C6-AA53-46943E824ACF}
+I: IO_TX                                    | {79827379-F36E-4ADA-8A95-5F8D1DC92FA9}     
 Spliter (NUKI Bridge)                       |
-{B41AE29B-39C1-4144-878F-94C0F7EEC725}      | (Module GUID)
-{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      | (PR: IO_TX)
-{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      | (CR: Device_RX)
-{018EF6B5-AB94-40C6-AA53-46943E824ACF}      | (I: IO_RX)
-{73188E44-8BBA-4EBF-8BAD-40201B8866B9}      | (I: Device_TX)
+Module GUID                                 | {B41AE29B-39C1-4144-878F-94C0F7EEC725}      
+PR: IO_TX                                   | {79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      
+CR: Device_RX                               | {3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      
+I: IO_RX                                    | {018EF6B5-AB94-40C6-AA53-46943E824ACF}     
+I: Device_TX                                | {73188E44-8BBA-4EBF-8BAD-40201B8866B9}      
 Device (NUKI Smartlock)                     |
-{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}      | (Module GUID)
-{73188E44-8BBA-4EBF-8BAD-40201B8866B9}      | (PR: Device_TX)
-{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      | (I: Device_RX)
+Module GUID                                 | {37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}      
+PR: Device_TX                               | {73188E44-8BBA-4EBF-8BAD-40201B8866B9}      
+I: Device_RX                                | {3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      
 
 ### 10. Changelog
 
