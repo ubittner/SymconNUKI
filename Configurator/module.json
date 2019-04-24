@@ -1,0 +1,17 @@
+{
+  "id": "{1ADAB09D-67EF-412C-B851-B2848C33F67B}",
+  "name": "NUKIConfigurator",
+  "type": 4,
+  "vendor": "NUKI",
+  "aliases": [
+    "NUKI Configurator"
+  ],
+  "parentRequirements": [
+    "{E66CB7EE-AC70-4D77-B7C5-B760A82894D3}"
+  ],
+  "childRequirements": [],
+  "implemented": [
+    "{F3710DC9-D0E6-4170-BB59-EFCF3F3466D6}"
+  ],
+  "prefix": "NUKI"
+}

@@ -1,11 +1,22 @@
 {
-	"id": "{B41AE29B-39C1-4144-878F-94C0F7EEC725}",
-	"name": "NUKIBridge",
-	"type": 2,
-	"vendor": "NUKI",
-	"aliases": [ "NUKI Bridge" ],
-	"parentRequirements": ["{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}"],
-	"childRequirements": ["{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}"],
-	"implemented": ["{018EF6B5-AB94-40C6-AA53-46943E824ACF}", "{73188E44-8BBA-4EBF-8BAD-40201B8866B9}"],
-	"prefix": "NUKI"
+  "id": "{B41AE29B-39C1-4144-878F-94C0F7EEC725}",
+  "name": "NUKIBridge",
+  "type": 2,
+  "vendor": "NUKI",
+  "aliases": [
+    "NUKI Bridge"
+  ],
+  "parentRequirements": [
+    "{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}",
+    "{F3710DC9-D0E6-4170-BB59-EFCF3F3466D6}"
+  ],
+  "childRequirements": [
+    "{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}"
+  ],
+  "implemented": [
+    "{018EF6B5-AB94-40C6-AA53-46943E824ACF}",
+    "{73188E44-8BBA-4EBF-8BAD-40201B8866B9}",
+    "{E66CB7EE-AC70-4D77-B7C5-B760A82894D3}"
+  ],
+  "prefix": "NUKI"
 }

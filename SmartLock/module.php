@@ -32,9 +32,11 @@
  *
  *				Device (NUKI Smartlock)
  *				{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14} (Module GUID)
- *
  * 				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
  *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
+ *
+ *              Configurator (NUKI Configurator)
+ *              {1ADAB09D-67EF-412C-B851-B2848C33F67B} (Module GUID)
  *
  * @changelog	2019-04-21, 10:00, added changes for module store
  *              2018-04-21, 12:30, rebuild for IP-Symcon 5.0

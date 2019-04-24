@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Version](https://img.shields.io/badge/Modul_Version-1.04-blue.svg)]()
-![Version](https://img.shields.io/badge/Modul_Build-1004-blue.svg)
+![Version](https://img.shields.io/badge/Modul_Build-1005-blue.svg)
 [![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
 [![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -50,8 +50,8 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
   
 - Bei privater Nutzung wird das Modul über den Modul Store installiert.
 
-- Sofern noch keine NUKI Bridge Instanz in IP-Symcon vorhanden ist, so beginnen Sie mit der Installation und Konfiguration der NUKI Bridge.  
-Hier finden Sie die [Dokumentation](../Bridge) zur NUKI Bridge.  
+- Sofern noch keine NUKI Configurator Instanz in IP-Symcon vorhanden ist, so beginnen Sie mit der Installation und Konfiguration des NUKI Configurators.  
+Hier finden Sie die [Dokumentation](../Configurator) zum NUKI Configurator.  
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
@@ -125,25 +125,13 @@ Löscht das Smart Lock von der Bridge.
 Bezeichnung                                 | GUID
 --------------------------------------------| --------------------------------------
 Bibliothek                                  | {752C865A-5290-4DBE-AC30-01C7B1C3312F}      
-Virtual I/O (Server Socket NUKI Callback)   |
-CR: IO_RX                                   | {018EF6B5-AB94-40C6-AA53-46943E824ACF}
-I: IO_TX                                    | {79827379-F36E-4ADA-8A95-5F8D1DC92FA9}     
-Spliter (NUKI Bridge)                       |
-Module GUID                                 | {B41AE29B-39C1-4144-878F-94C0F7EEC725}      
-PR: IO_TX                                   | {79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      
-CR: Device_RX                               | {3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      
-I: IO_RX                                    | {018EF6B5-AB94-40C6-AA53-46943E824ACF}     
-I: Device_TX                                | {73188E44-8BBA-4EBF-8BAD-40201B8866B9}      
-Device (NUKI Smartlock)                     |
-Module GUID                                 | {37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}      
-PR: Device_TX                               | {73188E44-8BBA-4EBF-8BAD-40201B8866B9}      
-I: Device_RX                                | {3DED8598-AA95-4EC4-BB5D-5226ECD8405C}   
+NUKI Smart Lock                             | {37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}      
 
 ### 9. Changelog
 
 Version     | Datum      | Beschreibung
 ----------- | -----------| -------------------
-1.04-1004   | 21.04.2019 | Version für Module-Store
+1.04-1005   | 21.04.2019 | Version für Module-Store
 1.03        | 27.04.2018 | Update auf API 1.7
 1.02        | 19.04.2017 | Update auf API 1.5
 1.01        | 31.01.2017 | Erweiterung von Funktionen

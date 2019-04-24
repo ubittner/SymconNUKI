@@ -6,36 +6,6 @@ declare(strict_types=1);
 trait control
 {
     /**
-     * Syncs the Smart Locks of the bridge.
-     */
-    public function SyncSmartLocks()
-    {
-        $categoryID = $this->ReadPropertyInteger('SmartLockCategory');
-        $smartLocks = $this->GetSmartLocks();
-        if (!empty($smartLocks)) {
-            $smartLocks = json_decode($smartLocks, true);
-            foreach ($smartLocks as $smartLock) {
-                $uniqueID = $smartLock['nukiId'];
-                $name = utf8_decode((string) $smartLock['name']);
-                $instanceID = $this->GetSmartLockInstanceIdByUniqueId($uniqueID);
-                if ($instanceID == 0) {
-                    $instanceID = IPS_CreateInstance(SMARTLOCK_MODULE_GUID);
-                    IPS_SetProperty($instanceID, 'SmartLockUID', $uniqueID);
-                }
-                IPS_SetProperty($instanceID, 'SmartLockName', $name);
-                IPS_SetName($instanceID, $name);
-                IPS_SetParent($instanceID, $categoryID);
-                if (IPS_GetInstance($instanceID)['ConnectionID'] != $this->InstanceID) {
-                    @IPS_DisconnectInstance($instanceID);
-                    IPS_ConnectInstance($instanceID, $this->InstanceID);
-                }
-                IPS_ApplyChanges($instanceID);
-            }
-            echo $this->Translate('Smart Locks have been matched / created!');
-        }
-    }
-
-    /**
      * Gets the instance id of the smartlock by UID.
      *
      * @param $UniqueID

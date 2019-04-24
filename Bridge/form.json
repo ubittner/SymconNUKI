@@ -46,7 +46,7 @@
         },
         {
           "type": "Label",
-          "caption": "Module version:\t1.04-1004"
+          "caption": "Module version:\t1.04-1005"
         },
         {
           "type": "Label",
@@ -101,22 +101,7 @@
     },
     {
       "type": "ExpansionPanel",
-      "caption": "(2) Smart Locks",
-      "items": [
-        {
-          "type": "Label",
-          "caption": "Please select the category for your SmartLocks:"
-        },
-        {
-          "type": "SelectCategory",
-          "name": "SmartLockCategory",
-          "caption": "Category"
-        }
-      ]
-    },
-    {
-      "type": "ExpansionPanel",
-      "caption": "(3) Callback Socket",
+      "caption": "(2) Callback Socket",
       "items": [
         {
           "type": "Label",
@@ -168,15 +153,15 @@
         },
         {
           "type": "Label",
-          "caption": "After accepting possible changes, you can use the ADD button under point (3) Callback Socket to create a callback."
+          "caption": "After accepting possible changes, you can use the ADD button under point (2) Callback Socket to create a callback."
         },
         {
           "type": "Label",
-          "caption": "With the button LIST under point (3) Callback Socket you can list the existing callbacks."
+          "caption": "With the button LIST under point (2) Callback Socket you can list the existing callbacks."
         },
         {
           "type": "Label",
-          "caption": "Use the DELETE button under point (3) Callback Socket to delete the callback with the specified ID."
+          "caption": "Use the DELETE button under point (2) Callback Socket to delete the callback with the specified ID."
         }
       ]
     }
@@ -245,27 +230,18 @@
       }
     },
     {
-      "type": "Label",
-      "caption": "(2) Smart Locks"
-    },
-    {
       "type": "RowLayout",
       "items": [
         {
           "type": "Button",
-          "caption": "Show",
+          "caption": "Show Smart Locks",
           "onClick": "$data=NUKI_GetSmartLocks($id); print_r(json_decode($data, true));"
-        },
-        {
-          "type": "Button",
-          "caption": "Sync",
-          "onClick": "NUKI_SyncSmartLocks($id);"
         }
       ]
     },
     {
       "type": "Label",
-      "caption": "(3) Callback Socket"
+      "caption": "(2) Callback Socket"
     },
     {
       "type": "RowLayout",
