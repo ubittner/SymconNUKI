@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Version](https://img.shields.io/badge/Modul_Version-1.04-blue.svg)]()
-![Version](https://img.shields.io/badge/Modul_Build-1004-blue.svg)
+![Version](https://img.shields.io/badge/Modul_Build-1005-blue.svg)
 [![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
 [![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -36,7 +36,7 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 ### 1. Funktionsumfang
 
 * Ermitteln und anlegen der verfügbaren Smart Locks
-* Empfang von Statusinformationen der Samrt Locks via Webhook
+* Empfang von Statusinformationen der Smart Locks via Webhook
 * Öffnen und schließen des Smart Locks 
 
 ### 2. Voraussetzungen
@@ -53,6 +53,9 @@ Hier finden Sie die [Dokumentation](../SmartLock) zum NUKI Smart Lock.
   
 - Bei privater Nutzung wird das Modul über den Modul Store installiert.
 
+- Sofern noch keine NUKI Configurator Instanz in IP-Symcon vorhanden ist, so beginnen Sie mit der Installation und Konfiguration des NUKI Configurators.  
+Hier finden Sie die [Dokumentation](../Configurator) zum NUKI Configurator.  
+
 ### 4. Einrichten der Instanzen in IP-Symcon
 
 - In IP-Symcon an beliebiger Stelle `Instanz hinzufügen` auswählen und `NUKI Bridge` auswählen, welches unter dem Hersteller `NUKI` aufgeführt ist. Es wird eine NUKI Bridge Instanz angelegt, in der die Eigenschaften zur Steuerung des NUKI Bridge gesetzt werden können.
@@ -63,8 +66,7 @@ Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
 (0) Instanzinformationen            | Informationen zu der Instanz
 (1) Bridge                          | Eigenschaften der NUKI Bridge
-(2) Smart Lock                      | Kategorie für die Smart Locks
-(3) Callback Socket                 | Eigenschaften zum Callback Socket
+(2) Callback Socket                 | Eigenschaften zum Callback Socket
 
 __Schaltflächen__:
 
@@ -80,10 +82,8 @@ Logdatei löschen                    | Löscht die Logdatei der Bridge
 Update Firmware                     | Führt eine aktualisierung der Firmware durch
 Neustart                            | Starte die Bridge neu
 Werkseinstellungen                  | Setzt die Brige zurück in die Werkseinstellungen
-(2) Smart Locks                     | 
-Anzeigen                            | Zeigt die verfügbaren Smart Locks der Bridge an
-Abgleichen                          | Legt die Smart Locks automatisch in IP-Symcon an
-(3) Callback Socket                 | 
+Smart Locks anzeigen                | Zeigt die verfügbaren Smart Locks der Bridge an
+(2) Callback Socket                 | 
 Anlegen                             | Legt den Callback an
 Anzeigen                            | Zeigt die angelegten Callbacks an
 Löschen                             | Löscht den Callback mit der definierten ID
@@ -92,9 +92,7 @@ __Vorgehensweise__:
 
 Geben Sie die IP-Adresse, den Port und den API Token der NUKI Bridge an. 
 Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt. 
-Über das Konfigurationsfeld `Kategorie` können Sie festlegen, in welche Kategorie die Smart Locks angelegt werden sollen. Es kann auch die Hauptkategorie genutzt werden.  
-Übernehmen Sie die Änderungen und drücken Sie unter Punkt (2) Smart Locks die Schaltfläche `ABGLEICHEN`.  
-Die Smart Locks werden dann automatisch angelegt.
+Mit der Konfigurator Instanz `NUKI Configurator` können Sie die Smart Locks automatisch anlegen lassen.
 
 __Callback__:
 
@@ -201,10 +199,6 @@ Starte die Brdige neu.
 
 Setzt die Bridge auf Werkseinstellungen.
 
-`NUKI_SyncSmartLocks(integer $BridgeInstanceID)`
-
-Gleicht alle smarten NUKI Türschlösser der Bridge ab und legt diese in IP-Symcon automatisch an.
-
 `NUKI_UpdateStateOfSmartLocks(integer $BridgeInstanceID, bool $ProtocolMode)`
 
 Aktualisiert den Status aller smarten NUKI Türschlösser.
@@ -225,26 +219,14 @@ curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: applic
 
 Bezeichnung                                 | GUID
 --------------------------------------------| --------------------------------------
-Bibliothek                                  | {752C865A-5290-4DBE-AC30-01C7B1C3312F}      
-Virtual I/O (Server Socket NUKI Callback)   |
-CR: IO_RX                                   | {018EF6B5-AB94-40C6-AA53-46943E824ACF}
-I: IO_TX                                    | {79827379-F36E-4ADA-8A95-5F8D1DC92FA9}     
-Spliter (NUKI Bridge)                       |
-Module GUID                                 | {B41AE29B-39C1-4144-878F-94C0F7EEC725}      
-PR: IO_TX                                   | {79827379-F36E-4ADA-8A95-5F8D1DC92FA9}      
-CR: Device_RX                               | {3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      
-I: IO_RX                                    | {018EF6B5-AB94-40C6-AA53-46943E824ACF}     
-I: Device_TX                                | {73188E44-8BBA-4EBF-8BAD-40201B8866B9}      
-Device (NUKI Smartlock)                     |
-Module GUID                                 | {37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}      
-PR: Device_TX                               | {73188E44-8BBA-4EBF-8BAD-40201B8866B9}      
-I: Device_RX                                | {3DED8598-AA95-4EC4-BB5D-5226ECD8405C}      
+Bibliothek                                  | {752C865A-5290-4DBE-AC30-01C7B1C3312F}          
+NUKI Bridge                                 | {B41AE29B-39C1-4144-878F-94C0F7EEC725}      
 
 ### 10. Changelog
 
 Version     | Datum      | Beschreibung
 ----------- | -----------| -------------------
-1.04-1004   | 21.04.2019 | Version für Module-Store
+1.04-1005   | 21.04.2019 | Version für Module-Store
 1.03        | 27.04.2018 | Update auf API 1.7
 1.02        | 19.04.2017 | Update auf API 1.5
 1.01        | 31.01.2017 | Erweiterung von Funktionen
