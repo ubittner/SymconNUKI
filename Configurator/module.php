@@ -91,7 +91,7 @@ class NUKIConfigurator extends IPSModule
             'caption' => 'Category'];
         $form['actions'][] = [
             'type' => 'Configurator',
-            'name' => 'NUKI Configuration',
+            'name' => 'NUKIConfigurator',
             'caption ' => 'Smart Locks',
             'rowCount' => 10,
             'delete' => true,
