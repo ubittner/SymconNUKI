@@ -10,7 +10,7 @@
 
 ![Image](../imgs/nuki-logo-black.png)
 
-Dieses Modul listet die mit der Bridge gekoppelten Smart Locks auf und der Nutzer kann die ausgewählten Smart Locks automatisch anlegen lassen.
+Dieses Modul listet die mit der NUKI Bridge gekoppelten Smart Locks auf und der Nutzer kann die ausgewählten Smart Locks automatisch anlegen lassen.
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
 
@@ -35,7 +35,7 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 ### 1. Funktionsumfang
 
 * Listet die verfügbaren Smart Locks auf
-* Automatisches Anlegen des ausgewhälten Smart Locks
+* Automatisches Anlegen des ausgewählten Smart Locks
 
 ### 2. Voraussetzungen
 
@@ -53,7 +53,7 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 
 - In IP-Symcon an beliebiger Stelle `Instanz hinzufügen` auswählen und `NUKI Configurator` auswählen, welches unter dem Hersteller `NUKI` aufgeführt ist. Es wird eine NUKI Configurator Instanz unter der Kategorie `Konfigurator Instanzen` angelegt.  
 
-_Konfigurationsseite__:
+__Konfigurationsseite__:
 
 Name        | Beschreibung
 ----------- | ---------------------------------
@@ -71,8 +71,9 @@ __Vorgehensweise__:
 
 Sofern noch keine NUKI Bridge installiert wurde, muss einmalig beim Erstellen der NUKI Configurator Instanz die Konfiguration der NUKI Bridge vorgenommen werden.  
 Geben Sie die IP-Adresse, den Port und den API Token der NUKI Bridge an. 
-Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt. 
-Über die Schaltfläche `AKTUALISIEREN` können Sie im NUKI Configurator die Liste der verfügbaren Smart Locks jederzeit aktualisieren.
+Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt.  
+Wählen Sie anschließend `WEITER` aus.  
+Über die Schaltfläche `AKTUALISIEREN` können Sie im NUKI Configurator die Liste der verfügbaren Smart Locks jederzeit aktualisieren.  
 Wählen Sie `ALLE ERSTELLEN` oder wählen Sie ein Smart Lock aus der Liste aus und drücken dann die Schaltfläche `ERSTELEN`, um die Smart Locks automatisch anzulegen.
 
 ### 5. Statusvariablen und Profile
