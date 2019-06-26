@@ -11,8 +11,7 @@
   ],
   "childRequirements": [],
   "implemented": [
-    "{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}",
-    "{F3710DC9-D0E6-4170-BB59-EFCF3F3466D6}"
+    "{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}"
   ],
   "prefix": "NUKI"
 }

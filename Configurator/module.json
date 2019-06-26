@@ -7,11 +7,11 @@
     "NUKI Configurator"
   ],
   "parentRequirements": [
-    "{E66CB7EE-AC70-4D77-B7C5-B760A82894D3}"
+    "{73188E44-8BBA-4EBF-8BAD-40201B8866B9}"
   ],
   "childRequirements": [],
   "implemented": [
-    "{F3710DC9-D0E6-4170-BB59-EFCF3F3466D6}"
+    "{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}"
   ],
   "prefix": "NUKI"
 }
