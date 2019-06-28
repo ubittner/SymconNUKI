@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Version](https://img.shields.io/badge/Modul_Version-1.04-blue.svg)]()
-![Version](https://img.shields.io/badge/Modul_Build-1005-blue.svg)
+![Version](https://img.shields.io/badge/Modul_Build-1006-blue.svg)
 [![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
 [![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)

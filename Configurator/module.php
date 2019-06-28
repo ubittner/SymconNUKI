@@ -10,12 +10,12 @@
  * @license     CC BY-NC-SA 4.0
  *
  * @version     1.04
- * @build       1005
- * @date        2019-04-21, 10:00
+ * @build       1006
+ * @date        2019-06-28, 10:15
  *
  * @see         https://github.com/ubittner/SymconNUKI
  *
- * @guids		Library
+  * @guids		Library
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
  *
  *				Virtual I/O (Server Socket NUKI Callback)
@@ -27,19 +27,21 @@
  *
  * 				{79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (PR:	IO_TX)
  *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (CR: Device_RX)
- * 				{018EF6B5-AB94-40C6-AA53-46943E824ACF} (I:	IO_RX)
+ *              {018EF6B5-AB94-40C6-AA53-46943E824ACF} (I:	IO_RX)
  *				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (I:	Device_TX)
  *
  *				Device (NUKI Smartlock)
  *				{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14} (Module GUID)
- *
  * 				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
  *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
  *
  *              Configurator (NUKI Configurator)
  *              {1ADAB09D-67EF-412C-B851-B2848C33F67B} (Module GUID)
+ *              {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
+ *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
  *
- * @changelog	2019-04-21, 10:00, added changes for module store
+ * @changelog	2019-06-28, 10:15, data flow fix for configurator
+ *              2019-04-21, 10:00, added changes for module store
  *              2018-04-21, 12:30, rebuild for IP-Symcon 5.0
  * 				2017-04-19, 23:00, update to API Version 1.5 and some improvements
  * 				2017-01-18, 13:00, initial module script version 1.01
@@ -105,8 +107,7 @@ class NUKIConfigurator extends IPSModule
                 'direction' => 'ascending'],
             'columns' => [
                 ['caption' => 'Name', 'name' => 'SmartLockName', 'width' => 'auto'],
-                ['caption' => 'NukiID', 'name' => 'SmartLockID', 'width' => '300px'],
-                ['caption' => 'Firmware version', 'name' => 'FirmwareVersion', 'width' => '300px']],
+                ['caption' => 'NukiID', 'name' => 'SmartLockID', 'width' => '300px']],
             'values' => $this->GetConfigurationList()];
         $jsonForm = json_encode($form);
         $this->SendDebug('ConfigurationForm', $jsonForm, 0);
@@ -151,7 +152,6 @@ class NUKIConfigurator extends IPSModule
             $smartLockName = $device['name'];
             $smartLockID = (string) $device['nukiId'];
             $this->SendDebug('NukiID', $smartLockID, 0);
-            $firmwareVersion = $device['firmwareVersion'];
             foreach ($smartLockDevices as $smartLockDevice) {
                 $this->SendDebug('Device', $smartLockDevice, 0);
                 $smartLockUID = (string) IPS_GetProperty($smartLockDevice, 'SmartLockUID');
@@ -167,7 +167,6 @@ class NUKIConfigurator extends IPSModule
                 'instanceID'      => $instanceID,
                 'SmartLockName'   => $smartLockName,
                 'SmartLockID'     => $smartLockID,
-                'FirmwareVersion' => $firmwareVersion,
                 'create'          => [
                     'moduleID'      => '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}',
                     'configuration' => [

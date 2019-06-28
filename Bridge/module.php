@@ -10,8 +10,8 @@
  * @license     CC BY-NC-SA 4.0
  *
  * @version     1.04
- * @build       1004
- * @date        2019-04-21, 10:00
+ * @build       1006
+ * @date        2019-06-28, 10:15
  *
  * @see         https://github.com/ubittner/SymconNUKI
  *
@@ -27,7 +27,7 @@
  *
  * 				{79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (PR:	IO_TX)
  *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (CR: Device_RX)
- * 				{018EF6B5-AB94-40C6-AA53-46943E824ACF} (I:	IO_RX)
+ *              {018EF6B5-AB94-40C6-AA53-46943E824ACF} (I:	IO_RX)
  *				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (I:	Device_TX)
  *
  *				Device (NUKI Smartlock)
@@ -37,8 +37,12 @@
  *
  *              Configurator (NUKI Configurator)
  *              {1ADAB09D-67EF-412C-B851-B2848C33F67B} (Module GUID)
+ *              {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
+ *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
  *
- * @changelog	2019-04-21, 10:00, added changes for module store
+ *
+ * @changelog	2019-06-28, 10:15, data flow fix for configurator
+ *              2019-04-21, 10:00, added changes for module store
  *              2018-04-21, 12:30, rebuild for IP-Symcon 5.0
  * 				2017-04-19, 23:00, update to API Version 1.5 and some improvements
  * 				2017-01-18, 13:00, initial module script version 1.01
