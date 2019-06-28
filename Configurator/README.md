@@ -29,8 +29,6 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 5. [Statusvariablen und Profile](#5-statusvariablen-und-profile)
 6. [WebFront](#6-webfront)
 7. [PHP-Befehlsreferenz](#7-php-befehlsreferenz)
-8. [GUIDs](#8-guids)
-9. [Changelog](#9-changelog)
 
 ### 1. Funktionsumfang
 
@@ -97,21 +95,3 @@ Der NUKI Configurator ist im WebFront nicht nutzbar.
 ### 7. PHP-Befehlsreferenz
 
 Es ist keine Befehlsreferenz verfügbar.
-
-### 8. GUIDs
-
-Bezeichnung                                 | GUID
---------------------------------------------| --------------------------------------
-Bibliothek                                  | {752C865A-5290-4DBE-AC30-01C7B1C3312F}      
-NUKI Configurator                           | {1ADAB09D-67EF-412C-B851-B2848C33F67B}      
-
-### 9. Changelog
-
-Version     | Datum      | Beschreibung
------------ | -----------| -------------------
-1.04-1005   | 21.04.2019 | Version für Module-Store
-1.03        | 27.04.2018 | Update auf API 1.7
-1.02        | 19.04.2017 | Update auf API 1.5
-1.01        | 31.01.2017 | Erweiterung von Funktionen
-1.00        | 01.11.2016 | Modulerstellung
-

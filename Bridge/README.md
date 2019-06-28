@@ -30,8 +30,6 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 6. [WebFront](#6-webfront)
 7. [PHP-Befehlsreferenz](#7-php-befehlsreferenz)
 8. [Bridge Callback Simulation](#8-bridge-callback-simulation)
-9. [GUIDs](#9-guids)
-10. [Changelog](#10-changelog)
 
 ### 1. Funktionsumfang
 
@@ -214,21 +212,3 @@ curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: applic
 * `NukiBridge_12345678` ist die ID der NUKI Bridge  
 * `nukiId: 987654321` ist die ID des NUKI Smartlocks  
 * `http://127.0.0.1:8081` ist die IP-Adresse und Port des Server Sockets
-
-### 9. GUIDs
-
-Bezeichnung                                 | GUID
---------------------------------------------| --------------------------------------
-Bibliothek                                  | {752C865A-5290-4DBE-AC30-01C7B1C3312F}          
-NUKI Bridge                                 | {B41AE29B-39C1-4144-878F-94C0F7EEC725}      
-
-### 10. Changelog
-
-Version     | Datum      | Beschreibung
------------ | -----------| -------------------
-1.04-1005   | 21.04.2019 | Version für Module-Store
-1.03        | 27.04.2018 | Update auf API 1.7
-1.02        | 19.04.2017 | Update auf API 1.5
-1.01        | 31.01.2017 | Erweiterung von Funktionen
-1.00        | 01.11.2016 | Modulerstellung
-
