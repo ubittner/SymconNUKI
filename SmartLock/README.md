@@ -2,7 +2,7 @@
 
 [![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Version](https://img.shields.io/badge/Modul_Version-1.04-blue.svg)]()
-![Version](https://img.shields.io/badge/Modul_Build-1005-blue.svg)
+![Version](https://img.shields.io/badge/Modul_Build-1006-blue.svg)
 [![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
 [![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
@@ -29,8 +29,6 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 5. [Statusvariablen und Profile](#5-statusvariablen-und-profile)
 6. [WebFront](#6-webfront)
 7. [PHP-Befehlsreferenz](#7-php-befehlsreferenz)
-8. [GUIDs](#8-guids)
-9. [Changelog](#9-changelog)
 
 ### 1. Funktionsumfang
 
@@ -119,20 +117,3 @@ Zeigt den Status eines smarten NUKI Türschlosses an.
 `NUKI_UnpairSmartLock(integer $SmartLockInstanceID, bool $State)`
 
 Löscht das Smart Lock von der Bridge.
-
-### 8. GUIDs
-
-Bezeichnung                                 | GUID
---------------------------------------------| --------------------------------------
-Bibliothek                                  | {752C865A-5290-4DBE-AC30-01C7B1C3312F}      
-NUKI Smart Lock                             | {37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}      
-
-### 9. Changelog
-
-Version     | Datum      | Beschreibung
------------ | -----------| -------------------
-1.04-1005   | 21.04.2019 | Version für Module-Store
-1.03        | 27.04.2018 | Update auf API 1.7
-1.02        | 19.04.2017 | Update auf API 1.5
-1.01        | 31.01.2017 | Erweiterung von Funktionen
-1.00        | 01.11.2016 | Modulerstellung
