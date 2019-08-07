@@ -12,31 +12,30 @@ trait bridgeAPI
      * which have been connected to the Nuki Servers through the same IP address than the one calling the URL within the last 30 days.
      *
      * @return string
-
-    public function DiscoverBridges(): string
-    {
-        $endpoint = 'https://api.nuki.io/discover/bridges';
-        $cURLHandle = curl_init();
-        curl_setopt_array($cURLHandle, [
-            CURLOPT_URL            => $endpoint,
-            CURLOPT_HEADER         => 0,
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_TIMEOUT, 20]);
-        $response = curl_exec($cURLHandle);
-        if ($response == false) {
-            $response = '';
-        }
-        curl_close($cURLHandle);
-        if (!empty($response)) {
-            $data = json_decode($response, true);
-            $bridges = $data['bridges'];
-            foreach ($bridges as $bridge) {
-                $this->SendDebug('DiscoverBridges', 'Bridge ID: ' . $bridge['bridgeId'] . ' , IP-Address: ' . $bridge['ip'] . ' , Port: ' . $bridge['port'], 0);
-            }
-        }
-        return $response;
-    }
-    */
+     * public function DiscoverBridges(): string
+     * {
+     * $endpoint = 'https://api.nuki.io/discover/bridges';
+     * $cURLHandle = curl_init();
+     * curl_setopt_array($cURLHandle, [
+     * CURLOPT_URL            => $endpoint,
+     * CURLOPT_HEADER         => 0,
+     * CURLOPT_RETURNTRANSFER => 1,
+     * CURLOPT_TIMEOUT, 20]);
+     * $response = curl_exec($cURLHandle);
+     * if ($response == false) {
+     * $response = '';
+     * }
+     * curl_close($cURLHandle);
+     * if (!empty($response)) {
+     * $data = json_decode($response, true);
+     * $bridges = $data['bridges'];
+     * foreach ($bridges as $bridge) {
+     * $this->SendDebug('DiscoverBridges', 'Bridge ID: ' . $bridge['bridgeId'] . ' , IP-Address: ' . $bridge['ip'] . ' , Port: ' . $bridge['port'], 0);
+     * }
+     * }
+     * return $response;
+     * }
+     */
 
     /**
      * Enables the API.

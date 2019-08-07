@@ -25,7 +25,6 @@
 
 declare(strict_types=1);
 
-
 class NUKIDiscovery extends IPSModule
 {
     public function Create()
@@ -55,6 +54,7 @@ class NUKIDiscovery extends IPSModule
 
     /**
      * Discovers NUKI bridges and returns the values as an array.
+     *
      * @return array
      */
     public function DiscoverBridges(): array
@@ -70,8 +70,8 @@ class NUKIDiscovery extends IPSModule
         $endpoint = 'https://api.nuki.io/discover/bridges';
         $ch = curl_init();
         curl_setopt_array($ch, [
-            CURLOPT_URL => $endpoint,
-            CURLOPT_HEADER => 0,
+            CURLOPT_URL            => $endpoint,
+            CURLOPT_HEADER         => 0,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_TIMEOUT, 15]);
         $response = curl_exec($ch);
@@ -94,6 +94,7 @@ class NUKIDiscovery extends IPSModule
 
     /**
      * Gets an existing NUKI Bridge splitter instance and returns the object id.
+     *
      * @param string $BridgeIP
      *
      * @return int
