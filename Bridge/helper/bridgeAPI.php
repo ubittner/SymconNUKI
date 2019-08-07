@@ -12,7 +12,7 @@ trait bridgeAPI
      * which have been connected to the Nuki Servers through the same IP address than the one calling the URL within the last 30 days.
      *
      * @return string
-     */
+
     public function DiscoverBridges(): string
     {
         $endpoint = 'https://api.nuki.io/discover/bridges';
@@ -36,6 +36,7 @@ trait bridgeAPI
         }
         return $response;
     }
+    */
 
     /**
      * Enables the API.

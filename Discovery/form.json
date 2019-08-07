@@ -1,0 +1,33 @@
+{
+  "actions":
+  [
+    {
+      "type": "Configurator",
+      "name": "Configurator",
+      "caption": "NUKI Bridge Discovery",
+      "delete": false,
+      "sort": {
+        "column": "BridgeIP",
+        "direction": "ascending"
+      },
+      "columns": [
+        {
+          "caption": "Bridge ID",
+          "name": "BridgeID",
+          "width": "200px"
+        },
+        {
+          "caption": "Bridge IP",
+          "name": "BridgeIP",
+          "width": "auto"
+        },
+        {
+          "caption": "Bridge Port",
+          "name": "BridgePort",
+          "width": "200px"
+        }
+      ],
+      "values": []
+    }
+  ]
+}
