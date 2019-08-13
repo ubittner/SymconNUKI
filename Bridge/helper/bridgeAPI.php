@@ -288,8 +288,8 @@ trait bridgeAPI
         }
         curl_close($ch);
         if (isset($error_msg)) {
-           $response = '';
-           $this->SendDebug('Data', 'An error has occurred: ' . json_encode($error_msg), 0);
+            $response = '';
+            $this->SendDebug('Data', 'An error has occurred: ' . json_encode($error_msg), 0);
         }
         return $response;
     }
