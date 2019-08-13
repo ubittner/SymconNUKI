@@ -6,38 +6,6 @@ declare(strict_types=1);
 trait bridgeAPI
 {
     /**
-     * Discovers the bridges.
-     *
-     * Calling the URL https://api.nuki.io/discover/bridges returns a JSON array with all bridges,
-     * which have been connected to the Nuki Servers through the same IP address than the one calling the URL within the last 30 days.
-     *
-     * @return string
-     */
-    public function DiscoverBridges(): string
-    {
-        $endpoint = 'https://api.nuki.io/discover/bridges';
-        $cURLHandle = curl_init();
-        curl_setopt_array($cURLHandle, [
-            CURLOPT_URL            => $endpoint,
-            CURLOPT_HEADER         => 0,
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_TIMEOUT, 20]);
-        $response = curl_exec($cURLHandle);
-        if ($response == false) {
-            $response = '';
-        }
-        curl_close($cURLHandle);
-        if (!empty($response)) {
-            $data = json_decode($response, true);
-            $bridges = $data['bridges'];
-            foreach ($bridges as $bridge) {
-                $this->SendDebug('DiscoverBridges', 'Bridge ID: ' . $bridge['bridgeId'] . ' , IP-Address: ' . $bridge['ip'] . ' , Port: ' . $bridge['port'], 0);
-            }
-        }
-        return $response;
-    }
-
-    /**
      * Enables the API.
      *
      * Enables the api (if not yet enabled) and returns the api token.
@@ -140,6 +108,19 @@ trait bridgeAPI
          *	4 lock ‘n’ go
          * 	5 lock ‘n’ go with unlatch
          */
+
+        // Check SmartLockUniqueID, in some cases the user uses the instance id instead of the uid
+        if (IPS_ObjectExists($SmartLockUniqueID)) {
+            $moduleID = IPS_GetInstance($SmartLockUniqueID)['ModuleInfo']['ModuleID'];
+            if ($moduleID == SMARTLOCK_MODULE_GUID) {
+                // The user uses an instance id, we need the UID
+                $id = $SmartLockUniqueID;
+                $SmartLockUniqueID = IPS_GetProperty($id, 'SmartLockUID');
+                if (empty($SmartLockUniqueID)) {
+                    return '';
+                }
+            }
+        }
         $endpoint = '/lockAction?nukiId=' . $SmartLockUniqueID . '&action=' . $LockAction . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
@@ -282,18 +263,34 @@ trait bridgeAPI
     {
         $bridgeIP = $this->ReadPropertyString('BridgeIP');
         $bridgePort = $this->ReadPropertyInteger('BridgePort');
+        $timeout = round($this->ReadPropertyInteger('Timeout') / 1000);
+        if ($timeout < 1) {
+            $timeout = 1;
+        }
+        $this->SendDebug('Timeout', json_encode($timeout), 0);
         $token = $this->ReadPropertyString('BridgeAPIToken');
-        $cURLHandle = curl_init();
-        curl_setopt_array($cURLHandle, [
+        $ch = curl_init();
+        curl_setopt_array($ch, [
             CURLOPT_URL            => 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . $token,
             CURLOPT_HEADER         => 0,
             CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_TIMEOUT, 40]);
-        $response = curl_exec($cURLHandle);
+            CURLOPT_FAILONERROR    => true,
+            CURLOPT_CONNECTTIMEOUT => $timeout,
+            CURLOPT_TIMEOUT, $timeout]);
+        $response = curl_exec($ch);
+        if (curl_errno($ch)) {
+            $error_msg = curl_error($ch);
+        }
         if ($response == false) {
             $response = '';
+        } else {
+            $this->SendDebug('Data', $response, 0);
         }
-        curl_close($cURLHandle);
+        curl_close($ch);
+        if (isset($error_msg)) {
+           $response = '';
+           $this->SendDebug('Data', 'An error has occurred: ' . json_encode($error_msg), 0);
+        }
         return $response;
     }
 }

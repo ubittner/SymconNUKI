@@ -5,47 +5,32 @@
  *
  * @file        module.php
  *
+ * prefix       NUKI
+ *
  * @author      Ulrich Bittner
  * @copyright   (c) 2019
  * @license     CC BY-NC-SA 4.0
  *
  * @version     1.04
- * @build       1006
- * @date        2019-06-28, 10:15
+ * @build       1007
+ * @date        2019-08-07, 18:00
  *
  * @see         https://github.com/ubittner/SymconNUKI
  *
  * @guids		Library
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
  *
- *				Virtual I/O (Server Socket NUKI Callback)
+ *				Server Socket (Virtual I/O NUKI Callback)
  *				{018EF6B5-AB94-40C6-AA53-46943E824ACF} (CR:	IO_RX)
  *				{79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (I: 	IO_TX)
  *
- *				Spliter (NUKI Bridge)
+ *				NUKI Bridge (Spliter)
  *				{B41AE29B-39C1-4144-878F-94C0F7EEC725} (Module GUID)
  *
  * 				{79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (PR:	IO_TX)
  *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (CR: Device_RX)
  *              {018EF6B5-AB94-40C6-AA53-46943E824ACF} (I:	IO_RX)
  *				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (I:	Device_TX)
- *
- *				Device (NUKI Smartlock)
- *				{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14} (Module GUID)
- * 				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
- *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
- *
- *              Configurator (NUKI Configurator)
- *              {1ADAB09D-67EF-412C-B851-B2848C33F67B} (Module GUID)
- *              {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
- *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
- *
- *
- * @changelog	2019-06-28, 10:15, data flow fix for configurator
- *              2019-04-21, 10:00, added changes for module store
- *              2018-04-21, 12:30, rebuild for IP-Symcon 5.0
- * 				2017-04-19, 23:00, update to API Version 1.5 and some improvements
- * 				2017-01-18, 13:00, initial module script version 1.01
  *
  */
 
@@ -68,6 +53,8 @@ class NUKIBridge extends IPSModule
         // Register properties
         $this->RegisterPropertyString('BridgeIP', '');
         $this->RegisterPropertyInteger('BridgePort', 8080);
+        $this->RegisterPropertyInteger('Timeout', 5000);
+        $this->RegisterPropertyString('BridgeID', '');
         $this->RegisterPropertyString('BridgeAPIToken', '');
         $this->RegisterPropertyBoolean('UseCallback', false);
         $this->RegisterPropertyString('SocketIP', '');
@@ -87,24 +74,23 @@ class NUKIBridge extends IPSModule
             return;
         }
 
-        $callback = false;
+        // Callback
         if ($this->ReadPropertyBoolean('UseCallback')) {
-            $callback = true;
-            // Server socket
-            $this->RequireParent(SERVER_SOCKET_GUID);
+            $this->ConnectParent(SERVER_SOCKET_GUID);
+            $bridgeID = $this->ReadPropertyString('BridgeID');
+            if (!empty($bridgeID)) {
+                $filter = '.*User-Agent: NukiBridge_' . $bridgeID . '.*';
+                $this->SetReceiveDataFilter($filter);
+            }
+        } else {
+            $parent = $this->GetParent();
+            if ($parent != 0 && IPS_ObjectExists($parent)) {
+                IPS_DisconnectInstance($this->InstanceID);
+            }
+            $filter = '.*User-Agent: NukiBridge_99999999.*';
+            $this->SetReceiveDataFilter($filter);
         }
 
-        $parentID = $this->GetParent();
-        if ($parentID > 0) {
-            if (IPS_GetProperty($parentID, 'Port') != $this->ReadPropertyInteger('SocketPort')) {
-                IPS_SetProperty($parentID, 'Port', $this->ReadPropertyInteger('SocketPort'));
-            }
-            IPS_SetName($parentID, 'NUKI Socket');
-            IPS_SetProperty($parentID, 'Open', $callback);
-            if (IPS_HasChanges($parentID)) {
-                IPS_ApplyChanges($parentID);
-            }
-        }
         // Validate configuration
         $this->ValidateBridgeConfiguration();
     }
@@ -136,6 +122,7 @@ class NUKIBridge extends IPSModule
      */
     public function ReceiveData($JSONString)
     {
+        $this->SendDebug('ReceiveData', 'Incomming data for this NUKI Bridge', 0);
         $data = json_decode($JSONString);
         $data = utf8_decode($data->Buffer);
         $this->SendDebug('ReceiveData', $data, 0);

@@ -1,14 +1,8 @@
 # NUKI Configurator
 
-[![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Modul_Version-1.04-blue.svg)]()
-![Version](https://img.shields.io/badge/Modul_Build-1006-blue.svg)
-[![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
-[![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
-[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![StyleCI](https://github.styleci.io/repos/71931303/shield?branch=master&style=flat)](https://github.styleci.io/repos/71931303)
+[![Image](../imgs/NUKI_Logo.png)](https://nuki.io/de/)  
 
-![Image](../imgs/nuki-logo-black.png)
+[![Image](../imgs/NUKI_SmartLock.png)]()  
 
 Dieses Modul listet die mit der NUKI Bridge gekoppelten Smart Locks auf und der Nutzer kann die ausgewählten Smart Locks automatisch anlegen lassen.
 
@@ -32,8 +26,8 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 
 ### 1. Funktionsumfang
 
-* Listet die verfügbaren Smart Locks auf
-* Automatisches Anlegen des ausgewählten Smart Locks
+* Listet die verfügbaren NUKI Smart Locks der zugewiesenen NUKI Bridge auf
+* Automatisches Anlegen des ausgewählten NUKI Smart Locks
 
 ### 2. Voraussetzungen
 
@@ -55,24 +49,26 @@ __Konfigurationsseite__:
 
 Name        | Beschreibung
 ----------- | ---------------------------------
-Kategorie   | Auswahl der Kategorie für die Smart Locks
-Smart Locks | Liste der verfügbaren Smart Locks
+Kategorie   | Auswahl der Kategorie für die NUKI Smart Locks
+Smart Locks | Liste der verfügbaren NUKI Smart Locks
 
 __Schaltflächen__:
 
 Name            | Beschreibung
 --------------- | ---------------------------------
-Alle erstellen  | Erstellt für alle aufgelisteten Smart Locks jeweils eine Instanz
-Erstellen       | Erstellt für das ausgewählte Smart Lock eine Instanz        
+Alle erstellen  | Erstellt für alle aufgelisteten NUKI Smart Locks jeweils eine Instanz
+Erstellen       | Erstellt für das ausgewählte NUKI Smart Lock eine Instanz        
 
 __Vorgehensweise__:
 
+Über die Schaltfläche `AKTUALISIEREN` können Sie im NUKI Configurator die Liste der verfügbaren NUKI Smart Locks jederzeit aktualisieren.  
+Wählen Sie `ALLE ERSTELLEN` oder wählen Sie ein NUKI Smart Lock aus der Liste aus und drücken dann die Schaltfläche `ERSTELLEN`, um die NUKI Smart Locks automatisch anzulegen.
 Sofern noch keine NUKI Bridge installiert wurde, muss einmalig beim Erstellen der NUKI Configurator Instanz die Konfiguration der NUKI Bridge vorgenommen werden.  
-Geben Sie die IP-Adresse, den Port und den API Token der NUKI Bridge an. 
+Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout, die Bridge ID und den API Token der NUKI Bridge an. 
 Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt.  
 Wählen Sie anschließend `WEITER` aus.  
-Über die Schaltfläche `AKTUALISIEREN` können Sie im NUKI Configurator die Liste der verfügbaren Smart Locks jederzeit aktualisieren.  
-Wählen Sie `ALLE ERSTELLEN` oder wählen Sie ein Smart Lock aus der Liste aus und drücken dann die Schaltfläche `ERSTELEN`, um die Smart Locks automatisch anzulegen.
+
+Sofern Sie mehrere NUKI Bridges verwenden, können Sie in der Instanzkonfiguration unter `GATEWAY ÄNDERN` die entsprechende NUKI Bridge auswählen. Die NUKI Bridge Instanz muss dafür bereits vorhanden sein.  
 
 ### 5. Statusvariablen und Profile
 

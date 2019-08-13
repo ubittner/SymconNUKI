@@ -1,0 +1,13 @@
+{
+  "id": "{29B22B4B-2BBE-4A48-AC96-65AB80EC0CD5}",
+  "name": "NUKI Discovery",
+  "type": 5,
+  "vendor": "NUKI",
+  "aliases": [
+    "NUKI Discovery"
+  ],
+  "parentRequirements": [],
+  "childRequirements": [],
+  "implemented": [],
+  "prefix": "NUKI"
+}
