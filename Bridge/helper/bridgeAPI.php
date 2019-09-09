@@ -109,18 +109,6 @@ trait bridgeAPI
          * 	5 lock ‘n’ go with unlatch
          */
 
-        // Check SmartLockUniqueID, in some cases the user uses the instance id instead of the uid
-        if (IPS_ObjectExists($SmartLockUniqueID)) {
-            $moduleID = IPS_GetInstance($SmartLockUniqueID)['ModuleInfo']['ModuleID'];
-            if ($moduleID == SMARTLOCK_MODULE_GUID) {
-                // The user uses an instance id, we need the UID
-                $id = $SmartLockUniqueID;
-                $SmartLockUniqueID = IPS_GetProperty($id, 'SmartLockUID');
-                if (empty($SmartLockUniqueID)) {
-                    return '';
-                }
-            }
-        }
         $endpoint = '/lockAction?nukiId=' . $SmartLockUniqueID . '&action=' . $LockAction . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;

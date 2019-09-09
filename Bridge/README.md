@@ -127,7 +127,7 @@ Gibt als Rückwert eine Liste aller verfügbaren NUKI Smart Locks aus.
 Zeigt den aktuellen Status eines NUKI SmartLocks an.  
 
 `NUKI_SetLockActionOfSmartLock(integer $BridgeInstanceID, integer $SmarLockUniqueID, integer $LockAction)`  
-Alternativ zur Angabe der NUKI Smart Lock Unique ID kann auch die Instanz ID des NUKI Smart Locks angegeben werden.  
+Achtung: Es muss die NUKI Smart Lock Unique ID angegeben werden und nicht die Instanz ID des NUKI Smart Locks.  
 Führt eine Aktion für das NUKI Smart Lock gemäss Tabelle aus:  
 
 Wert | Bezeichnung
