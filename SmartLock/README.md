@@ -1,16 +1,10 @@
 # NUKI Smart Lock
 
-[![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
-[![Version](https://img.shields.io/badge/Modul_Version-1.04-blue.svg)]()
-![Version](https://img.shields.io/badge/Modul_Build-1006-blue.svg)
-[![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
-[![Version](https://img.shields.io/badge/API_Version-1.07-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
-[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![StyleCI](https://github.styleci.io/repos/71931303/shield?branch=master&style=flat)](https://github.styleci.io/repos/71931303)
+[![Image](../imgs/NUKI_Logo.png)](https://nuki.io/de/)  
 
-![Image](../imgs/nuki-logo-black.png)
+[![Image](../imgs/NUKI_SmartLock.png)]()  
 
-Dieses Modul integriert das [NUKI Smart Lock](https://nuki.io/de/smart-lock/) in [IP-Symcon](https://www.symcon.de).
+Dieses Modul integriert das elektronische Türschloss [NUKI Smart Lock](https://nuki.io/de/smart-lock/) in [IP-Symcon](https://www.symcon.de).
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
 
@@ -32,9 +26,9 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 
 ### 1. Funktionsumfang
 
-* Öffnen und Schließen des Smart Locks
+* Auf- und Zusperren des NUKI Smart Locks
 * Anzeige von Statusinformationen
-* Protokollierung der Schließvorgänge
+* Protokollierung der Schaltvorgänge
 
 ### 2. Voraussetzungen
 
@@ -48,8 +42,13 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
   
 - Bei privater Nutzung wird das Modul über den Modul Store installiert.
 
-- Sofern noch keine NUKI Configurator Instanz in IP-Symcon vorhanden ist, so beginnen Sie mit der Installation und Konfiguration des NUKI Configurators.  
+- Sofern noch keine NUKI Bridge Instanz in IP-Symcon vorhanden ist, so beginnen Sie mit der Installation der NUKI Discovery Instanz.  
+Hier finden Sie die [Dokumentation](../Discovery) zum NUKI Discovery.  
+Alternativ können Sie die NUKI Bridge auch manuell anlegen. Hier finden Sie die [Dokumentation](../Bridge) zur NUKI Bridge.
+
+- Sofern noch keine NUKI Configurator Instanz in IP-Symcon vorhanden ist, so beginnen Sie mit der Installation und Konfiguration der NUKI Configurator Instanz.  
 Hier finden Sie die [Dokumentation](../Configurator) zum NUKI Configurator.  
+Alternativ könenn Sie das NUKI Smart Lock auch manuell anlegen. Lesen Sie bitte dafür diese Dokumentation weiter durch.
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
@@ -59,24 +58,21 @@ __Konfigurationsseite__:
 
 Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
-(0) Instanzinformationen            | Informationen zu der Instanz
-(1) Smart Lock                      | Eigenschaften des Smart Locks
+(0) Instanzinformationen            | Informationen zu NUKI Smart Lock Instanz
+(1) Smart Lock                      | Eigenschaften des NUKI Smart Locks
 (2) Schaltvorgänge                  | Definieren der Schaltvorgänge
-(3) Protokoll                       | Eigenschaften zum Protokoll
+(3) Protokoll                       | Eigenschaften zur Protokollierung
 
-__Schaltflächen__:
+__Schaltflächen im Aktionsbereich__:
 
 Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
-(0) Instanzinformationen            |
-Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an
 (1) Smart Lock                      | 
-Status anzeigen                     | Zeigt den Status des Smart Locks an
+Status anzeigen                     | Zeigt den Status des NUKI Smart Locks an
 Unpair                              | Entfernt das Smart Lock von der Bridge
+Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an
 
-__Vorgehensweise__:
-
-Das manuelle Anlegen einer Smart Lock Instanz ist nicht zwingend erforderlich. Über die Instanzkonfiguration der NUKI Bridge Instanz können die Smart Locks automatisch angelegt werden.
+__Vorgehensweise__:  
 
 ### 5. Statusvariablen und Profile
 
@@ -86,9 +82,9 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 Name                    | Typ       | Beschreibung
 ----------------------- | --------- | ----------------
-SmartLockSwitch         | Boolean   | Schalter zum ver- und entriegeln des Türschlosses
-SmartLockStatus         | String    | Zeigt den Status des Türschlosses an
-SmartLockBatteryState   | Boolean   | Zeigt den Batteriezustand des Türschlosses an
+SmartLockSwitch         | Boolean   | Schalter zum auf- und zusperren des NUKI Smart Locks
+SmartLockStatus         | String    | Zeigt den Status des NUKI Smart Locks an
+SmartLockBatteryState   | Boolean   | Zeigt den Batteriezustand des NUKI Smart Locks an
 Protocol                | String    | Zeigt die letzten Protokolleinträge an
 
 ##### Profile:
@@ -97,23 +93,20 @@ Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
 NUKI.SmartLockSwitch
 
-Werden alle NUKI SmartLock Instanzen gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
+Werden alle NUKI Smart Lock Instanzen gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
 
 ### 6. WebFront
 
-Über das WebFront kann das Smart Lock ver- oder entriegelt werden.
-Weiherhin werden Statusinformationen über das Smart Lock und ein Protokoll angezeigt.
+Über das WebFront kann das NUKI Smart Lock auf- oder zugesperrt werden.
+Weiherhin werden Statusinformationen über das NUKI Smart Lock und ein Protokoll angezeigt.
  
 ### 7. PHP-Befehlsreferenz
 
-`NUKI_ShowLockStateOfSmartLock(integer $SmartLockInstanceID)`
+`NUKI_ShowLockStateOfSmartLock(integer $SmartLockInstanceID)`  
+Zeigt den Status eines smarten NUKI Türschlosses an.  
 
-Zeigt den Status eines smarten NUKI Türschlosses an.
+`NUKI_ToggleSmartLock(integer $SmartLockInstanceID, bool $State)`  
+Sperrt das NUKI Smart Lock mit `true` auf oder sperrt mit `false` das NUKI Smart Lock zu.  
 
-`NUKI_ToggleSmartLock(integer $SmartLockInstanceID, bool $State)`
-
-Öffnet `true` oder Schließt `false` das Smart Lock.
-
-`NUKI_UnpairSmartLock(integer $SmartLockInstanceID, bool $State)`
-
-Löscht das Smart Lock von der Bridge.
+`NUKI_UnpairSmartLock(integer $SmartLockInstanceID, bool $State)`  
+Löscht das NUKI Smart Lock von der Bridge.

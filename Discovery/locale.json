@@ -1,0 +1,15 @@
+{
+  "translations": {
+    "de": {
+      "This instance can determine the NUKI bridges connected to the NUKI server.": "Diese Instanz kann die mit dem NUKI Server verbundenen NUKI Bridges ermitteln.",
+      "An existing Internet connection is required.": "Es wird eine bestehende Internetverbindung benötigt.",
+      "(0) Instance information": "(0) Instanzinformationen",
+      "Symcon version:\t5.1>": "Symcon Version:\t5.1>",
+      "Date:\t\t\tAugust 7, 2019": "Datum:\t\t\t7. August 2019",
+      "Time:\t\t\t18:00": "Uhrzeit:\t\t\t18:00",
+      "Developer:\t\tUlrich Bittner": "Entwickler:\t\tUlrich Bittner",
+      "Prefix:\t\t\tNUKI": "Präfix:\t\t\tNUKI",
+      "IP address": "IP-Adresse"
+    }
+  }
+}

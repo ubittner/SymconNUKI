@@ -1,11 +1,17 @@
 {
   "translations": {
     "de": {
+      "This instance can determine existing NUKI Smart Locks of the assigned NUKI Bridge (CHANGE GATEWAY).": "Diese Instanz kann bestehende NUKI Smart Locks der zugeordneten NUKI Bridge (GATEWAY ÄNDERN) ermitteln.",
+      "Please select the category for the NUKI Smart Locks.": "Bitte wählen Sie die Kategorie für die NUKI Smart Locks aus.",
+      "(0) Instance information": "(0) Instanzinformationen",
+      "Symcon version:\t5.1>": "Symcon Version:\t5.1>",
+      "Name:\t\t\tNUKI Configurator": "Name:\t\t\tNUKI Konfigurator",
+      "Date:\t\t\tAugust 7, 2019": "Datum:\t\t\t7. August 2019",
+      "Time:\t\t\t18:00": "Uhrzeit:\t\t\t18:00",
+      "Developer:\t\tUlrich Bittner": "Entwickler:\t\tUlrich Bittner",
+      "Prefix:\t\t\tNUKI": "Präfix:\t\t\tNUKI",
       "Category": "Kategorie",
-      "NUKI Configurator - A project of Ulrich Bittner": "NUKI Konfigurator - Ein Projekt von Ulrich Bittner",
       "NUKI Configurator": "NUKI Konfigurator",
-      "Please select the category for the Smart Locks:": "Bitte wählen Sie die Kategorie für die Smart Locks aus:",
-      "Firmware version": "Firmware Version",
       "not found!": "nicht gefunden!"
     }
   }
