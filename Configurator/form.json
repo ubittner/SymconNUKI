@@ -91,7 +91,7 @@
         },
         {
           "caption": "Name",
-          "name": "SmartLockName",
+          "name": "DeviceName",
           "width": "auto"
         }
       ],
