@@ -87,10 +87,10 @@
         {
           "caption": "Type",
           "name": "DeviceType",
-          "width": "200px"
+          "width": "100px"
         },
         {
-          "caption": "Type Description",
+          "caption": "Type Designation",
           "name": "TypeDescription",
           "width": "200px"
         },
