@@ -11,9 +11,9 @@
  * @copyright   (c) 2019
  * @license     CC BY-NC-SA 4.0
  *
- * @version     1.04
- * @build       1007
- * @date        2019-08-07, 18:00
+ * @version     1.05
+ * @build       1008
+ * @date        2019-09-26, 18:00
  *
  * @see         https://github.com/ubittner/SymconNUKI
  *
@@ -70,10 +70,12 @@ class NUKIConfigurator extends IPSModule
      */
     private function GetConfigurationList(): array
     {
-        // Get already existing smart lock instances
+        // Get already existing devices
         $smartLockDevices = IPS_GetInstanceListByModuleID('{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}');
-        $this->SendDebug('ExistingInstances', json_encode($smartLockDevices), 0);
-        // Get available smart locks from the bridge
+        $openerDevices = IPS_GetInstanceListByModuleID('{057995F0-F9A9-C6F4-C882-C47A259419CE}');
+        $existingDevices = array_merge($smartLockDevices, $openerDevices);
+        $this->SendDebug('ExistingInstances', json_encode($existingDevices), 0);
+        // Get available devices from the bridge
         $devices = [];
         $parentID = IPS_GetInstance($this->InstanceID)['ConnectionID'];
         if ($parentID > 0) {
@@ -97,29 +99,42 @@ class NUKIConfigurator extends IPSModule
         $configurationList = [];
         foreach ($devices as $key => $device) {
             $instanceID = 0;
-            $smartLockName = $device['name'];
-            $smartLockID = (string) $device['nukiId'];
-            $this->SendDebug('NukiID', $smartLockID, 0);
-            foreach ($smartLockDevices as $smartLockDevice) {
-                $this->SendDebug('Device', $smartLockDevice, 0);
-                $smartLockUID = (string) IPS_GetProperty($smartLockDevice, 'SmartLockUID');
-                $this->SendDebug('NukiID', $smartLockUID, 0);
-                if (($smartLockID === $smartLockUID) && (IPS_GetInstance($smartLockDevice)['ConnectionID'] === $parentID)) {
-                    $instanceID = $smartLockDevice;
+            $deviceType = (string)$device['deviceType'];
+            $deviceID = (string)$device['nukiId'];
+            $deviceName = (string)$device['name'];
+            $moduleID = '';
+            $propertyName = '';
+            foreach ($existingDevices as $existingDevice) {
+                $moduleID = IPS_GetInstance($existingDevice['ModuleInfo']['ModuleID']);
+                $deviceUID = 0;
+                // Smart Lock
+                if ($moduleID == '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}') {
+                    $propertyName = 'SmartLockUID';
+                    $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyName);
+
+                }
+                // Opener
+                if ($moduleID == '{057995F0-F9A9-C6F4-C882-C47A259419CE}') {
+                    $propertyName = 'OpenerUID';
+                    $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyName);
+                }
+                if (($deviceID === $deviceUID) && (IPS_GetInstance($existingDevice)['ConnectionID'] === $parentID)) {
+                    $instanceID = $existingDevice;
                     $this->SendDebug('InstanceID', $instanceID, 0);
                 } else {
                     $this->SendDebug('InstanceID', 'not found!', 0);
                 }
             }
             $configurationList[] = [
-                'instanceID'      => $instanceID,
-                'SmartLockName'   => $smartLockName,
-                'SmartLockID'     => $smartLockID,
-                'create'          => [
-                    'moduleID'      => '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}',
+                'instanceID' => $instanceID,
+                'DeviceID' => $deviceID,
+                'DeviceType' => $deviceType,
+                'DeviceName' => $deviceName,
+                'create' => [
+                    'moduleID' => $moduleID,
                     'configuration' => [
-                        'SmartLockUID'  => $smartLockID,
-                        'SmartLockName' => $smartLockName],
+                        $propertyName => $deviceID,
+                        'DeviceName' => $deviceName],
                     'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
         }
         return $configurationList;
