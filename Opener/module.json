@@ -1,0 +1,17 @@
+{
+  "id": "{057995F0-F9A9-C6F4-C882-C47A259419CE}",
+  "name": "NUKI Opener",
+  "type": 3,
+  "vendor": "NUKI",
+  "aliases": [
+    "NUKI Opener"
+  ],
+  "parentRequirements": [
+    "{73188E44-8BBA-4EBF-8BAD-40201B8866B9}"
+  ],
+  "childRequirements": [],
+  "implemented": [
+    "{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}"
+  ],
+  "prefix": "NUKI"
+}
