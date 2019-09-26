@@ -59,7 +59,7 @@ class NUKIConfigurator extends IPSModule
     {
         $form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
         $values = $this->GetConfigurationList();
-        $form['actions'][1]['values'] = $values;
+        $form['actions'][0]['values'] = $values;
         return json_encode($form);
     }
 
@@ -125,7 +125,6 @@ class NUKIConfigurator extends IPSModule
                     $this->SendDebug('InstanceID', 'not found!', 0);
                 }
             }
-            /*
             $configurationList[] = [
                 'instanceID' => $instanceID,
                 'DeviceID' => $deviceID,
@@ -137,18 +136,7 @@ class NUKIConfigurator extends IPSModule
                         $propertyName => $deviceID,
                         'DeviceName' => $deviceName],
                     'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
-            */
-            $configurationList[] = [
-                'instanceID' => $instanceID,
-                'DeviceID' => $deviceID,
-                'DeviceType' => $deviceType,
-                'DeviceName' => $deviceName,
-                'create' => [
-                    'moduleID' => $moduleID,
-                    'configuration' => [
-                        'Property' => $deviceID,
-                        'DeviceName' => $deviceName],
-                    'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
+
         }
         return $configurationList;
     }
