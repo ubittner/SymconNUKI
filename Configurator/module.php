@@ -99,9 +99,9 @@ class NUKIConfigurator extends IPSModule
         $configurationList = [];
         foreach ($devices as $key => $device) {
             $instanceID = 0;
-            $deviceType = (string)$device['deviceType'];
-            $deviceID = (string)$device['nukiId'];
-            $deviceName = (string)$device['name'];
+            $deviceType = (string) $device['deviceType'];
+            $deviceID = (string) $device['nukiId'];
+            $deviceName = (string) $device['name'];
             $moduleID = '';
             $propertyName = '';
             foreach ($existingDevices as $existingDevice) {
@@ -110,13 +110,12 @@ class NUKIConfigurator extends IPSModule
                 // Smart Lock
                 if ($moduleID == '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}') {
                     $propertyName = 'SmartLockUID';
-                    $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyName);
-
+                    $deviceUID = (string) IPS_GetProperty($existingDevice, $propertyName);
                 }
                 // Opener
                 if ($moduleID == '{057995F0-F9A9-C6F4-C882-C47A259419CE}') {
                     $propertyName = 'OpenerUID';
-                    $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyName);
+                    $deviceUID = (string) IPS_GetProperty($existingDevice, $propertyName);
                 }
                 if (($deviceID === $deviceUID) && (IPS_GetInstance($existingDevice)['ConnectionID'] === $parentID)) {
                     $instanceID = $existingDevice;
@@ -127,14 +126,14 @@ class NUKIConfigurator extends IPSModule
             }
             $configurationList[] = [
                 'instanceID' => $instanceID,
-                'DeviceID' => $deviceID,
+                'DeviceID'   => $deviceID,
                 'DeviceType' => $deviceType,
                 'DeviceName' => $deviceName,
-                'create' => [
-                    'moduleID' => $moduleID,
+                'create'     => [
+                    'moduleID'      => $moduleID,
                     'configuration' => [
                         $propertyName => $deviceID,
-                        'DeviceName' => $deviceName],
+                        'DeviceName'  => $deviceName],
                     'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
         }
         return $configurationList;
