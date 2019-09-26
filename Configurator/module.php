@@ -125,6 +125,7 @@ class NUKIConfigurator extends IPSModule
                     $this->SendDebug('InstanceID', 'not found!', 0);
                 }
             }
+            /*
             $configurationList[] = [
                 'instanceID' => $instanceID,
                 'DeviceID' => $deviceID,
@@ -134,6 +135,18 @@ class NUKIConfigurator extends IPSModule
                     'moduleID' => $moduleID,
                     'configuration' => [
                         $propertyName => $deviceID,
+                        'DeviceName' => $deviceName],
+                    'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
+            */
+            $configurationList[] = [
+                'instanceID' => $instanceID,
+                'DeviceID' => $deviceID,
+                'DeviceType' => $deviceType,
+                'DeviceName' => $deviceName,
+                'create' => [
+                    'moduleID' => $moduleID,
+                    'configuration' => [
+                        'Property' => $deviceID,
                         'DeviceName' => $deviceName],
                     'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
         }
