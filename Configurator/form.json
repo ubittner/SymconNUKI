@@ -90,6 +90,11 @@
           "width": "200px"
         },
         {
+          "caption": "Type Description",
+          "name": "TypeDescription",
+          "width": "200px"
+        },
+        {
           "caption": "Name",
           "name": "DeviceName",
           "width": "auto"

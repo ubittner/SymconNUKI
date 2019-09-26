@@ -100,6 +100,16 @@ class NUKIConfigurator extends IPSModule
         foreach ($devices as $key => $device) {
             $instanceID = 0;
             $deviceType = (string)$device['deviceType'];
+            switch ($deviceType) {
+                case 0:
+                    $typeDesignation = 'Smart Lock';
+                    break;
+                case 2:
+                    $typeDesignation = 'Opener';
+                    break;
+                default:
+                    $typeDesignation = $this->translate('Unknown');
+            }
             $deviceID = (string)$device['nukiId'];
             $deviceName = (string)$device['name'];
             $moduleID = '';
@@ -129,6 +139,7 @@ class NUKIConfigurator extends IPSModule
                 'instanceID' => $instanceID,
                 'DeviceID' => $deviceID,
                 'DeviceType' => $deviceType,
+                'TypeDescription' =>  $typeDesignation,
                 'DeviceName' => $deviceName,
                 'create' => [
                     'moduleID' => $moduleID,
