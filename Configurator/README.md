@@ -2,8 +2,6 @@
 
 [![Image](../imgs/NUKI_Logo.png)](https://nuki.io/de/)  
 
-[![Image](../imgs/NUKI_SmartLock.png)]()  
-
 Dieses Modul listet die mit der NUKI Bridge gekoppelten Geräte (Smart Locks / Opener) auf und der Nutzer kann die ausgewählten Geräte automatisch anlegen lassen.
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
@@ -33,8 +31,7 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 
 - IP-Symcon ab Version 5.1
 - NUKI Bridge
-- NUKI Smart Lock oder 
-- NUKI Opener
+- NUKI Smart Lock oder Opener
 
 ### 3. Software-Installation
 
@@ -49,14 +46,14 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 __Konfigurationsseite__:
 
 Name        | Beschreibung
------------ | ---------------------------------
+----------- | -----------------------------------------
 Kategorie   | Auswahl der Kategorie für die NUKI Geräte
 NUKI Geräte | Liste der verfügbaren NUKI Geräte
 
 __Schaltflächen__:
 
 Name            | Beschreibung
---------------- | ---------------------------------
+--------------- | ----------------------------------------------------------------
 Alle erstellen  | Erstellt für alle aufgelisteten NUKI Geräte jeweils eine Instanz
 Erstellen       | Erstellt für das ausgewählte NUKI Gerät eine Instanz        
 
@@ -83,7 +80,7 @@ Es werden keine Statusvariablen angelegt.
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
-Es werden keine neuen Profile angelegt.
+Es werden keine Profile angelegt.
 
 ### 6. WebFront
 
