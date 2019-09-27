@@ -85,13 +85,13 @@
           "width": "200px"
         },
         {
-          "caption": "Type",
+          "caption": "Device Type",
           "name": "DeviceType",
-          "width": "100px"
+          "width": "200px"
         },
         {
           "caption": "Type Designation",
-          "name": "TypeDescription",
+          "name": "TypeDesignation",
           "width": "200px"
         },
         {

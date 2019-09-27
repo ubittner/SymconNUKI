@@ -281,4 +281,71 @@ trait bridgeAPI
         }
         return $response;
     }
+
+    //########## NEW
+    /**
+     * Returns a list of all paired devices.
+     *
+     * @return string
+     */
+    public function GetPairedDevices(): string
+    {
+        $endpoint = '/list?token=';
+        $data = $this->SendDataToBridge($endpoint);
+        return $data;
+    }
+
+    /**
+     * Returns a list of all paired smart locks.
+     *
+     * @return string
+     */
+    public function GetPairedSmartLocks(): string
+    {
+        $endpoint = '/list?token=';
+        $data = $this->SendDataToBridge($endpoint);
+        // Filter to device type 0
+        if (!empty($data)) {
+            $data = json_decode($data);
+            foreach ($data as $key => $device) {
+                if (array_key_exists('deviceType', $device)) {
+                    $deviceType = $device->deviceType;
+                    // Delete Opener
+                    if ($deviceType == 2) {
+                        unset($data[$key]);
+                    }
+                }
+            }
+            $data = array_values($data);
+            $data = json_encode($data);
+        }
+        return $data;
+    }
+
+    /**
+     * Returns a list of all paired openers.
+     *
+     * @return string
+     */
+    public function GetPairedOpeners(): string
+    {
+        $endpoint = '/list?token=';
+        $data = $this->SendDataToBridge($endpoint);
+        // Filter to device type 2
+        if (!empty($data)) {
+            $data = json_decode($data);
+            foreach ($data as $key => $device) {
+                if (array_key_exists('deviceType', $device)) {
+                    $deviceType = $device->deviceType;
+                    if ($deviceType == 0) {
+                        // Delete Smart Lock
+                        unset($data[$key]);
+                    }
+                }
+            }
+            $data = array_values($data);
+            $data = json_encode($data);
+        }
+        return $data;
+    }
 }

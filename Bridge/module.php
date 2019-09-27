@@ -132,6 +132,29 @@ class NUKIBridge extends IPSModule
         $this->SetStateOfSmartLock($smartLockData, true);
     }
 
+    public function ForwardData($JSONString)
+    {
+        $this->SendDebug(__FUNCTION__, $JSONString, 0);
+        $data = json_decode($JSONString);
+        switch ($data->Buffer->Command) {
+            case 'GetPairedDevices':
+                $result = $this->GetPairedDevices();
+                break;
+            case 'GetPairedSmartLocks':
+                $result = $this->GetPairedSmartLocks();
+                break;
+            case 'GetPairedOpeners':
+                $result = $this->GetPairedOpeners();
+                break;
+            default:
+                $this->SendDebug(__FUNCTION__, 'Invalid Command: ' . $data->Buffer->Command, 0);
+                $result = '';
+                break;
+        }
+        $this->SendDebug(__FUNCTION__, json_encode($result), 0);
+        return json_encode($result);
+    }
+
     /**
      * Gets the parent id.
      *
