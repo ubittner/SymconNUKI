@@ -113,19 +113,22 @@ class NUKIConfigurator extends IPSModule
             $deviceID = (string)$device['nukiId'];
             $deviceName = (string)$device['name'];
             $moduleID = '';
+            $propertyUID = '';
             $propertyName = '';
             foreach ($existingDevices as $existingDevice) {
                 $moduleID = IPS_GetInstance($existingDevice)['ModuleInfo']['ModuleID'];
                 $deviceUID = 0;
                 // Smart Lock
                 if ($moduleID == '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}') {
-                    $propertyName = 'SmartLockUID';
+                    $propertyUID = 'SmartLockUID';
+                    $propertyName = 'SmartLockName';
                     $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyName);
 
                 }
                 // Opener
                 if ($moduleID == '{057995F0-F9A9-C6F4-C882-C47A259419CE}') {
-                    $propertyName = 'OpenerUID';
+                    $propertyUID = 'OpenerUID';
+                    $propertyName = 'OpenerName';
                     $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyName);
                 }
                 if (($deviceID === $deviceUID) && (IPS_GetInstance($existingDevice)['ConnectionID'] === $parentID)) {
@@ -144,8 +147,8 @@ class NUKIConfigurator extends IPSModule
                 'create' => [
                     'moduleID' => $moduleID,
                     'configuration' => [
-                        $propertyName => $deviceID,
-                        'name' => $deviceName],
+                        $propertyUID => $deviceID,
+                        $propertyName => $deviceName],
                     'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
 
         }
