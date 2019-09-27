@@ -140,11 +140,10 @@ class NUKIBridge extends IPSModule
             case 'GetPairedDevices':
                 $result = $this->GetPairedDevices();
                 break;
-            case 'GetPairedSmartLocks':
-                $result = $this->GetPairedSmartLocks();
-                break;
-            case 'GetPairedOpeners':
-                $result = $this->GetPairedOpeners();
+            case 'GetLockState':
+                $params = (array) $data->Buffer->Params;
+                //$this->SendDebug('Test:', $params['nukiId'], 0);
+                $result = $this->GetLockState($params['nukiId'], $params['deviceType']);
                 break;
             default:
                 $this->SendDebug(__FUNCTION__, 'Invalid Command: ' . $data->Buffer->Command, 0);

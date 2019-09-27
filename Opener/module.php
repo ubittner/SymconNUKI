@@ -53,7 +53,8 @@ class NUKIOpener extends IPSModule
         if (!IPS_VariableProfileExists($profile)) {
             IPS_CreateVariableProfile($profile, 1);
         }
-        IPS_SetVariableProfileAssociation($profile, 1, $this->Translate('open'), 'LockOpen', 0x00FF00);
+        IPS_SetVariableProfileIcon($profile, '');
+        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Open'), 'LockOpen', 0x00FF00);
     }
 
     public function ApplyChanges()
@@ -77,18 +78,18 @@ class NUKIOpener extends IPSModule
         // Register variables
         $profile = 'NUKI.' . $this->InstanceID . '.DoorBuzzer';
         $this->MaintainVariable('DoorBuzzer', $this->Translate('Door buzzer'), 1, $profile, 1, true);
+        $this->EnableAction('DoorBuzzer');
 
-        $statusID = $this->RegisterVariableString('OpenerStatus', $this->Translate('State'), '', 2);
-        IPS_SetIcon($statusID, 'Information');
+        $this->MaintainVariable('OpenerMode', $this->Translate('Mode'), 3, '', 2, true);
+        IPS_SetIcon($this->GetIDForIdent('OpenerMode'), 'Information');
 
-        $this->RegisterVariableBoolean('OpenerBatteryState', $this->Translate('Battery'), '~Battery', 3);
+        $this->MaintainVariable('OpenerState', $this->Translate('State'), 3, '', 3, true);
+        IPS_SetIcon($this->GetIDForIdent('OpenerState'), 'Information');
 
-        $uniqueID = $this->ReadPropertyString('OpenerUID');
-        if (!empty($uniqueID)) {
-            NUKI_UpdateStateOfSmartLocks($this->GetBridgeInstanceID(), false);
-        }
+        $this->MaintainVariable('BatteryState', $this->Translate('Battery'), 0, '~Battery', 4, true);
 
-        $this->SetStatus(102);
+        // Get actual state
+        $this->GetOpenerState();
     }
 
     public function Destroy()
@@ -140,35 +141,89 @@ class NUKIOpener extends IPSModule
         return $id;
     }
 
-    /**
-     * Shows the lock state of the Smart Lock.
-     *
-     * @return string
-     */
-    public function ShowDeviceState(): string
-    {
-        $state = '';
-        $bridgeID = $this->GetBridgeInstanceID();
-        if ($bridgeID > 0) {
-            $state = NUKI_GetLockStateOfSmartLock($bridgeID, $this->ReadPropertyString('OpenerUID'));
-            NUKI_UpdateStateOfSmartLocks($bridgeID, true);
-        }
-        return $state;
-    }
 
-    /**
-     * Removes the Smart Lock from the bridge.
-     *
-     * @return string
-     */
-    public function UnpairDevice(): string
+    public function GetOpenerState(): array
     {
-        $state = '';
-        $bridgeID = $this->GetBridgeInstanceID();
-        if ($bridgeID > 0) {
-            $state = NUKI_UnpairSmartLockFromBridge($bridgeID, $this->ReadPropertyString('OpenerUID'));
+        $nukiID = $this->ReadPropertyString('OpenerUID');
+        if (empty($nukiID)) {
+            return [];
         }
-        return $state;
+        if (!$this->HasActiveParent()) {
+            return [];
+        }
+        $data = [];
+        $buffer = [];
+        $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
+        $buffer['Command'] = 'GetLockState';
+        $buffer['Params'] = ['nukiId' => (int)$nukiID, 'deviceType' => 2];
+        $data['Buffer'] = $buffer;
+        $data = json_encode($data);
+        $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
+        if (empty($result)) {
+            return [];
+        }
+        if (array_key_exists('mode', $result)) {
+            /*
+             *  2    door mode, operation mode after complete setup
+             *  3    continuous mode, ring to open permanently active
+             */
+            switch ($result['mode']) {
+                case 2:
+                    $modeText = $this->translate('Door Mode');
+                    break;
+                case 3:
+                    $modeText = $this->translate('Continuous Mode');
+                    break;
+                default:
+                    $modeText = $this->translate('Unknown');
+            }
+            $this->SetValue('OpenerMode', $modeText);
+        }
+        if (array_key_exists('state', $result)) {
+            /*
+             *  0   untrained
+             *  1   online
+             *	2   -
+             *  3   rto active
+             *	4   -
+             *	5   open
+             *	6   -
+             *	7   opening
+             *  253 boot run
+             *  254 -
+             *  255 undefined
+             */
+            switch ($result['state']) {
+                case 0:
+                    $stateText = $this->Translate('Untrained');
+                    break;
+                case 1:
+                    $stateText = 'Online';
+                    break;
+                case 3:
+                    $stateText = $this->Translate('Ring to Open active');
+                    break;
+                case 5:
+                    $stateText = $this->Translate('Open');
+                    break;
+                case 7:
+                    $stateText = $this->Translate('Opening');
+                    break;
+                case 253:
+                    $stateText = 'Boot Run';
+                    break;
+                case 255:
+                    $stateText = $this->Translate('Undefined');
+                    break;
+                default:
+                    $stateText = $this->Translate('Unknown');
+            }
+            $this->SetValue('OpenerState', $stateText);
+        }
+        if (array_key_exists('batteryCritical', $result)) {
+            $this->SetValue('BatteryState', $result['batteryCritical']);
+        }
+        return $result;
     }
 
     /**
@@ -183,4 +238,7 @@ class NUKIOpener extends IPSModule
             NUKI_SetLockActionOfSmartLock($bridgeID, $openerUniqueID, $action = 0);
         }
     }
+
+
+
 }

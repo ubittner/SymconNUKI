@@ -59,6 +59,19 @@ trait bridgeAPI
         return $data;
     }
 
+    //########## NEW
+    /**
+     * Returns a list of all paired devices.
+     *
+     * @return string
+     */
+    public function GetPairedDevices(): string
+    {
+        $endpoint = '/list?token=';
+        $data = $this->SendDataToBridge($endpoint);
+        return $data;
+    }
+
     /**
      * Returns the current lock state of a given Smart Lock.
      *
@@ -87,6 +100,59 @@ trait bridgeAPI
          *	7 unlatching
          *	254 motor blocked
          *	255 undefined
+         */
+    }
+
+
+
+    //########## NEW
+    /**
+     * Gets the state of the device.
+     *
+     * @param int $NukiID
+     * @return string
+     */
+    public function GetLockState(int $NukiID, int $DeviceType): string
+    {
+        $endpoint = '/lockState?nukiId=' . $NukiID .'&deviceType=' . $DeviceType . '&token=';
+        $data = $this->SendDataToBridge($endpoint);
+        return $data;
+
+        /*
+         *	Response example for a locked smart lock
+         *
+         *  {“deviceType”: 0, “mode”: 2,“state”: 1, “stateName”: “locked”, “batteryCritical”: false, “success”: true}
+         *
+         */
+
+        /*
+         * 	Possible state values for a smart lock are:
+         *  0   uncalibrated
+         *  1   locked
+         *	2   unlocking
+         *  3   unlocked
+         *	4   locking
+         *	5   unlatched
+         *	6   unlocked (lock ‘n’ go)
+         *	7   unlatching
+         *  253 -
+         *  254 motor blocked
+         *  255 undefined
+         */
+
+        /*
+         * 	Possible state values for a opener are:
+         *  0   untrained
+         *  1   online
+         *	2   -
+         *  3   rto active
+         *	4   -
+         *	5   open
+         *	6   -
+         *	7   opening
+         *  253 boot run
+         *  254 -
+         *  255 undefined
          */
     }
 
@@ -280,72 +346,5 @@ trait bridgeAPI
             $this->SendDebug('Data', 'An error has occurred: ' . json_encode($error_msg), 0);
         }
         return $response;
-    }
-
-    //########## NEW
-    /**
-     * Returns a list of all paired devices.
-     *
-     * @return string
-     */
-    public function GetPairedDevices(): string
-    {
-        $endpoint = '/list?token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
-    }
-
-    /**
-     * Returns a list of all paired smart locks.
-     *
-     * @return string
-     */
-    public function GetPairedSmartLocks(): string
-    {
-        $endpoint = '/list?token=';
-        $data = $this->SendDataToBridge($endpoint);
-        // Filter to device type 0
-        if (!empty($data)) {
-            $data = json_decode($data);
-            foreach ($data as $key => $device) {
-                if (array_key_exists('deviceType', $device)) {
-                    $deviceType = $device->deviceType;
-                    // Delete Opener
-                    if ($deviceType == 2) {
-                        unset($data[$key]);
-                    }
-                }
-            }
-            $data = array_values($data);
-            $data = json_encode($data);
-        }
-        return $data;
-    }
-
-    /**
-     * Returns a list of all paired openers.
-     *
-     * @return string
-     */
-    public function GetPairedOpeners(): string
-    {
-        $endpoint = '/list?token=';
-        $data = $this->SendDataToBridge($endpoint);
-        // Filter to device type 2
-        if (!empty($data)) {
-            $data = json_decode($data);
-            foreach ($data as $key => $device) {
-                if (array_key_exists('deviceType', $device)) {
-                    $deviceType = $device->deviceType;
-                    if ($deviceType == 0) {
-                        // Delete Smart Lock
-                        unset($data[$key]);
-                    }
-                }
-            }
-            $data = array_values($data);
-            $data = json_encode($data);
-        }
-        return $data;
     }
 }

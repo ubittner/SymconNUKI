@@ -6,6 +6,7 @@
   "aliases": [
     "NUKI Opener"
   ],
+  "url": "https://github.com/ubittner/SymconNUKI",
   "parentRequirements": [
     "{73188E44-8BBA-4EBF-8BAD-40201B8866B9}"
   ],
