@@ -192,6 +192,7 @@ class NUKIConfigurator extends IPSModule
      */
     private function GetDeviceInstances($DeviceUID, $DeviceType)
     {
+        $instanceID = 0;
         switch ($DeviceType) {
             // Smart Lock
             case 0:
@@ -210,9 +211,9 @@ class NUKIConfigurator extends IPSModule
         $instanceIDs = IPS_GetInstanceListByModuleID($moduleID);
         foreach ($instanceIDs as $id) {
             if (IPS_GetProperty($id, $propertyUIDName) == $DeviceUID) {
-                return $id;
+                $instanceID = $id;
             }
         }
-        return 0;
+        return $instanceID;
     }
 }
