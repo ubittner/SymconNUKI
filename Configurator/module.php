@@ -145,7 +145,7 @@ class NUKIConfigurator extends IPSModule
                     'moduleID' => $moduleID,
                     'configuration' => [
                         $propertyName => $deviceID,
-                        'DeviceName' => $deviceName],
+                        'name' => $deviceName],
                     'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
 
         }
