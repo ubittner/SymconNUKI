@@ -115,7 +115,7 @@ class NUKIConfigurator extends IPSModule
             $moduleID = '';
             $propertyName = '';
             foreach ($existingDevices as $existingDevice) {
-                $moduleID = IPS_GetInstance($existingDevice['ModuleInfo']['ModuleID']);
+                $moduleID = IPS_GetInstance($existingDevice)['ModuleInfo']['ModuleID'];
                 $deviceUID = 0;
                 // Smart Lock
                 if ($moduleID == '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}') {
