@@ -122,14 +122,14 @@ class NUKIConfigurator extends IPSModule
                 if ($moduleID == '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}') {
                     $propertyUID = 'SmartLockUID';
                     $propertyName = 'SmartLockName';
-                    $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyName);
+                    $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyUID);
 
                 }
                 // Opener
                 if ($moduleID == '{057995F0-F9A9-C6F4-C882-C47A259419CE}') {
                     $propertyUID = 'OpenerUID';
                     $propertyName = 'OpenerName';
-                    $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyName);
+                    $deviceUID = (string)IPS_GetProperty($existingDevice, $propertyUID);
                 }
                 if (($deviceID === $deviceUID) && (IPS_GetInstance($existingDevice)['ConnectionID'] === $parentID)) {
                     $instanceID = $existingDevice;
