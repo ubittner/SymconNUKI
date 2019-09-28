@@ -6,6 +6,7 @@
   "aliases": [
     "NUKI Discovery"
   ],
+  "url": "https://github.com/ubittner/SymconNUKI",
   "parentRequirements": [],
   "childRequirements": [],
   "implemented": [],
