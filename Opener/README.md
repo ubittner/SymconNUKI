@@ -104,11 +104,11 @@ Wird die NUKI Opener Instanz gelöscht, so werden automatisch die oben aufgefüh
 ### 7. PHP-Befehlsreferenz
 
 ```text
-Status abfragen:  
+Status aktualisieren:  
 
 NUKI_GetOpenerState(integer $InstanzID);  
 Fragt den aktuellen Status des NUKI Openers ab und aktualisiert die Werte der entsprechenden Variablen.  
-Rückgabewert: Ein Array der Daten  
+Rückgabewert: Die aktuellen Werte als String  
 
 Beispiel:  
 $state = NUKI_GetOpenerState(12345);

@@ -2,7 +2,7 @@
   "elements": [
     {
       "type": "Image",
-      "image": "data:image/png;base64,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"
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAoCAYAAAB6tz31AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOxAAADsQBlSsOGwAABCRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyI+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDx0aWZmOkNvbXByZXNzaW9uPjU8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjk2PC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj45NjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjg4PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT4xPC9leGlmOkNvbG9yU3BhY2U+CiAgICAgICAgIDxleGlmOlBpeGVsWURpbWVuc2lvbj40MDwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAgICAgIDxkYzpzdWJqZWN0PgogICAgICAgICAgICA8cmRmOkJhZy8+CiAgICAgICAgIDwvZGM6c3ViamVjdD4KICAgICAgICAgPHhtcDpNb2RpZnlEYXRlPjIwMTktMDktMjdUMTY6MDk6NTQ8L3htcDpNb2RpZnlEYXRlPgogICAgICAgICA8eG1wOkNyZWF0b3JUb29sPlBpeGVsbWF0b3IgMy44LjY8L3htcDpDcmVhdG9yVG9vbD4KICAgICAgPC9yZGY6RGVzY3JpcHRpb24+CiAgIDwvcmRmOlJERj4KPC94OnhtcG1ldGE+CgZYb6MAAAYMSURBVGgF7ZlbbBVVFIb3nCJXRSCAQYyC2jZWxIhaNFguQsBEEo3RxCc03tBo1PjgJSoW4i3WEB8kxKgReNDEmhgfjBcwVkRFQAQVSYUoIKIhKq1tubZn/P5Dhwyrc86ZOac+tM6f/Gf2WnuvtWf/s2fPnjmeS1G2Ar5znvu6bq5fkXnC+X6N8906z2We8mqbtnhlZ08TOH9D3WzfZZZ7A7xKl0XuDLJ2+Ruc599RkepTngL+tpsGZo8dXJwZmJnpdyKuoCldkRmfzboRmeOe9LdkBQ4dGOJ5/nk5VcNJUNdz/tRU4LAopZTbOo94ztuPmieDZcLz3PZU4JNlSWx5s5oOd7nsSv+o3+KdknGsw05HP+vvdL63LF2DE0vaM2Dx+D3N2aoJu72u7GjW3zYedF95A1y9mzJrtZ3YPaNTT2wF/lo/dfiozJChrsO1M7PbYwemDVMFUgVSBVIFUgVSBVIFUgVSBfqZAnrReAQOh8vhXhgX1TSs6W4cvLBsxP61SIIx1NfCQVCfn/Q2uRtu6rY59MBIPFfCwVAxesX/DSqmExbCxVTyMSYXp/PMws1wD4zC2TgvhWob9PUH5S+7bQ49cBqeK6B0VH6d3z6o83N641CiNVDJ46KBhl2GD8UInk+bf0zcOuxRBWLnUNdiYnQxzyoQE1S9a+J0QZYEleY4GrsRqk0wNmmzBZ4K80HiamIFMToqZqKUPgaF2XAVrJQRA0Npo/gw5SsGzdwhMBw3DHtAgUDFDDQx6qtQTJBuhInTHaOZZqG7YxG8HqpNcH4dlF+HB2E+6NzsmGQPUpIwZmC8Bs8PO/OUdWUtonxRbXQbhWHtcJ3KymtzF4sJckS1i/ItIGAhtBdN4r4Ko2Jw56Bzs/WyfSuwWk+Hb8BJMv4nuIZx1kPNxDA+xFgED4edScpRAiv+KiiRJ8vo56hifM/CcWacW7G1AWg1/kRmPoGV5DK4Cl4io59iLONaCu0Y/8b3KPwOloVCAiuxtjgS+XIZ/QjBevkYY5pnxqWH2fNwtfGXZBYTWEm1Fq+E02T0E2iPeyO8C9qH2tv4lkFttcqGBA6uZqFkF1Cpp2ldoUZ9qE771npot5Uf4VsCC23JqI4PCWyTSfADESmq8a2A0yPq+ppLb4UXmpNuxtaS8Yvxl2VKYHsr6PZpgO9FZD4X3wo4A9o4XH0GGqPFWhzfWme5tgS2UOc74L3wc1uJPRG+AnWb9Sdcx2Dm9vaAogRWH1r49THlFrgGWmi5qLXOPmQ3ca7bzPmOxdaWrVf3/vkEDvrWeqQnrW6f/xJRt2y4P9UXaxNuX6y8iQaLoX1D07r8DBwJewXFBFYnEvl22Fsi66F6DIYxBmNc2GHKE7AHGZ/yHDW+uKYuViN8KyJgPr6HoT74lI04AquTnfAeqCtfLn4nQatJcib2DcYXmGdQ0KDtuWoJ02fPUhDkWkLwxogED+BTn2Uj6ChOoh9ppDX5mziNC7TZTd1Ppl7ncT+8DQ4L1Z1D+Wk4J+QLipspdARGicddxOl7Q4uJ16fGF+Ak409sJhFYySWy1uSoq676ONBg3oloqO+2L0NtDxugdioqS3Q9dMPYh/E+9MPOEsufEqf+7LJVhU+vzMNhWdhFtE40zJuLZKyhfquJUfzjReKCaom5Dob7jFvuJE6zOi4+oaHNvdQE6y8fvSLbdrKfg8XWY73h7jfx27Grk85gYnLQTF4A1x83E/9qFmtJ+D5xpHNvEvNSCXGFQtqo1OSQKBYP4rjVOuPaEjhK5DhbIs3ghbA5bmemndbQ+6Bdj02zE6beHPXU15r55wlv8ULc8e0glbZu7SblYOwn4WTjD5vSy2qWs9W5ZpO2O0e6j9obHoJxoO+lWk5KffCtJXYu1Iz8GUpEC80u3Sl3wzuhdiFJoPFpfQ3Gp3JrngSN+F+EB2FYk3HY2uVYEXHlIM30wA360TFnK2AWrISCbFV+AJMMZCbttUHXk1cPpqTQhb4IXg2nwQlQg/wBfga/gHthKaglaArUR6wAypnvzjudumuh1mWtwYKOusj5ljS1nQdHQ/WjNVv6ffwvQWpr6BzfmjcAAAAASUVORK5CYII="
     },
     {
       "type": "Label",
@@ -22,6 +22,10 @@
     },
     {
       "type": "Label",
+      "caption": "In conjunction with a NUKI Opener you can turn your existing intercom into a smart door opener."
+    },
+    {
+      "type": "Label",
       "caption": "For further information, please refer to the documentation or the notes here in the configuration."
     },
     {
@@ -34,7 +38,7 @@
       "items": [
         {
           "type": "Label",
-          "caption": "Symcon version:\t5.1>"
+          "caption": "Symcon Version:\t5.2>"
         },
         {
           "type": "Label",
@@ -42,11 +46,11 @@
         },
         {
           "type": "Label",
-          "caption": "Version:\t\t\t1.04-1007"
+          "caption": "Version:\t\t\t1.05-1008"
         },
         {
           "type": "Label",
-          "caption": "Date:\t\t\tAugust 7, 2019"
+          "caption": "Date:\t\t\tSeptember 26, 2019"
         },
         {
           "type": "Label",
@@ -326,15 +330,6 @@
           ]
         }
       ]
-    },
-    {
-      "type": "Label",
-      "caption": " "
-    },
-    {
-      "type": "Button",
-      "caption": "Manual",
-      "onClick": "echo 'https://github.com/ubittner/SymconNUKI';"
     }
   ],
   "status": [

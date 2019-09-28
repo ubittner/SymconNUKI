@@ -135,16 +135,16 @@ class NUKIOpener extends IPSModule
     /**
      * Gets the actual state of the opener.
      *
-     * @return array
+     * @return string
      */
-    public function GetOpenerState(): array
+    public function GetOpenerState(): string
     {
         $nukiID = $this->ReadPropertyString('OpenerUID');
         if (empty($nukiID)) {
-            return [];
+            return '';
         }
         if (!$this->HasActiveParent()) {
-            return [];
+            return '';
         }
         $data = [];
         $buffer = [];
@@ -153,10 +153,73 @@ class NUKIOpener extends IPSModule
         $buffer['Params'] = ['nukiId' => (int)$nukiID, 'deviceType' => 2];
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
-        $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
+        $result = $this->SendDataToParent($data);
+        $this->SendDebug(__FUNCTION__ . ' Data', json_decode($result), 0);
         if (empty($result)) {
-            return [];
+            return '';
         }
+        $this->SetOpenerState(json_decode($result));
+        return json_decode($result);
+    }
+
+    /**
+     * Opens the door via buzzer.
+     *
+     * @return bool
+     */
+    public function BuzzDoor(): bool
+    {
+        $result = $this->SetLockAction(3);
+        return $result;
+    }
+
+    /**
+     * Toggles the ring to open function of the opener.
+     *
+     * @param bool $State
+     * @return bool
+     */
+    public function ToggleRingToOpen(bool $State): bool
+    {
+        // Deactivate
+        $lockAction = 2;
+        // Activate
+        if ($State) {
+            $lockAction = 1;
+        }
+        $result = $this->SetLockAction($lockAction);
+        return $result;
+    }
+
+    /**
+     * Toggles the continuous mode of the opener.
+     *
+     * @param bool $State
+     * @return bool
+     */
+    public function ToggleContinuousMode(bool $State): bool
+    {
+        // Deactivate
+        $lockAction = 5;
+        // Activate
+        if ($State) {
+            $lockAction = 4;
+        }
+        $result = $this->SetLockAction($lockAction);
+        return $result;
+    }
+
+    //########## Private
+
+    /**
+     * Set the state of the opener.
+     *
+     * @param string $Data
+     */
+    private function SetOpenerState(string $Data)
+    {
+        $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
+        $result = json_decode($Data, true);
         if (array_key_exists('mode', $result)) {
             /*
              *  2    door mode, operation mode after complete setup
@@ -218,57 +281,7 @@ class NUKIOpener extends IPSModule
         if (array_key_exists('batteryCritical', $result)) {
             $this->SetValue('BatteryState', $result['batteryCritical']);
         }
-        return $result;
     }
-
-    /**
-     * Opens the door via buzzer.
-     *
-     * @return bool
-     */
-    public function BuzzDoor(): bool
-    {
-        $result = $this->SetLockAction(3);
-        return $result;
-    }
-
-    /**
-     * Toggles the ring to open function of the opener.
-     *
-     * @param bool $State
-     * @return bool
-     */
-    public function ToggleRingToOpen(bool $State): bool
-    {
-        // Deactivate
-        $lockAction = 2;
-        // Activate
-        if ($State) {
-            $lockAction = 1;
-        }
-        $result = $this->SetLockAction($lockAction);
-        return $result;
-    }
-
-    /**
-     * Toggles the continuous mode of the opener.
-     *
-     * @param bool $State
-     * @return bool
-     */
-    public function ToggleContinuousMode(bool $State): bool
-    {
-        // Deactivate
-        $lockAction = 5;
-        // Activate
-        if ($State) {
-            $lockAction = 4;
-        }
-        $result = $this->SetLockAction($lockAction);
-        return $result;
-    }
-
-    //########## Private
 
     /**
      * Set the lock action of the opener.

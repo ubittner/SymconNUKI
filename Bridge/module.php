@@ -11,9 +11,9 @@
  * @copyright   (c) 2019
  * @license     CC BY-NC-SA 4.0
  *
- * @version     1.04
- * @build       1007
- * @date        2019-08-07, 18:00
+ * @version     1.05
+ * @build       1008
+ * @date        2019-09-26, 18:00
  *
  * @see         https://github.com/ubittner/SymconNUKI
  *
@@ -36,6 +36,19 @@
 
 // Declare
 declare(strict_types=1);
+
+// Definitions
+if (!defined('SMARTLOCK_MODULE_GUID')) {
+    define('SMARTLOCK_MODULE_GUID', '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}');
+}
+
+if (!defined('OPENER_MODULE_GUID')) {
+    define('OPENER_MODULE_GUID', '{057995F0-F9A9-C6F4-C882-C47A259419CE}');
+}
+
+if (!defined('SERVER_SOCKET_GUID')) {
+    define('SERVER_SOCKET_GUID', '{8062CF2B-600E-41D6-AD4B-1BA66C32D6ED}');
+}
 
 // Include
 include_once __DIR__ . '/helper/autoload.php';
@@ -122,14 +135,15 @@ class NUKIBridge extends IPSModule
      */
     public function ReceiveData($JSONString)
     {
-        $this->SendDebug('ReceiveData', 'Incomming data for this NUKI Bridge', 0);
+        $this->SendDebug(__FUNCTION__ . ' Start', 'Incomming data', 0);
+        $this->SendDebug(__FUNCTION__ . ' String', $JSONString, 0);
         $data = json_decode($JSONString);
         $data = utf8_decode($data->Buffer);
-        $this->SendDebug('ReceiveData', $data, 0);
-        preg_match_all('/\\{(.*?)\\}/', $data, $match);
-        $smartLockData = json_encode(json_decode(implode($match[0]), true));
-        $this->SendDebug('ReceiveData', $smartLockData, 0);
-        $this->SetStateOfSmartLock($smartLockData, true);
+        preg_match_all('/{(.*?)}/', $data, $match);
+        $receivedData = json_encode(json_decode(implode($match[0]), true));
+        $this->SendDebug(__FUNCTION__ . ' Data', $receivedData, 0);
+        $this->SendDebug(__FUNCTION__ . ' End', 'Data received', 0);
+        $this->SetDeviceState($receivedData);
     }
 
     public function ForwardData($JSONString)
@@ -162,7 +176,7 @@ class NUKIBridge extends IPSModule
      *
      * @return int
      */
-    protected function GetParent(): int
+    private function GetParent(): int
     {
         $connectionID = IPS_GetInstance($this->InstanceID)['ConnectionID'];
         return $connectionID;
@@ -196,5 +210,27 @@ class NUKIBridge extends IPSModule
                 $this->SetStatus(201);
             }
         }
+    }
+
+    private function SetDeviceState(string $Data)
+    {
+        /*
+         * Callback example:
+         *
+         * {“nukiId”: 11, “deviceType”: 0, “mode”: 2, “state”: 1, “stateName”: “locked”, “batteryCritical”: false}
+         *
+         */
+
+        $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
+        if (empty($Data)) {
+            return;
+        }
+        $data = [];
+        $data['DataID'] = '{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}';
+        $data['Buffer'] = json_decode($Data);
+        $data = json_encode($data);
+        $this->SendDebug(__FUNCTION__ . ' Forward', $data, 0);
+        // Send data to all children
+        $this->SendDataToChildren($data);
     }
 }

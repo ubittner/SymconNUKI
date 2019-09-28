@@ -239,7 +239,7 @@
         },
         {
           "type": "Button",
-          "caption": "Show Actual State",
+          "caption": "Update State",
           "onClick": "$state=NUKI_GetSmartLockState($id); print_r($state);"
         },
         {

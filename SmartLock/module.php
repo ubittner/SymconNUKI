@@ -136,6 +136,22 @@ class NUKISmartLock extends IPSModule
         $this->ApplyChanges();
     }
 
+    public function ReceiveData($JSONString)
+    {
+        $this->SendDebug(__FUNCTION__ . ' Start', 'Incomming data', 0);
+        $this->SendDebug(__FUNCTION__ . ' String', $JSONString, 0);
+        $data = json_decode(utf8_decode($JSONString));
+        $buffer = $data->Buffer;
+        $this->SendDebug(__FUNCTION__ . ' Data', json_encode($buffer), 0);
+        $nukiID = $buffer->nukiId;
+        if ($this->ReadPropertyString('SmartLockUID') != $nukiID) {
+            $this->SendDebug(__FUNCTION__ . ' Abort', 'Data is not for this instance.', 0);
+            return;
+        }
+        $this->SendDebug(__FUNCTION__ . ' End', 'Data received', 0);
+        $this->SetSmartLockState(json_encode($buffer));
+    }
+
     //#################### Request Action
 
     public function RequestAction($Ident, $Value)
@@ -149,14 +165,19 @@ class NUKISmartLock extends IPSModule
 
     //#################### Public
 
-    public function GetSmartLockState(): array
+    /**
+     * Gets the actual state of the smart lock.
+     *
+     * @return string
+     */
+    public function GetSmartLockState(): string
     {
         $nukiID = $this->ReadPropertyString('SmartLockUID');
         if (empty($nukiID)) {
-            return [];
+            return '';
         }
         if (!$this->HasActiveParent()) {
-            return [];
+            return '';
         }
         $data = [];
         $buffer = [];
@@ -165,10 +186,52 @@ class NUKISmartLock extends IPSModule
         $buffer['Params'] = ['nukiId' => (int)$nukiID, 'deviceType' => 0];
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
-        $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
+        $result = $this->SendDataToParent($data);
+        $this->SendDebug(__FUNCTION__ . ' Data', json_decode($result), 0);
         if (empty($result)) {
-            return [];
+            return '';
         }
+        $this->SetSmartLockState(json_decode($result));
+        return json_decode($result);
+    }
+
+    /**
+     * Toggles the Smart Lock.
+     *
+     * @param bool $State
+     * @return bool
+     */
+    public function ToggleSmartLock(bool $State): bool
+    {
+        $lockAction = 255;
+        if ($State == false) {
+            $lockAction = $this->ReadPropertyString('SwitchOffAction');
+        }
+        if ($State == true) {
+            $lockAction = $this->ReadPropertyString('SwitchOnAction');
+        }
+        // Set values
+        $this->SetValue('SmartLockSwitch', $State);
+        // Send data to bridge
+        $result = $this->SetLockAction($lockAction);
+        if ($result) {
+            $stateName = [1 => 'Unlock', 2 => 'Lock', 3 => 'Unlatch', 4 => 'Lock ‘n’ go', 5 => 'Lock ‘n’ go with unlatch', 255 => 'Undefined'];
+            $name = $stateName[$lockAction];
+            $this->SetValue('SmartLockStatus', $this->Translate($name));
+        } else {
+            // Revert switch
+            $this->SetValue('SmartLockSwitch', !$State);
+        }
+        return $result;
+    }
+
+    //#################### Private
+
+    // ToDo: Protocol missing !!!
+    private function SetSmartLockState(string $Data)
+    {
+        $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
+        $result = json_decode($Data, true);
         if (array_key_exists('mode', $result)) {
             /*
              *  2    door mode
@@ -240,40 +303,7 @@ class NUKISmartLock extends IPSModule
         if (array_key_exists('batteryCritical', $result)) {
             $this->SetValue('SmartLockBatteryState', $result['batteryCritical']);
         }
-        return $result;
     }
-
-    /**
-     * Toggles the Smart Lock.
-     *
-     * @param bool $State
-     * @return bool
-     */
-    public function ToggleSmartLock(bool $State): bool
-    {
-        $lockAction = 255;
-        if ($State == false) {
-            $lockAction = $this->ReadPropertyString('SwitchOffAction');
-        }
-        if ($State == true) {
-            $lockAction = $this->ReadPropertyString('SwitchOnAction');
-        }
-        // Set values
-        $this->SetValue('SmartLockSwitch', $State);
-        // Send data to bridge
-        $result = $this->SetLockAction($lockAction);
-        if ($result) {
-            $stateName = [1 => 'Unlock', 2 => 'Lock', 3 => 'Unlatch', 4 => 'Lock ‘n’ go', 5 => 'Lock ‘n’ go with unlatch', 255 => 'Undefined'];
-            $name = $stateName[$lockAction];
-            $this->SetValue('SmartLockStatus', $this->Translate($name));
-        } else {
-            // Revert switch
-            $this->SetValue('SmartLockSwitch', !$State);
-        }
-        return $result;
-    }
-
-    //#################### Private
 
     /**
      * Set the lock action of the opener.

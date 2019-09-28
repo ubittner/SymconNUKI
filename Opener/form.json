@@ -102,8 +102,8 @@
         },
         {
           "type": "Button",
-          "caption": "Show Actual State",
-          "onClick": "$state=NUKI_GetOpenerState($id); print_r($state);"
+          "caption": "Update State",
+          "onClick": "$state=NUKI_GetOpenerState($id); var_dump($state);"
         },
         {
           "type": "RowLayout",

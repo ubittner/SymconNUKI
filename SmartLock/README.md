@@ -97,16 +97,30 @@ Werden alle NUKI Smart Lock Instanzen gelöscht, so werden automatisch die oben 
 
 ### 6. WebFront
 
-Über das WebFront kann das NUKI Smart Lock auf- oder zugesperrt werden.
+Über das WebFront kann das NUKI Smart Lock zu- oder aufgesperrt werden.
 Weiherhin werden Statusinformationen über das NUKI Smart Lock und ein Protokoll angezeigt.
  
 ### 7. PHP-Befehlsreferenz
 
-`NUKI_ShowLockStateOfSmartLock(integer $SmartLockInstanceID)`  
-Zeigt den Status eines smarten NUKI Türschlosses an.  
+```text
+Status aktualisieren:  
 
-`NUKI_ToggleSmartLock(integer $SmartLockInstanceID, bool $State)`  
-Sperrt das NUKI Smart Lock mit `true` auf oder sperrt mit `false` das NUKI Smart Lock zu.  
+NUKI_GetSmartLockState(integer $InstanzID);  
+Fragt den aktuellen Status des NUKI Smart Locks ab und aktualisiert die Werte der entsprechenden Variablen.  
+Rückgabewert: Die aktuellen Werte als String  
 
-`NUKI_UnpairSmartLock(integer $SmartLockInstanceID, bool $State)`  
-Löscht das NUKI Smart Lock von der Bridge.
+Beispiel:  
+$state = NUKI_GetSmartLockState(12345);
+```  
+
+```text
+Türschloß zu und aufsperren:  
+
+NUKI_ToggleSmartLock(integer $InstanzID, boolean $Status);  
+$Status: false = Funktion gemäss Konfiguration (i.d.R. zusperren), true = Funktion gemäss Konfiguration (i.d.R. aufsperren)    
+Rückgabewert: Gibt true oder false zurück  
+
+Beispiel:  
+Zusperren:      $toggle = NUKI_ToggleSmartLock(12345, false);
+Aufsperren:     $toggle = NUKI_ToggleSmartLock(12345, true);
+```  
