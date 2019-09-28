@@ -276,7 +276,7 @@ class NUKIOpener extends IPSModule
      * @param int $LockAction
      * @return bool
      */
-    private function SetLockAction(int $LockAction)
+    private function SetLockAction(int $LockAction): bool
     {
         $success = false;
         $nukiID = $this->ReadPropertyString('OpenerUID');
