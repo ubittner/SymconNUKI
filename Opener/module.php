@@ -54,7 +54,7 @@ class NUKIOpener extends IPSModule
             IPS_CreateVariableProfile($profile, 1);
         }
         IPS_SetVariableProfileIcon($profile, '');
-        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Open'), 'LockOpen', 0x00FF00);
+        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Actuate'), 'Door', 0x00FF00);
     }
 
     public function ApplyChanges()
