@@ -142,8 +142,11 @@ class NUKIBridge extends IPSModule
                 break;
             case 'GetLockState':
                 $params = (array) $data->Buffer->Params;
-                //$this->SendDebug('Test:', $params['nukiId'], 0);
                 $result = $this->GetLockState($params['nukiId'], $params['deviceType']);
+                break;
+            case 'SetLockAction':
+                $params = (array) $data->Buffer->Params;
+                $result = $this->SetLockAction($params['nukiId'], $params['lockAction'], $params['deviceType']);
                 break;
             default:
                 $this->SendDebug(__FUNCTION__, 'Invalid Command: ' . $data->Buffer->Command, 0);

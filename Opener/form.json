@@ -103,7 +103,42 @@
         {
           "type": "Button",
           "caption": "Show Actual State",
-          "onClick": "$state=NUKI_GetOpenerState($id);print_r($state);"
+          "onClick": "$state=NUKI_GetOpenerState($id); print_r($state);"
+        },
+        {
+          "type": "RowLayout",
+          "items": [
+            {
+              "type": "Button",
+              "caption": "Deactivate Ring to Open",
+              "onClick": "$toggle=NUKI_ToggleRingToOpen($id, false); var_dump($toggle);"
+            },
+            {
+              "type": "Button",
+              "caption": "Activate Ring to Open",
+              "onClick": "$toggle=NUKI_ToggleRingToOpen($id, true); var_dump($toggle);"
+            }
+          ]
+        },
+        {
+          "type": "RowLayout",
+          "items": [
+            {
+              "type": "Button",
+              "caption": "Deactivate Continuous Mode",
+              "onClick": "$toggle=NUKI_ToggleContinuousMode($id, false); var_dump($toggle);"
+            },
+            {
+              "type": "Button",
+              "caption": "Activate Continuous Mode",
+              "onClick": "$toggle=NUKI_ToggleContinuousMode($id, true); var_dump($toggle);"
+            }
+          ]
+        },
+        {
+          "type": "Button",
+          "caption": "Open Door",
+          "onClick": "$open=NUKI_BuzzDoor($id); var_dump($open);"
         }
       ]
     }
