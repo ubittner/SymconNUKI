@@ -233,7 +233,6 @@ class NUKISmartLock extends IPSModule
 
     //#################### Private
 
-    // ToDo: Protocol missing !!!
     private function SetSmartLockState(string $Data)
     {
         $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
@@ -305,6 +304,12 @@ class NUKISmartLock extends IPSModule
                     $stateText = $this->Translate('Unknown');
             }
             $this->SetValue('SmartLockStatus', $stateText);
+            // Protocol
+            if ($this->ReadPropertyBoolean('UseProtocol')) {
+                $deviceName = $this->ReadPropertyString('SmartLockName');
+                $nukiID = $this->ReadPropertyString('SmartLockUID');
+                $this->WriteLogEntry($deviceName, $nukiID, $stateText);
+            }
         }
         if (array_key_exists('batteryCritical', $result)) {
             $this->SetValue('SmartLockBatteryState', $result['batteryCritical']);
@@ -342,5 +347,32 @@ class NUKISmartLock extends IPSModule
             $this->SetValue('SmartLockBatteryState', $result['batteryCritical']);
         }
         return $success;
+    }
+
+    /**
+     * Writes an entry to the log.
+     *
+     * @param string $DeviceName
+     * @param string $NukiID
+     * @param string $StateName
+     */
+    private function WriteLogEntry(string $DeviceName, string $NukiID, string $StateName)
+    {
+        $date = date('d.m.Y');
+        $time = date('H:i:s');
+        $string = "{$date}, {$time}, {$DeviceName}, NUKI ID: {$NukiID}, Status: {$StateName}.";
+        $entries = $this->ReadPropertyInteger('ProtocolEntries');
+        if ($entries == 1) {
+            $this->SetValue('Protocol', $string);
+        }
+        if ($entries > 1) {
+            // Get old content first
+            $content = array_merge(array_filter(explode("\n", $this->GetValue('Protocol'))));
+            $records = $entries - 1;
+            array_splice($content, $records);
+            array_unshift($content, $string);
+            $newContent = implode("\n", $content);
+            $this->SetValue('Protocol', $newContent);
+        }
     }
 }
