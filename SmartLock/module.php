@@ -136,6 +136,12 @@ class NUKISmartLock extends IPSModule
         $this->ApplyChanges();
     }
 
+    /**
+     * Receives data from the NUKI Bridge (splitter).
+     *
+     * @param $JSONString
+     * @return bool|void
+     */
     public function ReceiveData($JSONString)
     {
         $this->SendDebug(__FUNCTION__ . ' Start', 'Incomming data', 0);

@@ -48,11 +48,11 @@ trait bridgeAPI
     }
 
     /**
-     * Returns a list of all available Smart Locks.
+     * Returns a list of all paired devices.
      *
      * @return string
      */
-    public function GetSmartLocks(): string
+    public function GetPairedDevices(): string
     {
         $endpoint = '/list?token=';
         $data = $this->SendDataToBridge($endpoint);
@@ -60,6 +60,84 @@ trait bridgeAPI
     }
 
     /**
+     * Deprecated !!!
+     *
+     * Returns a list of all available Smart Locks.
+     *
+     * @return string
+     */
+    public function GetSmartLocks(): string
+    {
+        $data = $this->GetPairedDevices();
+        return $data;
+    }
+
+    /**
+     * Gets the state of the device.
+     *
+     * @param int $NukiID
+     * @param int $DeviceType
+     * @return string
+     */
+    public function GetLockState(int $NukiID, int $DeviceType = 0): string
+    {
+        /*
+         * Device type:
+         *
+         *  0   Smart lock
+         *  2   Opener
+         *
+         */
+
+        $endpoint = '/lockState?nukiId=' . $NukiID .'&deviceType=' . $DeviceType . '&token=';
+        $data = $this->SendDataToBridge($endpoint);
+        return $data;
+
+        /*
+         *  Response example for a locked smart lock
+         *
+         *  {“deviceType”: 0, “mode”: 2,“state”: 1, “stateName”: “locked”, “batteryCritical”: false, “success”: true}
+         *
+         */
+
+        /*
+         *  State values for a smart lock are:
+         *
+         *  0   uncalibrated
+         *  1   locked
+         *	2   unlocking
+         *  3   unlocked
+         *	4   locking
+         *	5   unlatched
+         *	6   unlocked (lock ‘n’ go)
+         *	7   unlatching
+         *  253 -
+         *  254 motor blocked
+         *  255 undefined
+         *
+         */
+
+        /*
+         * 	State values for an opener are:
+         *
+         *  0   untrained
+         *  1   online
+         *	2   -
+         *  3   rto active
+         *	4   -
+         *	5   open
+         *	6   -
+         *	7   opening
+         *  253 boot run
+         *  254 -
+         *  255 undefined
+         *
+         */
+    }
+
+    /**
+     * Deprecated !!!
+     *
      * Returns the current lock state of a given Smart Lock.
      *
      * @param int $SmartLockUniqueID
@@ -68,29 +146,64 @@ trait bridgeAPI
      */
     public function GetLockStateOfSmartLock(int $SmartLockUniqueID): string
     {
-        $endpoint = '/lockState?nukiId=' . $SmartLockUniqueID . '&token=';
+        $data = $this->GetLockState($SmartLockUniqueID, 0);
+        return $data;
+    }
+
+    /**
+     * Set the lock action of a device.
+     *
+     * @param int $NukiID
+     * @param int $DeviceType
+     * @param int $LockAction
+     * @return string
+     */
+    public function SetLockAction(int $NukiID, int $LockAction, int $DeviceType = 0): string
+    {
+        /*
+         *  Lock actions for a smart lock are:
+         *
+         *	1   unlock
+         *	2   lock
+         *	3   unlatch
+         *	4   lock ‘n’ go
+         * 	5   lock ‘n’ go with unlatch
+         *
+         */
+
+        /*
+         *  Lock actions for an opener are:
+         *
+         *	1   activate rto
+         *	2   deactivate rto
+         *	3   electric strike actuation
+         *	4   activate continuous mode
+         * 	5   deactivate continuous mode
+         *
+         */
+
+        /*
+         * Device type:
+         *
+         *  0   Smart lock
+         *  2   Opener
+         *
+         */
+
+        $endpoint = '/lockAction?nukiId=' . $NukiID . '&action=' . $LockAction . '&deviceType=' . $DeviceType . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
+
         /*
-         *	Response example for a locked smart lock
+         *    Response example:
          *
-         *  {“state”: 1, “stateName”: “locked”, “batteryCritical”: false, success: “true”}
-         *
-         * 	Possible state values are:
-         *  0 uncalibrated
-         *  1 locked
-         *	2 unlocking
-         *  3 unlocked
-         *	4 locking
-         *	5 unlatched
-         *	6 unlocked (lock ‘n’ go)
-         *	7 unlatching
-         *	254 motor blocked
-         *	255 undefined
+         *    {“success”: true, “batteryCritical”: false}
          */
     }
 
     /**
+     * Deprecated !!!
+     *
      * Performs a lock operation on the given Smart Lock.
      *
      * @param int $SmartLockUniqueID
@@ -100,26 +213,27 @@ trait bridgeAPI
      */
     public function SetLockActionOfSmartLock(int $SmartLockUniqueID, int $LockAction): string
     {
-        /*
-         *	$LockAction
-         *	1 unlock
-         *	2 lock
-         *	3 unlatch
-         *	4 lock ‘n’ go
-         * 	5 lock ‘n’ go with unlatch
-         */
-
-        $endpoint = '/lockAction?nukiId=' . $SmartLockUniqueID . '&action=' . $LockAction . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
+        $data = $this->SetLockAction($SmartLockUniqueID, $LockAction, 0);
         return $data;
-
-        /*
-         *    Response example
-         *    {“success”: true, “batteryCritical”: false}
-         */
     }
 
     /**
+     * Unpairs a device from the bridge.
+     *
+     * @param int $NukiID
+     * @param int $DeviceType
+     * @return string
+     */
+    public function UnpairDevice(int $NukiID, int $DeviceType = 0): string
+    {
+        $endpoint = '/unpair?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&token=';
+        $data = $this->SendDataToBridge($endpoint);
+        return $data;
+    }
+
+    /**
+     * Deprecated !!!
+     *
      * Removes the pairing with a given Smart Lock.
      *
      * @param int $SmartLockUniqueID
@@ -128,15 +242,14 @@ trait bridgeAPI
      */
     public function UnpairSmartLockFromBridge(int $SmartLockUniqueID): string
     {
-        $endpoint = '/unpair?nukiId=' . $SmartLockUniqueID . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
+        $data = $this->UnpairDevice($SmartLockUniqueID, 0);
         return $data;
     }
 
     /**
      * Gets information of the bridge.
      *
-     * Returns all Smart Locks in range and some device information of the bridge itself.
+     * Returns all smart locks and openers in range and some device information of the bridge itself.
      *
      * @return string
      */
@@ -241,136 +354,8 @@ trait bridgeAPI
         $this->sendDataToBridge($endpoint);
     }
 
-    //########## NEW
-    /**
-     * Returns a list of all paired devices.
-     *
-     * @return string
-     */
-    public function GetPairedDevices(): string
-    {
-        $endpoint = '/list?token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
-    }
+    //########## Send data
 
-    //########## NEW
-    /**
-     * Gets the state of the device.
-     *
-     * @param int $NukiID
-     * @param int $DeviceType
-     * @return string
-     */
-    public function GetLockState(int $NukiID, int $DeviceType = 0): string
-    {
-        /*
-         * Device type:
-         *
-         *  0   Smart lock
-         *  2   Opener
-         *
-         */
-
-        $endpoint = '/lockState?nukiId=' . $NukiID .'&deviceType=' . $DeviceType . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
-
-        /*
-         *  Response example for a locked smart lock
-         *
-         *  {“deviceType”: 0, “mode”: 2,“state”: 1, “stateName”: “locked”, “batteryCritical”: false, “success”: true}
-         *
-         */
-
-        /*
-         *  State values for a smart lock are:
-         *
-         *  0   uncalibrated
-         *  1   locked
-         *	2   unlocking
-         *  3   unlocked
-         *	4   locking
-         *	5   unlatched
-         *	6   unlocked (lock ‘n’ go)
-         *	7   unlatching
-         *  253 -
-         *  254 motor blocked
-         *  255 undefined
-         *
-         */
-
-        /*
-         * 	State values for an opener are:
-         *
-         *  0   untrained
-         *  1   online
-         *	2   -
-         *  3   rto active
-         *	4   -
-         *	5   open
-         *	6   -
-         *	7   opening
-         *  253 boot run
-         *  254 -
-         *  255 undefined
-         *
-         */
-    }
-
-    //########## NEW
-    /**
-     * Set the lock action of a device.
-     *
-     * @param int $NukiID
-     * @param int $DeviceType
-     * @param int $LockAction
-     * @return string
-     */
-    public function SetLockAction(int $NukiID, int $LockAction, int $DeviceType = 0): string
-    {
-        /*
-         *  Lock actions for a smart lock are:
-         *
-         *	1   unlock
-         *	2   lock
-         *	3   unlatch
-         *	4   lock ‘n’ go
-         * 	5   lock ‘n’ go with unlatch
-         *
-         */
-
-        /*
-         *  Lock actions for an opener are:
-         *
-         *	1   activate rto
-         *	2   deactivate rto
-         *	3   electric strike actuation
-         *	4   activate continuous mode
-         * 	5   deactivate continuous mode
-         *
-         */
-
-        /*
-         * Device type:
-         *
-         *  0   Smart lock
-         *  2   Opener
-         *
-         */
-
-        $endpoint = '/lockAction?nukiId=' . $NukiID . '&action=' . $LockAction . '&deviceType=' . $DeviceType . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
-
-        /*
-         *    Response example:
-         *
-         *    {“success”: true, “batteryCritical”: false}
-         */
-    }
-
-    //########## Send data to bridge
     /**
      * Sends data to the bridge.
      *

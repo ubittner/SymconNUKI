@@ -57,7 +57,6 @@ class NUKIBridge extends IPSModule
 {
     // Helper
     use bridgeAPI;
-    use control;
 
     public function Create()
     {
@@ -96,7 +95,7 @@ class NUKIBridge extends IPSModule
                 $this->SetReceiveDataFilter($filter);
             }
         } else {
-            $parent = $this->GetParent();
+            $parent = IPS_GetInstance($this->InstanceID)['ConnectionID'];
             if ($parent != 0 && IPS_ObjectExists($parent)) {
                 IPS_DisconnectInstance($this->InstanceID);
             }
@@ -127,10 +126,9 @@ class NUKIBridge extends IPSModule
     }
 
     /**
-     * Receives data from the server socket.
+     * Receives data from the server socket and forwards the data to the children.
      *
      * @param $JSONString
-     *
      * @return bool|void
      */
     public function ReceiveData($JSONString)
@@ -143,9 +141,23 @@ class NUKIBridge extends IPSModule
         $receivedData = json_encode(json_decode(implode($match[0]), true));
         $this->SendDebug(__FUNCTION__ . ' Data', $receivedData, 0);
         $this->SendDebug(__FUNCTION__ . ' End', 'Data received', 0);
-        $this->SetDeviceState($receivedData);
+        if (empty($Data)) {
+            return;
+        }
+        $forwardData = [];
+        $forwardData['DataID'] = '{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}';
+        $forwardData['Buffer'] = json_decode($receivedData);
+        $forwardData = json_encode($forwardData);
+        // Send data to all children
+        $this->SendDataToChildren($forwardData);
     }
 
+    /**
+     * Receives data from the children and sends the result to the children.
+     *
+     * @param $JSONString
+     * @return false|string
+     */
     public function ForwardData($JSONString)
     {
         $this->SendDebug(__FUNCTION__, $JSONString, 0);
@@ -172,18 +184,7 @@ class NUKIBridge extends IPSModule
     }
 
     /**
-     * Gets the parent id.
-     *
-     * @return int
-     */
-    private function GetParent(): int
-    {
-        $connectionID = IPS_GetInstance($this->InstanceID)['ConnectionID'];
-        return $connectionID;
-    }
-
-    /**
-     * Validates the configuration form.
+     * Validates the configuration.
      */
     private function ValidateBridgeConfiguration()
     {
@@ -210,27 +211,5 @@ class NUKIBridge extends IPSModule
                 $this->SetStatus(201);
             }
         }
-    }
-
-    private function SetDeviceState(string $Data)
-    {
-        /*
-         * Callback example:
-         *
-         * {“nukiId”: 11, “deviceType”: 0, “mode”: 2, “state”: 1, “stateName”: “locked”, “batteryCritical”: false}
-         *
-         */
-
-        $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
-        if (empty($Data)) {
-            return;
-        }
-        $data = [];
-        $data['DataID'] = '{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}';
-        $data['Buffer'] = json_decode($Data);
-        $data = json_encode($data);
-        $this->SendDebug(__FUNCTION__ . ' Forward', $data, 0);
-        // Send data to all children
-        $this->SendDataToChildren($data);
     }
 }

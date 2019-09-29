@@ -111,65 +111,220 @@ Die NUKI Bridge ist im WebFront nicht nutzbar.
 
 ### 7. PHP-Befehlsreferenz
 
-`NUKI_EnableAPI(integer $BridgeInstanceID);`  
+```text
+API aktivieren:  
+
+NUKI_EnableAPI(integer $InstanzID);  
 Aktiviert die API Funktion, sofern über die Nuki iOS / Android App die Nutzung der API Funktion noch nicht aktiviert wurde.  
 Es muss innerhalb von 30 Sekunden der Knopf auf der NUKI Bridge zur Authentifizierung gedrückt werden.  
 Gibt als Rückwert den Zustand und den API Token an.  
+  
+$InstanzID:     Instanz ID der NUKI Bridge  
 
-`NUKI_ToggleConfigAuth(integer $BridgeInstanceID, bool $Enable)`  
-Aktiviert oder deaktiviert die Autorisierung über `NUKI_EnableAPI(integer $InstanzID)` und die Veröffentlichung der lokalen IP und des Ports zur Discovery URL.
+Beispiel:
+$enable = NUKI_EnableAPI(12345);
+```  
+
+```text
+Authorisierung de-/aktivieren:  
+
+NUKI_ToggleConfigAuth(integer $InstanzID, bool $Status);  
+Aktiviert oder deaktiviert die Authorisierung über `NUKI_EnableAPI(integer $InstanzID)` und die Veröffentlichung der lokalen IP-Adresse und des Ports zur Discovery URL.  
 Gibt als Rückgabewert des Status aus.  
 
-`NUKI_GetSmartLocks(integer $BridgeInstanceID)`  
-Gibt als Rückwert eine Liste aller verfügbaren NUKI Smart Locks aus.  
+$InstanzID:     Instanz ID der NUKI Bridge
+$Status:        false = deaktivieren, true = aktivieren  
 
-`NUKI_GetLockStateOfSmartLock(integer $BridgeInstanceID, integer $SmartLockUniqueID)`  
-Zeigt den aktuellen Status eines NUKI SmartLocks an.  
+Beispiel:  
+Deaktivieren:   $deactivate = NUKI_ToggleConfigAuth(12345, false); 
+Aktivieren:     $activate = NUKI_ToggleConfigAuth(12345, true); 
+```  
 
-`NUKI_SetLockActionOfSmartLock(integer $BridgeInstanceID, integer $SmarLockUniqueID, integer $LockAction)`  
-Achtung: Es muss die NUKI Smart Lock Unique ID angegeben werden und nicht die Instanz ID des NUKI Smart Locks.  
-Führt eine Aktion für das NUKI Smart Lock gemäss Tabelle aus:  
+```text
+Gekoppelte Geräte (Smart Lock / Opener) anzeigen:  
 
-Wert | Bezeichnung
------|----------------------------------
-1    | unlock 
-2    | lock 
-3    | unlatch 
-4    | lock ‘n’ go 
-5    | lock ‘n’ go with unlatch
+NUKI_GetPairedDevices(integer InstanzID);
+Gibt als Rückwert eine Liste aller verfügbaren NUKI Geräte (Smart Locks / Opener) aus.  
 
-`NUKI_UnpairSmartLockFromBridge(integer $BridgeInstanceID, integer $SmarLockUniqueID)`  
-Löscht ein NUKI Smart Lock von der Bridge.  
+Beispiel:
+$devices = NUKI_GetPairedDevices(12345);  
 
-`NUKI_GetBridgeInfo(integer $BridgeInstanceID)`  
-Zeigt alle NUKI Smart Locks in der Nähe an und liefert Informationen zur Bridge.  
+Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+NUKI_GetSmartLocks(integer $InstanzID);  
+````  
 
-`NUKI_AddCallback(integer $BridgeInstanceID)`  
+```text
+Status eines Gerätes (Smart Locks / Opener) ermitteln:  
+
+NUKI_GetLockState(integer InstanzID, integer $NukiID, int $DeviceType);  
+Gibt den aktuellen Status eines NUKI Gerätes (Smart Lock / Opener) zurück.  
+
+$InstanzID:     Instanz ID der NUKI Bridge  
+$NukiID:        UID des Gerätes  
+$DeviceType:    0 = Smart Lock, 2 = Opener  
+
+Beispiel:  
+$state = NUKI_GetLockState(12345, 987654321, 0);  
+
+Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+NUKI_GetLockStateOfSmartLock(integer $InstanzID, integer $SmartLockUniqueID);
+````
+
+```text
+Gerät (Smart Lock / Opener) schalten:  
+
+NUKI_SetLockAction(integer $InstanzID, integer $NukiID, int $LockAction, int $DeviceType);  
+Achtung: Es muss die NUKI ID angegeben werden und nicht die Instanz ID des NUKI Gerätes!  
+
+$InstanzID:     Instanz ID der NUKI Bridge
+$NukiID:        UID des NUKI Gerätes
+$DeviceType:    0 = Smart Lock, 2 = Opener  
+
+$LockAction:  
+Führt eine Aktion für das NUKI Gerät gemäss Tabelle aus:  
+
+Wert | Smart Lock                   | Opener
+-----|------------------------------|---------------------------
+1    | unlock                       | activate rto
+2    | lock                         | deactivate rto
+3    | unlatch                      | electric strike actuation
+4    | lock ‘n’ go                  | activate continuous mode
+5    | lock ‘n’ go with unlatch     | deactivate continuous mode
+  
+Beispiel:  
+Smart Lock zusperren:   NUKI_SetLockAction(12345, 987654321, 2, 0);  
+Smart Lock aufsperren:  NUKI_SetLockAction(12345, 987654321, 1, 0);  
+Türsummer betätigen:    NUKI_SetLockAction(12345, 987654321, 3, 2);  
+
+Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+NUKI_SetLockActionOfSmartLock(integer $BridgeInstanceID, integer $SmarLockUniqueID, integer $LockAction);  
+```
+
+```text
+Gerät entkoppeln:  
+
+UnpairDevice(integer $InstanzID, integer $NukiID, integer $DeviceType);
+Entkoppelt ein NUKI Gerät (Smart Lock / Opener) von der NUKI Bridge.
+
+$InstanzID:     Instanz ID der NUKI Bridge
+$NukiID:        UID des NUKI Gerätes
+$DeviceType:    0 = Smart Lock, 2 = Opener  
+
+Beispiel:  
+$unpair = NUKI_UnpairDevice(12345, 987654321, 0);  
+
+Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+NUKI_UnpairSmartLockFromBridge(integer $BridgeInstanceID, integer $SmarLockUniqueID)
+```
+
+```text
+Bridge Informationen:  
+
+NUKI_GetBridgeInfo(integer $InstanzID);    
+Zeigt alle NUKI Geräte (Smart Locks / Opener) in der Nähe an und liefert Informationen zur NUKI Bridge.  
+
+$InstanzID:     Instanz ID der NUKI Bridge  
+
+Beispiel:  
+$info = NUKI_GetBridgeInfo(12345);  
+```  
+
+```text
+Callback anlegen:  
+
+NUKI_AddCallback(integer $InstanzID);    
 Legt einen Callback auf der NUKI Bridge an.  
 
-`NUKI_ListCallback(integer $BridgeInstanceID)`  
+$InstanzID:     Instanz ID der NUKI Bridge  
+
+Beispiel:  
+$add = NUKI_AddCallback(12345);
+```
+
+```text
+Callback anzeigen:  
+
+NUKI_ListCallback(integer $InstanzID); 
 Zeigt die angelegten Callbacks auf der Bridge an.  
 
-`NUKI_DeleteCallback(integer $BridgeInstanceID, integer $CallbackID)`  
+$InstanzID:     Instanz ID der NUKI Bridge  
+
+Beispiel:  
+$add = NUKI_ListCallback(12345);
+```  
+
+```text
+Callback löschen:  
+
+NUKI_DeleteCallback(integer $InstanzID, integer $CallbackID);    
 Löscht den Callback mit der $CallbackID auf der Bridge.  
 
-`NUKI_GetBridgeLog(integer $BridgeInstanceID)`  
-Zeigt das Log der Bridge an.  
+$InstanzID:     Instanz ID der NUKI Bridge
+$CallbackID:    ID des Callbacks  
 
-`NUKI_ClearBridgeLog(integer $BridgeInstanceID)`  
+Beispiel:  
+$delete = NUKI_DeleteCallback(12345, 0);
+```
+
+```text
+Log anzeigen:  
+
+NUKI_GetBridgeLog(integer $InstanzID);    
+Zeigt das Log der NUKI Bridge an.  
+
+$InstanzID:     Instanz ID der NUKI Bridge
+
+Beispiel:  
+$log = NUKI_GetBridgeLog(12345);
+```  
+
+```text
+Log löschen:  
+
+NUKI_ClearBridgeLog(integer $InstanzID);    
 Löscht das Log der Bridge.  
 
-`NUKI_UpdateBridgeFirmware(integer $BridgeInstanceID)`  
-Prüft auf ein neues Firmware Update der Bridge und installiert es.  
+$InstanzID:     Instanz ID der NUKI Bridge
 
-`NUKI_RebootBridge(integer $BridgeInstanceID)`  
-Starte die Brdige neu.  
+Beispiel:  
+$clear = NUKI_ClearBridgeLog(12345);
+```  
 
-`NUKI_FactoryResetBridge(integer $BridgeInstanceID)`  
-Setzt die Bridge auf Werkseinstellungen.  
+```text
+Firmware aktualisieren:  
 
-`NUKI_UpdateStateOfSmartLocks(integer $BridgeInstanceID, bool $ProtocolMode)`  
-Aktualisiert den Status aller smarten NUKI Türschlösser.  
+NUKI_UpdateBridgeFirmware(integer $InstanzID);    
+Prüft auf ein neues Firmware Update der Bridge und installiert es.
+
+$InstanzID:     Instanz ID der NUKI Bridge
+
+Beispiel:  
+$update = NUKI_UpdateBridgeFirmware(12345);
+```  
+
+```text
+NUKI Bridge neu starten:  
+
+NUKI_RebootBridge(integer $InstanzID);    
+Starte die NUKI Bridge neu.  
+
+$InstanzID:     Instanz ID der NUKI Bridge
+
+Beispiel:  
+$update = NUKI_RebootBridge(12345);
+```  
+
+```text
+Werkseinstellungen laden:  
+
+NUKI_FactoryResetBridge(integer $InstanzID);    
+Setzt die NUKI Bridge auf Werkseinstellungen.   
+
+$InstanzID:     Instanz ID der NUKI Bridge
+
+Beispiel:  
+$update = NUKI_FactoryResetBridge(12345);
+```  
 
 ### 8. Bridge Callback Simulation
 
