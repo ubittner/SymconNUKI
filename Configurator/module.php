@@ -146,8 +146,11 @@ class NUKIConfigurator extends IPSModule
      *
      * @return array|mixed
      */
-    private function GetPairedDevices()
+    private function GetPairedDevices(): string
     {
+        if (!$this->HasActiveParent()) {
+            return '';
+        }
         $data = [];
         $buffer = [];
         $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
@@ -157,7 +160,7 @@ class NUKIConfigurator extends IPSModule
         $data = json_encode($data);
         $result = json_decode($this->SendDataToParent($data), true);
         if (!$result) {
-            return [];
+            return '';
         }
         return $result;
     }

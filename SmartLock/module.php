@@ -106,7 +106,7 @@ class NUKISmartLock extends IPSModule
         IPS_SetHidden($this->GetIDForIdent('Protocol'), !$this->ReadPropertyBoolean('UseProtocol'));
 
         // Update state
-        $this->GetSmartLockState();
+        //$this->GetSmartLockState();
     }
 
     public function Destroy()
@@ -269,6 +269,7 @@ class NUKISmartLock extends IPSModule
              *  255 undefined
              *
              */
+
             switch ($result['state']) {
                 case 0:
                     $stateText = $this->Translate('Uncalibrated');

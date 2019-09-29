@@ -282,8 +282,8 @@
           "items": [
             {
               "type": "Button",
-              "caption": "Show Smart Locks",
-              "onClick": "$data=NUKI_GetSmartLocks($id); print_r(json_decode($data, true));"
+              "caption": "Show Devices",
+              "onClick": "$data=NUKI_GetPairedDevices($id); print_r(json_decode($data, true));"
             }
           ]
         },

@@ -69,7 +69,7 @@ Logdatei löschen                    | Löscht die Logdatei der NUKI Bridge
 Firmware aktualisieren              | Führt eine aktualisierung der Firmware durch
 Neustart                            | Starte die NUKI Bridge neu
 Werkseinstellungen                  | Setzt die NUKI Brige zurück in die Werkseinstellungen
-Smart Locks anzeigen                | Zeigt die verfügbaren NUKI Smart Locks der NUKI Bridge an
+Geräte anzeigen                     | Zeigt die verfügbaren NUKI Geräte der NUKI Bridge an
 (2) Callback Socket                 | 
 Anlegen                             | Legt einen Callback auf der NUKI Bridge an
 Anzeigen                            | Zeigt die angelegten Callbacks der NUKI Bridge an

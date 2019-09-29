@@ -89,7 +89,7 @@ class NUKIOpener extends IPSModule
         $this->MaintainVariable('BatteryState', $this->Translate('Battery'), 0, '~Battery', 4, true);
 
         // Get actual state
-        $this->GetOpenerState();
+        //$this->GetOpenerState();
     }
 
     public function Destroy()
