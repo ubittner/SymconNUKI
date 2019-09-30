@@ -380,7 +380,7 @@ trait bridgeAPI
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FAILONERROR    => true,
             CURLOPT_CONNECTTIMEOUT => $timeout,
-            CURLOPT_TIMEOUT, $timeout]);
+            CURLOPT_TIMEOUT => $timeout]);
         $response = curl_exec($ch);
         if (curl_errno($ch)) {
             $error_msg = curl_error($ch);

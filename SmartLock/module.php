@@ -211,22 +211,24 @@ class NUKISmartLock extends IPSModule
     {
         $lockAction = 255;
         if ($State == false) {
-            $lockAction = $this->ReadPropertyString('SwitchOffAction');
+            $lockAction = (int)$this->ReadPropertyString('SwitchOffAction');
         }
         if ($State == true) {
-            $lockAction = $this->ReadPropertyString('SwitchOnAction');
+            $lockAction = (int)$this->ReadPropertyString('SwitchOnAction');
         }
-        // Set values
-        $this->SetValue('SmartLockSwitch', $State);
         // Send data to bridge
         $result = $this->SetLockAction($lockAction);
+        $this->SendDebug(__FUNCTION__, json_encode($result), 0);
         if ($result) {
-            $stateName = [1 => 'Unlock', 2 => 'Lock', 3 => 'Unlatch', 4 => 'Lock ‘n’ go', 5 => 'Lock ‘n’ go with unlatch', 255 => 'Undefined'];
+            // Set values
+            $this->SetValue('SmartLockSwitch', $State);
+            // ToDo: check names !
+            $stateName = [1 => 'Unlocked', 2 => 'Locked', 3 => 'Unlatched', 4 => 'Lock ‘n’ go', 5 => 'Lock ‘n’ go with unlatch', 255 => 'Undefined'];
             $name = $stateName[$lockAction];
             $this->SetValue('SmartLockStatus', $this->Translate($name));
         } else {
             // Revert switch
-            $this->SetValue('SmartLockSwitch', !$State);
+            //$this->SetValue('SmartLockSwitch', !$State);
         }
         return $result;
     }
@@ -341,6 +343,9 @@ class NUKISmartLock extends IPSModule
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
         $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
+        if (empty($result)) {
+            return $success;
+        }
         if (array_key_exists('success', $result)) {
             $success = $result['success'];
         }
