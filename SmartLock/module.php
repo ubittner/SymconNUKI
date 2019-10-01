@@ -59,8 +59,8 @@ class NUKISmartLock extends IPSModule
         $this->RegisterPropertyString('SwitchOffAction', '2');
         $this->RegisterPropertyString('SwitchOnAction', '1');
         $this->RegisterPropertyBoolean('HideSmartLockSwitch', false);
-        $this->RegisterPropertyBoolean('UseProtocol', false);
-        $this->RegisterPropertyInteger('ProtocolEntries', 6);
+        //$this->RegisterPropertyBoolean('UseProtocol', false);
+        //$this->RegisterPropertyInteger('ProtocolEntries', 6);
 
         // Register profiles
         $profile = 'NUKI.' . $this->InstanceID . '.SmartLockSwitch';
@@ -96,14 +96,17 @@ class NUKISmartLock extends IPSModule
         $this->EnableAction('SmartLockSwitch');
         IPS_SetHidden($this->GetIDForIdent('SmartLockSwitch'), $this->ReadPropertyBoolean('HideSmartLockSwitch'));
 
-        $this->MaintainVariable('SmartLockStatus', $this->Translate('State'), 3, '', 2, true);
+        $this->MaintainVariable('SmartLockMode', $this->Translate('Mode'), 3, '', 2, true);
+        IPS_SetIcon($this->GetIDForIdent('SmartLockMode'), 'Information');
+
+        $this->MaintainVariable('SmartLockStatus', $this->Translate('State'), 3, '', 3, true);
         IPS_SetIcon($this->GetIDForIdent('SmartLockStatus'), 'Information');
 
         $this->MaintainVariable('SmartLockBatteryState', $this->Translate('Battery'), 0, '~Battery', 3, true);
 
-        $this->MaintainVariable('Protocol', $this->Translate('Protocol'), 3, '~TextBox', 4, true);
-        IPS_SetIcon($this->GetIDForIdent('Protocol'), 'Database');
-        IPS_SetHidden($this->GetIDForIdent('Protocol'), !$this->ReadPropertyBoolean('UseProtocol'));
+        $this->MaintainVariable('Protocol', $this->Translate('Protocol'), 3, '~TextBox', 4, false);
+        //IPS_SetIcon($this->GetIDForIdent('Protocol'), 'Database');
+        //IPS_SetHidden($this->GetIDForIdent('Protocol'), !$this->ReadPropertyBoolean('UseProtocol'));
 
         // Update state
         //$this->GetSmartLockState();
@@ -239,6 +242,9 @@ class NUKISmartLock extends IPSModule
     {
         $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
         $result = json_decode($Data, true);
+        if (empty($Data)) {
+            return;
+        }
         if (array_key_exists('mode', $result)) {
             /*
              *  2    door mode
@@ -253,6 +259,23 @@ class NUKISmartLock extends IPSModule
             }
             $this->SendDebug(__FUNCTION__ . ' Mode', $modeText, 0);
             // Not used at the moment, prepared for future, create mode variable
+        }
+        if (array_key_exists('mode', $result)) {
+            /*
+             *  2    door mode, operation mode after complete setup
+             *  3    continuous mode, ring to open permanently active
+             */
+            switch ($result['mode']) {
+                case 2:
+                    $modeText = $this->translate('Door Mode');
+                    break;
+                case 3:
+                    $modeText = $this->translate('-');
+                    break;
+                default:
+                    $modeText = $this->translate('Unknown');
+            }
+            $this->SetValue('SmartLockMode', $modeText);
         }
         if (array_key_exists('state', $result)) {
             /*
@@ -307,12 +330,6 @@ class NUKISmartLock extends IPSModule
                     $stateText = $this->Translate('Unknown');
             }
             $this->SetValue('SmartLockStatus', $stateText);
-            // Protocol
-            if ($this->ReadPropertyBoolean('UseProtocol')) {
-                $deviceName = $this->ReadPropertyString('SmartLockName');
-                $nukiID = $this->ReadPropertyString('SmartLockUID');
-                $this->WriteLogEntry($deviceName, $nukiID, $stateText);
-            }
         }
         if (array_key_exists('batteryCritical', $result)) {
             $this->SetValue('SmartLockBatteryState', $result['batteryCritical']);
@@ -353,32 +370,5 @@ class NUKISmartLock extends IPSModule
             $this->SetValue('SmartLockBatteryState', $result['batteryCritical']);
         }
         return $success;
-    }
-
-    /**
-     * Writes an entry to the log.
-     *
-     * @param string $DeviceName
-     * @param string $NukiID
-     * @param string $StateName
-     */
-    private function WriteLogEntry(string $DeviceName, string $NukiID, string $StateName)
-    {
-        $date = date('d.m.Y');
-        $time = date('H:i:s');
-        $string = "{$date}, {$time}, {$DeviceName}, NUKI ID: {$NukiID}, Status: {$StateName}.";
-        $entries = $this->ReadPropertyInteger('ProtocolEntries');
-        if ($entries == 1) {
-            $this->SetValue('Protocol', $string);
-        }
-        if ($entries > 1) {
-            // Get old content first
-            $content = array_merge(array_filter(explode("\n", $this->GetValue('Protocol'))));
-            $records = $entries - 1;
-            array_splice($content, $records);
-            array_unshift($content, $string);
-            $newContent = implode("\n", $content);
-            $this->SetValue('Protocol', $newContent);
-        }
     }
 }

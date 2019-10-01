@@ -220,6 +220,9 @@ class NUKIOpener extends IPSModule
     {
         $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
         $result = json_decode($Data, true);
+        if (empty($Data)) {
+            return;
+        }
         if (array_key_exists('mode', $result)) {
             /*
              *  2    door mode, operation mode after complete setup
@@ -307,6 +310,9 @@ class NUKIOpener extends IPSModule
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
         $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
+        if (empty($result)) {
+            return $success;
+        }
         if (array_key_exists('success', $result)) {
             $success = $result['success'];
         }

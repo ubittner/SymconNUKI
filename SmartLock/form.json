@@ -198,34 +198,6 @@
           "caption": "Hide Toggle Switch"
         }
       ]
-    },
-    {
-      "type": "ExpansionPanel",
-      "caption": "(3) Protocol",
-      "items": [
-        {
-          "type": "Label",
-          "caption": "Please select if you want to use a protocol:"
-        },
-        {
-          "type": "CheckBox",
-          "name": "UseProtocol",
-          "caption": "Protocol activated"
-        },
-        {
-          "type": "Label",
-          "caption": " "
-        },
-        {
-          "type": "Label",
-          "caption": "Please enter the maximum numbers of records:"
-        },
-        {
-          "type": "NumberSpinner",
-          "name": "ProtocolEntries",
-          "caption": "Number of maximum records"
-        }
-      ]
     }
   ],
   "actions": [

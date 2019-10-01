@@ -53,6 +53,8 @@
       "NUKI SmartLock configuration has an error!": "NUKI Smart Lock Konfiguration hat einen Fehler!",
       "An unknown error has occurred!": "Es ist ein unbekannter Fehler aufgetreten!",
       "Door lock": "Türschloß",
+      "Mode": "Modus",
+      "Door Mode": "Türmodus",
       "Protocol": "Protokoll",
       "unlock": "aufsperren",
       "lock": "zusperren",
