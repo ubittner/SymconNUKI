@@ -294,41 +294,52 @@ class NUKISmartLock extends IPSModule
              *  255 undefined
              *
              */
-
             switch ($result['state']) {
                 case 0:
                     $stateText = $this->Translate('Uncalibrated');
+                    $switchState = false;
                     break;
                 case 1:
                     $stateText = $this->Translate('Locked');
+                    $switchState = false;
                     break;
                 case 2:
                     $stateText = $this->Translate('Unlocking');
+                    $switchState = true;
                     break;
                 case 3:
                     $stateText = $this->Translate('Unlocked');
+                    $switchState = true;
                     break;
                 case 4:
                     $stateText = $this->Translate('Locking');
+                    $switchState = false;
                     break;
                 case 5:
                     $stateText = $this->Translate('Unlatched');
+                    $switchState = true;
                     break;
                 case 6:
                     $stateText = $this->Translate('Unlocked (lock ‘n’ go)');
+                    $switchState = true;
                     break;
                 case 7:
                     $stateText = $this->Translate('Unlatching');
+                    $switchState = true;
                     break;
                 case 254:
                     $stateText = $this->Translate('Motor blocked');
+                    $switchState = false;
                     break;
                 case 255:
                     $stateText = $this->Translate('undefined');
+                    $switchState = false;
                     break;
                 default:
                     $stateText = $this->Translate('Unknown');
+                    $switchState = false;
             }
+            $this->SetValue('SmartLockSwitch', $switchState);
             $this->SetValue('SmartLockStatus', $stateText);
         }
         if (array_key_exists('batteryCritical', $result)) {

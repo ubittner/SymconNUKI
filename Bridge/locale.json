@@ -61,7 +61,7 @@
       "Please edit all configuration parameters of the NUKI Bridge.": "Bitte alle Konfigurationsparameter der NUKI Bridge eintragen.",
       "NUKI Bridge configuration has an error!": "NUKI Bridge Konfiguration hat einen Fehler!",
       "An unknown error has occurred!": "Es ist ein unbekannter Fehler aufgetreten!",
-      "Please enter the IP address of the IP-Symcon server and the port of the NUKI server socket!": "Bitte die IP-Adresse des IP-Symcon Servers und den Port des NUKI Server Sockets eintragen!",
+      "Please enter the IP address of the IP-Symcon server and the port for the Webhook!": "Bitte geben Sie die IP-Adresse des IP-Symcon Servers und den Port für den Webhook an!",
       "Smart Locks have been matched / created!": "Smart Locks wurden abgeglichen / angelegt!"
     }
   }

@@ -21,15 +21,15 @@
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
  *
  *				Server Socket (Virtual I/O NUKI Callback)
- *				{018EF6B5-AB94-40C6-AA53-46943E824ACF} (CR:	IO_RX)
+ *				*{018EF6B5-AB94-40C6-AA53-46943E824ACF} (CR:	IO_RX)
  *				{79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (I: 	IO_TX)
  *
  *				NUKI Bridge (Spliter)
  *				{B41AE29B-39C1-4144-878F-94C0F7EEC725} (Module GUID)
  *
- * 				{79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (PR:	IO_TX)
+ * 				*{79827379-F36E-4ADA-8A95-5F8D1DC92FA9} (PR:	IO_TX)
  *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (CR: Device_RX)
- *              {018EF6B5-AB94-40C6-AA53-46943E824ACF} (I:	IO_RX)
+ *              *{018EF6B5-AB94-40C6-AA53-46943E824ACF} (I:	IO_RX)
  *				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (I:	Device_TX)
  *
  */
@@ -64,7 +64,7 @@ class NUKIBridge extends IPSModule
 
         // Register properties
         $this->RegisterPropertyString('BridgeIP', '');
-        $this->RegisterPropertyInteger('BridgePort', 8080);
+        $this->RegisterPropertyInteger('BridgePort', 3777);
         $this->RegisterPropertyInteger('Timeout', 5000);
         $this->RegisterPropertyString('BridgeID', '');
         $this->RegisterPropertyString('BridgeAPIToken', '');
@@ -88,19 +88,9 @@ class NUKIBridge extends IPSModule
 
         // Callback
         if ($this->ReadPropertyBoolean('UseCallback')) {
-            $this->ConnectParent(SERVER_SOCKET_GUID);
-            $bridgeID = $this->ReadPropertyString('BridgeID');
-            if (!empty($bridgeID)) {
-                $filter = '.*User-Agent: NukiBridge_' . $bridgeID . '.*';
-                $this->SetReceiveDataFilter($filter);
-            }
+            $this->RegisterHook('/hook/nuki/bridge/' . $this->InstanceID);
         } else {
-            $parent = IPS_GetInstance($this->InstanceID)['ConnectionID'];
-            if ($parent != 0 && IPS_ObjectExists($parent)) {
-                IPS_DisconnectInstance($this->InstanceID);
-            }
-            $filter = '.*User-Agent: NukiBridge_99999999.*';
-            $this->SetReceiveDataFilter($filter);
+            $this->UnregisterHook('/hook/nuki/bridge/' . $this->InstanceID);
         }
 
         // Validate configuration
@@ -181,6 +171,82 @@ class NUKIBridge extends IPSModule
         }
         $this->SendDebug(__FUNCTION__, json_encode($result), 0);
         return json_encode($result);
+    }
+
+    //#################### Private
+
+    /**
+     * Registers the webhook to the WebHook instance.
+     *
+     * @param $WebHook
+     */
+    private function RegisterHook($WebHook)
+    {
+        $ids = IPS_GetInstanceListByModuleID('{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}');
+        if (count($ids) > 0) {
+            $hooks = json_decode(IPS_GetProperty($ids[0], 'Hooks'), true);
+            $found = false;
+            foreach ($hooks as $index => $hook) {
+                if ($hook['Hook'] == $WebHook) {
+                    if ($hook['TargetID'] == $this->InstanceID) {
+                        return;
+                    }
+                    $hooks[$index]['TargetID'] = $this->InstanceID;
+                    $found = true;
+                }
+            }
+            if (!$found) {
+                $hooks[] = ['Hook' => $WebHook, 'TargetID' => $this->InstanceID];
+            }
+            IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
+            IPS_ApplyChanges($ids[0]);
+        }
+    }
+
+    /**
+     * Unregisters the webhook from the WebHook instance.
+     *
+     * @param $WebHook
+     */
+    private function UnregisterHook($WebHook)
+    {
+        $ids = IPS_GetInstanceListByModuleID('{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}');
+        if (count($ids) > 0) {
+            $hooks = json_decode(IPS_GetProperty($ids[0], 'Hooks'), true);
+            $found = false;
+            $index = null;
+            foreach ($hooks as $key => $hook) {
+                if ($hook['Hook'] == $WebHook) {
+                    $found = true;
+                    $index = $key;
+                    break;
+                }
+            }
+            if ($found === true && !is_null($index)) {
+                array_splice($hooks, $index, 1);
+                IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
+                IPS_ApplyChanges($ids[0]);
+            }
+        }
+    }
+
+    /**
+     * This function will be called by the hook control. Visibility should be protected!
+     */
+    protected function ProcessHookData()
+    {
+        // Get incomming data from server
+        $this->SendDebug(__FUNCTION__ .' Incomming Data', print_r($_SERVER, true), 0);
+        // Get webhook content
+        $data = file_get_contents('php://input');
+        $this->SendDebug(__FUNCTION__ .' Data', $data, 0);
+        $forwardData = [];
+        $forwardData['DataID'] = '{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}';
+        $forwardData['Buffer'] = json_decode($data);
+        $forwardData = json_encode($forwardData);
+        // Send data to all children
+        $this->SendDataToChildren($forwardData);
+        $this->SendDebug(__FUNCTION__ .' Forward Data', $forwardData, 0);
     }
 
     /**

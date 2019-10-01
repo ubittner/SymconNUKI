@@ -271,11 +271,11 @@ trait bridgeAPI
         $callbackIP = $this->ReadPropertyString('SocketIP');
         $callbackPort = $this->ReadPropertyInteger('SocketPort');
         if (!empty($callbackIP) && !empty($callbackPort)) {
-            $endpoint = '/callback/add?url=http%3A%2F%2F' . $callbackIP . '%3A' . $callbackPort . '&token=';
+            $endpoint = '/callback/add?url=http%3A%2F%2F' . $callbackIP . '%3A' . $callbackPort . '%2Fhook%2Fnuki%2Fbridge%2F' . $this->InstanceID . '%2F&token=';
             $data = $this->SendDataToBridge($endpoint);
         }
         if (empty($callbackIP) || empty($callbackPort)) {
-            echo $this->Translate('Please enter the IP address of the IP-Symcon server and the port of the NUKI server socket!');
+            echo $this->Translate('Please enter the IP address of the IP-Symcon server and the port for the Webhook!');
         }
         return $data;
     }

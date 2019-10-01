@@ -132,7 +132,7 @@
     },
     {
       "type": "ExpansionPanel",
-      "caption": "(2) Callback",
+      "caption": "(2) Callback / Webhook",
       "items": [
         {
           "type": "Label",
