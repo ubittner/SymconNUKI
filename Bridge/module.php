@@ -86,6 +86,14 @@ class NUKIBridge extends IPSModule
         $this->ValidateBridgeConfiguration();
     }
 
+    public function Destroy()
+    {
+        if (!IPS_InstanceExists($this->InstanceID)) {
+            $this->UnregisterHook('/hook/nuki/bridge/' . $this->InstanceID);
+        }
+        parent::Destroy();
+    }
+
     public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     {
         $this->SendDebug('MessageSink', 'SenderID: ' . $SenderID . ', Message: ' . $Message, 0);
