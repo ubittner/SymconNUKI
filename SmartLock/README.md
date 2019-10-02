@@ -4,14 +4,11 @@
 
 [![Image](../imgs/NUKI_SmartLock.png)]()  
 
-Dieses Modul integriert das elektronische Türschloss [NUKI Smart Lock](https://nuki.io/de/smart-lock/) in [IP-Symcon](https://www.symcon.de).
+Dieses Modul integriert das elektronische Türschloss [NUKI Smart Lock](https://nuki.io/de/smart-lock/) in [IP-Symcon](https://www.symcon.de).  
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
-
 Bevor das Modul installiert wird, sollte unbedingt ein Backup von IP-Symcon durchgeführt werden.
-
 Der Entwickler haftet nicht für eventuell auftretende Datenverluste oder sonstige Schäden.
-
 Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklich zu.
 
 ### Inhaltverzeichnis
@@ -69,10 +66,10 @@ Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
 (1) Smart Lock                      | 
 Status anzeigen                     | Zeigt den Status des NUKI Smart Locks an
-Unpair                              | Entfernt das Smart Lock von der Bridge
-Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an
 
 __Vorgehensweise__:  
+
+Geben Sie bei manueller Konfiguration die NUKI ID und einen Namen für den NUKI Opener an.  
 
 ### 5. Statusvariablen und Profile
 
@@ -83,22 +80,21 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 Name                    | Typ       | Beschreibung
 ----------------------- | --------- | ----------------
 SmartLockSwitch         | Boolean   | Schalter zum auf- und zusperren des NUKI Smart Locks
-SmartLockStatus         | String    | Zeigt den Status des NUKI Smart Locks an
-SmartLockBatteryState   | Boolean   | Zeigt den Batteriezustand des NUKI Smart Locks an
-Protocol                | String    | Zeigt die letzten Protokolleinträge an
+SmartLockMode           | String    | Modus des NUKI Smart Locks
+SmartLockStatus         | String    | Status des NUKI Smart Locks
+SmartLockBatteryState   | Boolean   | Batteriezustand des NUKI Smart Locks
 
 ##### Profile:
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
-NUKI.SmartLockSwitch
+NUKI.InstanzID.SmartLockSwitch
 
-Werden alle NUKI Smart Lock Instanzen gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
+Wird die NUKI Smart Lock Instanz gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
 
 ### 6. WebFront
 
-Über das WebFront kann das NUKI Smart Lock zu- oder aufgesperrt werden.
-Weiherhin werden Statusinformationen über das NUKI Smart Lock und ein Protokoll angezeigt.
+Über das WebFront kann das NUKI Smart Lock zu- oder aufgesperrt werden. Informationen über den Modus, Status und den Batteriestatus werden angezeigt.  
  
 ### 7. PHP-Befehlsreferenz
 
