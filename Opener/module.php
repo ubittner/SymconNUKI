@@ -89,7 +89,7 @@ class NUKIOpener extends IPSModule
         $this->MaintainVariable('BatteryState', $this->Translate('Battery'), 0, '~Battery', 4, true);
 
         // Get actual state
-        //$this->GetOpenerState();
+        $this->GetOpenerState();
     }
 
     public function Destroy()
@@ -117,6 +117,28 @@ class NUKIOpener extends IPSModule
     private function KernelReady()
     {
         $this->ApplyChanges();
+    }
+
+    /**
+     * Receives data from the NUKI Bridge (splitter).
+     *
+     * @param $JSONString
+     * @return bool|void
+     */
+    public function ReceiveData($JSONString)
+    {
+        $this->SendDebug(__FUNCTION__ . ' Start', 'Incomming data', 0);
+        $this->SendDebug(__FUNCTION__ . ' String', $JSONString, 0);
+        $data = json_decode(utf8_decode($JSONString));
+        $buffer = $data->Buffer;
+        $this->SendDebug(__FUNCTION__ . ' Data', json_encode($buffer), 0);
+        $nukiID = $buffer->nukiId;
+        if ($this->ReadPropertyString('OpenerUID') != $nukiID) {
+            $this->SendDebug(__FUNCTION__ . ' Abort', 'Data is not for this instance.', 0);
+            return;
+        }
+        $this->SendDebug(__FUNCTION__ . ' End', 'Data received', 0);
+        $this->SetOpenerState(json_encode($buffer));
     }
 
     //#################### Request Action
@@ -163,17 +185,6 @@ class NUKIOpener extends IPSModule
     }
 
     /**
-     * Opens the door via buzzer.
-     *
-     * @return bool
-     */
-    public function BuzzDoor(): bool
-    {
-        $result = $this->SetLockAction(3);
-        return $result;
-    }
-
-    /**
      * Toggles the ring to open function of the opener.
      *
      * @param bool $State
@@ -209,6 +220,17 @@ class NUKIOpener extends IPSModule
         return $result;
     }
 
+    /**
+     * Opens the door via buzzer.
+     *
+     * @return bool
+     */
+    public function BuzzDoor(): bool
+    {
+        $result = $this->SetLockAction(3);
+        return $result;
+    }
+
     //#################### Private
 
     /**
@@ -219,10 +241,10 @@ class NUKIOpener extends IPSModule
     private function SetOpenerState(string $Data)
     {
         $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
-        $result = json_decode($Data, true);
         if (empty($Data)) {
             return;
         }
+        $result = json_decode($Data, true);
         if (array_key_exists('mode', $result)) {
             /*
              *  2    door mode, operation mode after complete setup
