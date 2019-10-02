@@ -84,7 +84,7 @@ Name                    | Typ       | Beschreibung
 DoorBuzzer              | Integer   | Türsummer
 OpenerMode              | String    | Modus des NUKI Openers
 OpenerState             | String    | Status des NUKI Openers
-BatteryState            | Boolean   | Batteriestatus
+BatteryState            | Boolean   | Batteriestatus des NUKI Openers
 
 ##### Profile:
 
