@@ -8,11 +8,8 @@ Dieses Modul integriert den [NUKI Opener](https://nuki.io/de/opener) in [IP-Symc
 In Verbindung mit einer NUKI Bridge macht der Nuki Opener aus deiner bestehenden Gegensprechanlage einen smarten Türöffner.  
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
-
 Bevor das Modul installiert wird, sollte unbedingt ein Backup von IP-Symcon durchgeführt werden.
-
 Der Entwickler haftet nicht für eventuell auftretende Datenverluste oder sonstige Schäden.
-
 Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklich zu.
 
 ### Inhaltverzeichnis
@@ -56,21 +53,21 @@ Alternativ könenn Sie den NUKI Opener auch manuell anlegen. Lesen Sie bitte daf
 __Konfigurationsseite__:
 
 Name                                | Beschreibung
------------------------------------ | ------------------------------
-(0) Instanzinformationen            | Informationen zum NUKI Opener
+----------------------------------- | -----------------------------------------------------
+(0) Instanzinformationen            | Informationen zur NUKI Opener Instanz
 (1) Opener                          | Eigenschaften des NUKI Openers
 
 __Schaltflächen im Aktionsbereich__:
 
 Name                                | Beschreibung
------------------------------------ | ----------------------------------------------
+----------------------------------- | -----------------------------------------------------
 (1) Opener                          | 
-Aktuellen Status anzeigen           | Zeigt den aktuellen Status des NUKI Openers an
+Status aktualisieren                | Aktualisiert den aktuellen Status des NUKI Openers an
 Ring to Open deaktivieren           | Deaktiviert die Ring to Open Funktion
 Ring to Open aktivieren             | Aktiviert die Ring to Open Funktion
 Dauermodus deaktivieren             | Deaktiviert den Dauermodus
 Dauermodus aktivieren               | Aktiviert den Dauermodus
-Türsummer betätigen                 | Betaätigt den Türsummer, um die Tür zu öffnen
+Türsummer betätigen                 | Betätigt den Türsummer, um die Tür zu öffnen
 
 __Vorgehensweise__:  
 

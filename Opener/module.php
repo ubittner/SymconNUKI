@@ -209,7 +209,7 @@ class NUKIOpener extends IPSModule
         return $result;
     }
 
-    //########## Private
+    //#################### Private
 
     /**
      * Set the state of the opener.
