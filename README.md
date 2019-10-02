@@ -1,5 +1,3 @@
-# NUKI
-
 [![Image](imgs/NUKI_Logo.png)](https://nuki.io/de/)  
 
 [![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
