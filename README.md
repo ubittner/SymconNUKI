@@ -8,7 +8,6 @@
 [![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
 [![Version](https://img.shields.io/badge/NUKI_API_Version-1.9-yellow.svg)](https://nuki.io/wp-content/uploads/2018/04/20180330-Bridge-API-v1.7.pdf)
 [![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
-[![StyleCI](https://github.styleci.io/repos/71931303/shield?branch=master&style=flat)](https://github.styleci.io/repos/71931303)  
 
 Dieses Repository integriert das elektronische Türschloss [NUKI Smart Lock](https://nuki.io/de/smart-lock/) in [IP-Symcon](https://www.symcon.de).  
 
