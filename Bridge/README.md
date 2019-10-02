@@ -74,7 +74,7 @@ Löschen                             | Löscht den Callback mit der definierten 
   
 __Vorgehensweise__:
 
-Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout, die Bridge ID und den API Token der NUKI Bridge an. 
+Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout und den API Token der NUKI Bridge an. 
 Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone wurden Ihnen die Daten angezeigt. 
 Mit der Konfigurator Instanz `NUKI Configurator` können Sie die Smart Locks automatisch anlegen lassen.
 

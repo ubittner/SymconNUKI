@@ -56,7 +56,6 @@ class NUKIBridge extends IPSModule
         $this->RegisterPropertyString('BridgeIP', '');
         $this->RegisterPropertyInteger('BridgePort', 8080);
         $this->RegisterPropertyInteger('Timeout', 5000);
-        $this->RegisterPropertyString('BridgeID', '');
         $this->RegisterPropertyString('BridgeAPIToken', '');
         $this->RegisterPropertyBoolean('UseCallback', false);
         $this->RegisterPropertyString('SocketIP', '');

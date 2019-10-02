@@ -112,15 +112,6 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the Bridge ID of the NUKI Bridge:"
-        },
-        {
-          "type": "ValidationTextBox",
-          "name": "BridgeID",
-          "caption": "Bridge ID"
-        },
-        {
-          "type": "Label",
           "caption": "Please enter the API Token of the NUKI Bridge:"
         },
         {
