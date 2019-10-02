@@ -110,7 +110,10 @@ Fragt den aktuellen Status des NUKI Smart Locks ab und aktualisiert die Werte de
 Rückgabewert: Die aktuellen Werte als String  
 
 Beispiel:  
-$state = NUKI_GetSmartLockState(12345);
+$state = NUKI_GetSmartLockState(12345);  
+
+Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+NUKI_ShowLockStateOfSmartLock(integer $InstanceID);
 ```  
 
 ```text

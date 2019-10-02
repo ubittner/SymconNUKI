@@ -59,8 +59,6 @@ class NUKISmartLock extends IPSModule
         $this->RegisterPropertyString('SwitchOffAction', '2');
         $this->RegisterPropertyString('SwitchOnAction', '1');
         $this->RegisterPropertyBoolean('HideSmartLockSwitch', false);
-        //$this->RegisterPropertyBoolean('UseProtocol', false);
-        //$this->RegisterPropertyInteger('ProtocolEntries', 6);
 
         // Register profiles
         $profile = 'NUKI.' . $this->InstanceID . '.SmartLockSwitch';
@@ -105,11 +103,9 @@ class NUKISmartLock extends IPSModule
         $this->MaintainVariable('SmartLockBatteryState', $this->Translate('Battery'), 0, '~Battery', 3, true);
 
         $this->MaintainVariable('Protocol', $this->Translate('Protocol'), 3, '~TextBox', 4, false);
-        //IPS_SetIcon($this->GetIDForIdent('Protocol'), 'Database');
-        //IPS_SetHidden($this->GetIDForIdent('Protocol'), !$this->ReadPropertyBoolean('UseProtocol'));
 
         // Update state
-        //$this->GetSmartLockState();
+        $this->GetSmartLockState();
     }
 
     public function Destroy()
@@ -205,6 +201,19 @@ class NUKISmartLock extends IPSModule
     }
 
     /**
+     * Deprecated !!!
+     *
+     * Shows the lock state of the Smart Lock.
+     *
+     * @return string
+     */
+    public function ShowLockStateOfSmartLock(): string
+    {
+        $state = $this->GetSmartLockState();
+        return $state;
+    }
+
+    /**
      * Toggles the Smart Lock.
      *
      * @param bool $State
@@ -225,13 +234,16 @@ class NUKISmartLock extends IPSModule
         if ($result) {
             // Set values
             $this->SetValue('SmartLockSwitch', $State);
-            // ToDo: check names !
-            $stateName = [1 => 'Unlocked', 2 => 'Locked', 3 => 'Unlatched', 4 => 'Lock ‘n’ go', 5 => 'Lock ‘n’ go with unlatch', 255 => 'Undefined'];
-            $name = $stateName[$lockAction];
-            $this->SetValue('SmartLockStatus', $this->Translate($name));
-        } else {
-            // Revert switch
-            //$this->SetValue('SmartLockSwitch', !$State);
+            // Check callback
+            $parentID = IPS_GetInstance($this->InstanceID)['ConnectionID'];
+            if ($parentID != 0 && IPS_ObjectExists($parentID)) {
+                $useCallback = (bool)IPS_GetProperty($parentID, 'UseCallback');
+                if (!$useCallback) {
+                    $stateName = [1 => 'Unlocked', 2 => 'Locked', 3 => 'Unlatched', 4 => 'Lock ‘n’ go', 5 => 'Lock ‘n’ go with unlatch', 255 => 'Undefined'];
+                    $name = $stateName[$lockAction];
+                    $this->SetValue('SmartLockStatus', $this->Translate($name));
+                }
+            }
         }
         return $result;
     }
@@ -241,10 +253,10 @@ class NUKISmartLock extends IPSModule
     private function SetSmartLockState(string $Data)
     {
         $this->SendDebug(__FUNCTION__ . ' Data', $Data, 0);
-        $result = json_decode($Data, true);
         if (empty($Data)) {
             return;
         }
+        $result = json_decode($Data, true);
         if (array_key_exists('mode', $result)) {
             /*
              *  2    door mode
@@ -332,7 +344,7 @@ class NUKISmartLock extends IPSModule
                     $switchState = false;
                     break;
                 case 255:
-                    $stateText = $this->Translate('undefined');
+                    $stateText = $this->Translate('Undefined');
                     $switchState = false;
                     break;
                 default:

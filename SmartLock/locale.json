@@ -59,8 +59,8 @@
       "unlock": "aufsperren",
       "lock": "zusperren",
       "unlatch": "entriegeln",
-      "lock ‘n’ go": "automatisch aufsperren und wieder zusperren",
-      "lock ‘n’ go with unlatch ": "automatisch aufsperren mit entriegeln und wieder zusperren"
+      "Lock ‘n’ go": "Automatisch auf- und wieder zusperren",
+      "Lock ‘n’ go with unlatch ": "Automatisch aufsperren mit entriegeln und wieder zusperren"
     }
   }
 }
