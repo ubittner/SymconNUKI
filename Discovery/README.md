@@ -7,11 +7,8 @@
 Diese Instanz kann die mit dem NUKI Server verbundenen NUKI Bridges ermitteln. Es wird eine bestehende Internetverbindung benötigt.  
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
-
 Bevor dieses Modul installiert wird, sollte unbedingt ein Backup von IP-Symcon durchgeführt werden.
-
 Der Entwickler haftet nicht für eventuell auftretende Datenverluste oder sonstige Schäden.
-
 Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklich zu.
 
 ### Inhaltverzeichnis
@@ -27,7 +24,7 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 ### 1. Funktionsumfang
 
 * Listet die mit dem NUKI Server verbundenen NUKI Bridges auf
-* Automatisches Anlegen der ausgewählten NUKI Bridges
+* Automatisches Anlegen der ausgewählten NUKI Bridge
 
 ### 2. Voraussetzungen
 
@@ -78,7 +75,7 @@ Es werden keine Statusvariablen angelegt.
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
-Es werden keine neuen Profile angelegt.
+Es werden keine Profile angelegt.
 
 ### 6. WebFront
 
@@ -86,7 +83,13 @@ Der NUKI Configurator ist im WebFront nicht nutzbar.
 
 ### 7. PHP-Befehlsreferenz
 
-`NUKI_DiscoverBridges(integer $InstanzID);`  
+```text
+Verbundene NUKI Bridges ermitteln: 
+
+NUKI_DiscoverBridges(integer $InstanzID);  
 Ermittelt die mit dem NUKI Server verbundenen NUKI Bridges.  
 Die Funktion liefert ein Array der verbundenden NUKI Bridges als Rückgabewert.  
-`$bridges = NUKI_DiscoverBridges(12345); print_r($bridges);`
+
+Beispiel:  
+$bridges = NUKI_DiscoverBridges(12345); print_r($bridges);
+```
