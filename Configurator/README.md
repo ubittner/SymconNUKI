@@ -2,14 +2,11 @@
 
 [![Image](../imgs/NUKI_Logo.png)](https://nuki.io/de/)  
 
-Dieses Modul listet die mit der NUKI Bridge gekoppelten Geräte (Smart Locks / Opener) auf und der Nutzer kann die ausgewählten Geräte automatisch anlegen lassen.
+Dieses Modul listet die mit der NUKI Bridge gekoppelten Geräte (Smart Locks / Opener) auf und der Nutzer kann die ausgewählten Geräte automatisch anlegen lassen.  
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
-
 Bevor das Modul installiert wird, sollte unbedingt ein Backup von IP-Symcon durchgeführt werden.
-
 Der Entwickler haftet nicht für eventuell auftretende Datenverluste oder sonstige Schäden.
-
 Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklich zu.
 
 ### Inhaltverzeichnis
@@ -31,7 +28,7 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 
 - IP-Symcon ab Version 5.1
 - NUKI Bridge
-- NUKI Smart Lock oder Opener
+- NUKI Smart Lock oder NUKI Opener
 
 ### 3. Software-Installation
 

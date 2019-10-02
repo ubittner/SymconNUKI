@@ -120,6 +120,8 @@ class NUKIConfigurator extends IPSModule
         return json_encode($form);
     }
 
+    //################### Private
+
     /**
      * Gets the path for Smart Lock category.
      *
