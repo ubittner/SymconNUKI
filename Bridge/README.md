@@ -4,14 +4,11 @@
 
 [![Image](../imgs/NUKI_Bridge.png)]()  
 
-Dieses Modul integriert die [NUKI Bridge](https://nuki.io/de/bridge/) in [IP-Symcon](https://www.symcon.de).
+Dieses Modul integriert die [NUKI Bridge](https://nuki.io/de/bridge/) in [IP-Symcon](https://www.symcon.de).  
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
-
 Bevor das Modul installiert wird, sollte unbedingt ein Backup von IP-Symcon durchgeführt werden.
-
 Der Entwickler haftet nicht für eventuell auftretende Datenverluste oder sonstige Schäden.
-
 Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklich zu.
 
 ### Inhaltverzeichnis
@@ -27,14 +24,14 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 
 ### 1. Funktionsumfang
 
-* Empfang von Statusinformationen der NUKI Smart Locks via Webhook
-* Auf- und Zusperren der NUKI Smart Locks 
+* Empfang von Statusinformationen der NUKI Smart Locks via WebHook Control
+* Auf- und Zusperren der Smart Locks 
 
 ### 2. Voraussetzungen
 
 - IP-Symcon ab Version 5.1
 - NUKI Bridge
-- NUKI Smart Lock  
+- NUKI Smart Lock oder NUKI Opener
 
 ### 3. Software-Installation
 
@@ -53,15 +50,15 @@ Alternativ können Sie die NUKI Bridge auch manuell anlegen. Lesen Sie bitte daf
 __Konfigurationsseite__:
 
 Name                                | Beschreibung
------------------------------------ | ---------------------------------
+----------------------------------- | --------------------------------------------------------------
 (0) Instanzinformationen            | Informationen zu der NUKI Bridge Instanz
 (1) Bridge                          | Eigenschaften der NUKI Bridge
-(2) Callback                        | Eigenschaften zum Callback der NUKI Bridge
+(2) Callback                        | Eigenschaften zum Callback der NUKI Bridge via WebHook Control
 
 __Schaltflächen im Aktionsbereich__:
 
 Name                                | Beschreibung
------------------------------------ | ---------------------------------
+----------------------------------- | --------------------------------------------------------------
 (1) Bridge                          | 
 Info anzeigen                       | Zeigt weitere Informationen der NUKI Bridge an
 Logdatei anzeigen                   | Zeigt die Logdatei der NUKI Bridge an
@@ -69,13 +66,12 @@ Logdatei löschen                    | Löscht die Logdatei der NUKI Bridge
 Firmware aktualisieren              | Führt eine aktualisierung der Firmware durch
 Neustart                            | Starte die NUKI Bridge neu
 Werkseinstellungen                  | Setzt die NUKI Brige zurück in die Werkseinstellungen
-Geräte anzeigen                     | Zeigt die verfügbaren NUKI Geräte der NUKI Bridge an
+Gekoppelte Geräte anzeigen          | Zeigt die gekoppelten NUKI Geräte der NUKI Bridge an
 (2) Callback Socket                 | 
 Anlegen                             | Legt einen Callback auf der NUKI Bridge an
 Anzeigen                            | Zeigt die angelegten Callbacks der NUKI Bridge an
 Löschen                             | Löscht den Callback mit der definierten ID von der NUKI Bridge
-Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an  
-
+  
 __Vorgehensweise__:
 
 Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout, die Bridge ID und den API Token der NUKI Bridge an. 
@@ -85,11 +81,20 @@ Mit der Konfigurator Instanz `NUKI Configurator` können Sie die Smart Locks aut
 __Callback__:
 
 Für die Aktualisierung von Informationen der NUKI Smart Locks wird ein Callback genutzt.  
-Geben Sie unter Punkt (3) Callback die IP-Adresse des IP-Symcon Servers ein und den Server-Socket Port.  
+Geben Sie unter Punkt (3) Callback die IP-Adresse des IP-Symcon Servers ein und den Port für den WebHook Control (normalerweise 3777).  
 Übernehmen Sie eventuelle Änderungen und drücken Sie anschließend im Aktionsbereich unter Punkt (2) Callback die Schaltfläche `ANLEGEN`.  
-Der Callback wird automatisch auf der NUKI Bridge eingetragen und in IP-Symcon wird autmatisch der entsprschende NUKI Socket (Server Socket) angelegt, sofern die Option `Callback benutzen` aktiviert wurde und kein bereits vorhandener Server-Socket existiert.  
+Der Callback wird automatisch auf der NUKI Bridge eingetragen, sofern die Option `Callback benutzen` aktiviert wurde.  
 Über die Schaltfläche `ANZEIGEN` unter Punkt (2) Callback im Aktionsbereich werden die registrierten Callbacks angezeigt.
-Mit der Schaltfläche `LÖSCHEN` im Aktionsbereich unter Punkt (2) Callback kann mittels der definierte Callback ID aus der Instantkonfiguration) der Callback von der NUKI Bridge gelöscht werden.
+Mit der Schaltfläche `LÖSCHEN` im Aktionsbereich unter Punkt (2) Callback kann mittels der definierte Callback ID aus der Instantkonfiguration) der Callback von der NUKI Bridge gelöscht werden.  
+
+Callback URL für [WebHook Control](https://www.symcon.de/service/dokumentation/modulreferenz/webhook-control/):  
+
+```text
+http://IP-Adressse:Port/hook/nuki/bridge/InstanzID  
+
+Beispiel:  
+http://192.168.1.100:377/hook/nuki/bridge/12345
+```  
 
 ### 5. Statusvariablen und Profile
 
@@ -103,7 +108,7 @@ Es werden keine Statusvariablen angelegt.
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
-Es werden keine neuen Profile angelegt.
+Es werden keine Profile angelegt.
 
 ### 6. WebFront
 
@@ -330,7 +335,7 @@ $update = NUKI_FactoryResetBridge(12345);
 
 Mit einem curl Befehl kann der Callback einer NUKI Bridge im Rahmen einer Entwicklungsumgebung simuliert werden. Für den normalen Gebrauch oder Einsatz der NUKI Bridge ist der curl Befehl nicht notwendig.  
 Für die Verwendung von curl über die Konsole des entsprechenden Betriebssystems informieren Sie sich bitte im Internet.  
-```Text
+```text
 curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: application/json;charset=utf-8" -X POST -d '{"nukiId": 987654321, "state": 1, "stateName": "locked", "batteryCritical": false}' http://127.0.0.1:8081
 ```  
 

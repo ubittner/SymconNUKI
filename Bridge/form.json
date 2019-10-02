@@ -38,7 +38,7 @@
       "items": [
         {
           "type": "Label",
-          "caption": "Symcon Version:\t5.2>"
+          "caption": "Symcon Version:\t5.1>"
         },
         {
           "type": "Label",
@@ -132,7 +132,7 @@
     },
     {
       "type": "ExpansionPanel",
-      "caption": "(2) Callback / Webhook",
+      "caption": "(2) Callback",
       "items": [
         {
           "type": "Label",
@@ -157,7 +157,7 @@
         },
         {
           "type": "Label",
-          "caption": "The information of the IP-Symcon server socket must be registered on the NUKI Bridge."
+          "caption": "The information of this IP-Symcon server for the webhook must be registered on the NUKI Bridge."
         },
         {
           "type": "Label",
@@ -170,16 +170,16 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the server socket port of this IP-Symcon server:"
+          "caption": "Please enter the port for the Webhook Control (normally 3777) of this IP-Symcon server:"
         },
         {
           "type": "NumberSpinner",
           "name": "SocketPort",
-          "caption": "Server socket port"
+          "caption": "Port"
         },
         {
           "type": "Label",
-          "caption": "Please specify the callback ID for changes or deletions:"
+          "caption": "Please enter the callback ID if you want to delete a callback:"
         },
         {
           "type": "NumberSpinner",
@@ -192,15 +192,15 @@
         },
         {
           "type": "Label",
-          "caption": "After accepting any changes, you can press the (2) CREATE button in the action area to create a callback on the NUKI Bridge."
+          "caption": "After accepting any changes, you can press in the action area under (2) Callbackthe the CREATE button to create a callback on the NUKI Bridge."
         },
         {
           "type": "Label",
-          "caption": "With the button (2) DISPLAY in the action area you can display the existing callbacks of the NUKI Bridge."
+          "caption": "With the button DISPLAY you can display the existing callbacks of the NUKI Bridge."
         },
         {
           "type": "Label",
-          "caption": "With the button (2) DELETE in the action area you can delete the callback with the specified ID from the NUKI Bridge."
+          "caption": "With the button DELETE you can delete the callback with the specified ID from the NUKI Bridge."
         }
       ]
     }
@@ -248,7 +248,6 @@
             ]
           }
         },
-
         {
           "type": "PopupButton",
           "caption": "Reboot",
@@ -282,7 +281,7 @@
           "items": [
             {
               "type": "Button",
-              "caption": "Show Devices",
+              "caption": "Show Paired Devices",
               "onClick": "$data=NUKI_GetPairedDevices($id); print_r(json_decode($data, true));"
             }
           ]

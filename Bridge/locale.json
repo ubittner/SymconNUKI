@@ -22,14 +22,13 @@
       "With a callback you can receive information from this NUKI bridge on this IP-Symcon server.": "Mit einem Callback können Sie Informationen von dieser NUKI Bridge auf diesem IP-Symcon Server empfangen.",
       "Please select if you want to use a callback:": "Bitte wählen Sie aus, ob Sie einen Callback nutzen wollen:",
       "Use Callback": "Callback benutzen",
-      "The information of the IP-Symcon server socket must be registered on the NUKI Bridge.": "Die Informationen des IP-Symcon Server-Sockets müssen auf der NUKI Bridge registriert werden.",
+      "The information of this IP-Symcon server for the webhook must be registered on the NUKI Bridge.": "Die Informationen dieses IP-Symcon Servers für den Webhook Control müssen auf der NUKI Bridge registriert werden.",
       "Please enter the IP address of this IP-Symcon server:": "Bitte geben Sie die IP-Adresse dieses IP-Symcon Servers an:",
-      "Please enter the server socket port of this IP-Symcon server:": "Bitte geben Sie den Server-Socket Port dieses IP-Symcon Servers an:",
-      "Server socket port": "Server-Socket Port",
-      "Please specify the callback ID for changes or deletions:": "Bitte geben Sie die Callback ID für Änderungen oder Löschungen an:",
-      "After accepting any changes, you can press the (2) CREATE button in the action area to create a callback on the NUKI Bridge.": "Nach Übernahme eventueller Änderungen können Sie im Aktionsbereich die Schaltfläche (2) ANLEGEN drücken, um den Callback auf der NUKI Bridge anzulegen.",
-      "With the button (2) DISPLAY in the action area you can display the existing callbacks of the NUKI Bridge.": "Mit der Schaltfläche (2) ANZEIGEN im Aktionsbereich werden die existierenden Callbacks der NUKI Bridge angezeigt.",
-      "With the button (2) DELETE in the action area you can delete the callback with the specified ID from the NUKI Bridge.": "Mit der Schaltfläche (2) LÖSCHEN im Aktionsbereich können Sie den Callback mit der angegebenen ID von der NUKI Bridge löschen.",
+      "Please enter the port for the Webhook Control (normally 3777) of this IP-Symcon server:": "Bitte geben Sie den Port für den Webhook Control (normalerweise 3777) dieses IP-Symcon Servers an:",
+      "Please enter the callback ID if you want to delete a callback:": "Bitte geben Sie die Callback ID an, wenn Sie einen Callback löschen wollen:",
+      "After accepting any changes, you can press in the action area under (2) Callbackthe the CREATE button to create a callback on the NUKI Bridge.": "Nach Übernahme eventueller Änderungen können Sie im Aktionsbereich unter (2) Callback die Schaltfläche ANLEGEN drücken, um den Callback auf der NUKI Bridge anzulegen.",
+      "With the button DISPLAY you can display the existing callbacks of the NUKI Bridge.": "Mit der Schaltfläche ANZEIGEN werden die existierenden Callbacks der NUKI Bridge angezeigt.",
+      "With the button DELETE you can delete the callback with the specified ID from the NUKI Bridge.": "Mit der Schaltfläche LÖSCHEN können Sie den Callback mit der angegebenen ID von der NUKI Bridge löschen.",
       "Action area": "Aktionsbereich",
       "Show Info": "Info anzeigen",
       "Show Log": "Logdatei anzeigen",
@@ -40,7 +39,7 @@
       "Do you really want to reboot the device?": "Wollen Sie wirklich die NUKI Bridge neu starten?",
       "Factory Reset": "Werkseinstellungen",
       "Do you really want to perform a factory reset?": "Wollen Sie wirklich die Werkseinstellungen laden?",
-      "Show Devices": "Geräte anzeigen",
+      "Show Paired Devices": "Gekoppelte Geräte anzeigen",
       "Add": "Anlegen",
       "Do you really want to add a callback?": "Wollen Sie wirklich einen Callback anlegen?",
       "List": "Anzeigen",
@@ -61,8 +60,7 @@
       "Please edit all configuration parameters of the NUKI Bridge.": "Bitte alle Konfigurationsparameter der NUKI Bridge eintragen.",
       "NUKI Bridge configuration has an error!": "NUKI Bridge Konfiguration hat einen Fehler!",
       "An unknown error has occurred!": "Es ist ein unbekannter Fehler aufgetreten!",
-      "Please enter the IP address of the IP-Symcon server and the port for the Webhook!": "Bitte geben Sie die IP-Adresse des IP-Symcon Servers und den Port für den Webhook an!",
-      "Smart Locks have been matched / created!": "Smart Locks wurden abgeglichen / angelegt!"
+      "Please enter the IP address of the IP-Symcon server and the port for the Webhook!": "Bitte geben Sie die IP-Adresse des IP-Symcon Servers und den Port für den Webhook an!"
     }
   }
 }
