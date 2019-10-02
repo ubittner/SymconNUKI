@@ -94,11 +94,11 @@ class NUKISmartLock extends IPSModule
         $this->EnableAction('SmartLockSwitch');
         IPS_SetHidden($this->GetIDForIdent('SmartLockSwitch'), $this->ReadPropertyBoolean('HideSmartLockSwitch'));
 
-        $this->MaintainVariable('SmartLockMode', $this->Translate('Mode'), 3, '', 2, true);
-        IPS_SetIcon($this->GetIDForIdent('SmartLockMode'), 'Information');
-
-        $this->MaintainVariable('SmartLockStatus', $this->Translate('State'), 3, '', 3, true);
+        $this->MaintainVariable('SmartLockStatus', $this->Translate('State'), 3, '', 2, true);
         IPS_SetIcon($this->GetIDForIdent('SmartLockStatus'), 'Information');
+
+        $this->MaintainVariable('SmartLockMode', $this->Translate('Mode'), 3, '', 3, true);
+        IPS_SetIcon($this->GetIDForIdent('SmartLockMode'), 'Information');
 
         $this->MaintainVariable('SmartLockBatteryState', $this->Translate('Battery'), 0, '~Battery', 3, true);
 
