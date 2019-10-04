@@ -139,6 +139,7 @@ class NUKISmartLock extends IPSModule
      * Receives data from the NUKI Bridge (splitter).
      *
      * @param $JSONString
+     *
      * @return bool|void
      */
     public function ReceiveData($JSONString)
@@ -188,7 +189,7 @@ class NUKISmartLock extends IPSModule
         $buffer = [];
         $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
         $buffer['Command'] = 'GetLockState';
-        $buffer['Params'] = ['nukiId' => (int)$nukiID, 'deviceType' => 0];
+        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'deviceType' => 0];
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
         $result = $this->SendDataToParent($data);
@@ -217,16 +218,17 @@ class NUKISmartLock extends IPSModule
      * Toggles the Smart Lock.
      *
      * @param bool $State
+     *
      * @return bool
      */
     public function ToggleSmartLock(bool $State): bool
     {
         $lockAction = 255;
         if ($State == false) {
-            $lockAction = (int)$this->ReadPropertyString('SwitchOffAction');
+            $lockAction = (int) $this->ReadPropertyString('SwitchOffAction');
         }
         if ($State == true) {
-            $lockAction = (int)$this->ReadPropertyString('SwitchOnAction');
+            $lockAction = (int) $this->ReadPropertyString('SwitchOnAction');
         }
         // Send data to bridge
         $result = $this->SetLockAction($lockAction);
@@ -237,7 +239,7 @@ class NUKISmartLock extends IPSModule
             // Check callback
             $parentID = IPS_GetInstance($this->InstanceID)['ConnectionID'];
             if ($parentID != 0 && IPS_ObjectExists($parentID)) {
-                $useCallback = (bool)IPS_GetProperty($parentID, 'UseCallback');
+                $useCallback = (bool) IPS_GetProperty($parentID, 'UseCallback');
                 if (!$useCallback) {
                     $stateName = [1 => 'Unlocked', 2 => 'Locked', 3 => 'Unlatched', 4 => 'Lock ‘n’ go', 5 => 'Lock ‘n’ go with unlatch', 255 => 'Undefined'];
                     $name = $stateName[$lockAction];
@@ -363,6 +365,7 @@ class NUKISmartLock extends IPSModule
      * Set the lock action of the opener.
      *
      * @param int $LockAction
+     *
      * @return bool
      */
     private function SetLockAction(int $LockAction): bool
@@ -379,7 +382,7 @@ class NUKISmartLock extends IPSModule
         $buffer = [];
         $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
         $buffer['Command'] = 'SetLockAction';
-        $buffer['Params'] = ['nukiId' => (int)$nukiID, 'lockAction' => $LockAction, 'deviceType' => 0];
+        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $LockAction, 'deviceType' => 0];
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
         $result = json_decode(json_decode($this->SendDataToParent($data), true), true);

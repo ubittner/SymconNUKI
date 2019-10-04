@@ -116,6 +116,7 @@ class NUKIBridge extends IPSModule
      * Receives data from the children and sends the result back to the child.
      *
      * @param $JSONString
+     *
      * @return false|string
      */
     public function ForwardData($JSONString)
@@ -127,11 +128,11 @@ class NUKIBridge extends IPSModule
                 $result = $this->GetPairedDevices();
                 break;
             case 'GetLockState':
-                $params = (array)$data->Buffer->Params;
+                $params = (array) $data->Buffer->Params;
                 $result = $this->GetLockState($params['nukiId'], $params['deviceType']);
                 break;
             case 'SetLockAction':
-                $params = (array)$data->Buffer->Params;
+                $params = (array) $data->Buffer->Params;
                 $result = $this->SetLockAction($params['nukiId'], $params['lockAction'], $params['deviceType']);
                 break;
             default:

@@ -77,6 +77,7 @@ trait bridgeAPI
      *
      * @param int $NukiID
      * @param int $DeviceType
+     *
      * @return string
      */
     public function GetLockState(int $NukiID, int $DeviceType = 0): string
@@ -156,6 +157,7 @@ trait bridgeAPI
      * @param int $NukiID
      * @param int $DeviceType
      * @param int $LockAction
+     *
      * @return string
      */
     public function SetLockAction(int $NukiID, int $LockAction, int $DeviceType = 0): string
@@ -222,6 +224,7 @@ trait bridgeAPI
      *
      * @param int $NukiID
      * @param int $DeviceType
+     *
      * @return string
      */
     public function UnpairDevice(int $NukiID, int $DeviceType = 0): string
