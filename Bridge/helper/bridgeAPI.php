@@ -89,7 +89,7 @@ trait bridgeAPI
          *
          */
 
-        $endpoint = '/lockState?nukiId=' . $NukiID .'&deviceType=' . $DeviceType . '&token=';
+        $endpoint = '/lockState?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&token=';
         $data = $this->SendDataToBridge($endpoint);
         return $data;
 
@@ -371,7 +371,6 @@ trait bridgeAPI
         if ($timeout < 1) {
             $timeout = 1;
         }
-        $this->SendDebug('Timeout', json_encode($timeout), 0);
         $token = $this->ReadPropertyString('BridgeAPIToken');
         $ch = curl_init();
         curl_setopt_array($ch, [
@@ -380,7 +379,7 @@ trait bridgeAPI
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FAILONERROR    => true,
             CURLOPT_CONNECTTIMEOUT => $timeout,
-            CURLOPT_TIMEOUT => $timeout]);
+            CURLOPT_TIMEOUT        => 60]);
         $response = curl_exec($ch);
         if (curl_errno($ch)) {
             $error_msg = curl_error($ch);
