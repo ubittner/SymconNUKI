@@ -2,16 +2,11 @@
 
 [![Image](../imgs/NUKI_Logo.png)](https://nuki.io/de/)  
 
-[![Image](../imgs/NUKI_SmartLock.png)]()  
-
-Dieses Modul listet die mit der NUKI Bridge gekoppelten Smart Locks auf und der Nutzer kann die ausgewählten Smart Locks automatisch anlegen lassen.
+Dieses Modul listet die mit der NUKI Bridge gekoppelten Geräte (Smart Locks / Opener) auf und der Nutzer kann die ausgewählten Geräte automatisch anlegen lassen.  
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
-
 Bevor das Modul installiert wird, sollte unbedingt ein Backup von IP-Symcon durchgeführt werden.
-
 Der Entwickler haftet nicht für eventuell auftretende Datenverluste oder sonstige Schäden.
-
 Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklich zu.
 
 ### Inhaltverzeichnis
@@ -26,14 +21,14 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 
 ### 1. Funktionsumfang
 
-* Listet die verfügbaren NUKI Smart Locks der zugewiesenen NUKI Bridge auf
-* Automatisches Anlegen des ausgewählten NUKI Smart Locks
+* Listet die verfügbaren NUKI Geräte (Smart Locks / Opener) der zugewiesenen NUKI Bridge auf
+* Automatisches Anlegen des ausgewählten NUKI Gerätes
 
 ### 2. Voraussetzungen
 
 - IP-Symcon ab Version 5.1
 - NUKI Bridge
-- NUKI Smart Lock
+- NUKI Smart Lock oder NUKI Opener
 
 ### 3. Software-Installation
 
@@ -48,21 +43,21 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 __Konfigurationsseite__:
 
 Name        | Beschreibung
------------ | ---------------------------------
-Kategorie   | Auswahl der Kategorie für die NUKI Smart Locks
-Smart Locks | Liste der verfügbaren NUKI Smart Locks
+----------- | -----------------------------------------
+Kategorie   | Auswahl der Kategorie für die NUKI Geräte
+NUKI Geräte | Liste der verfügbaren NUKI Geräte
 
 __Schaltflächen__:
 
 Name            | Beschreibung
---------------- | ---------------------------------
-Alle erstellen  | Erstellt für alle aufgelisteten NUKI Smart Locks jeweils eine Instanz
-Erstellen       | Erstellt für das ausgewählte NUKI Smart Lock eine Instanz        
+--------------- | ----------------------------------------------------------------
+Alle erstellen  | Erstellt für alle aufgelisteten NUKI Geräte jeweils eine Instanz
+Erstellen       | Erstellt für das ausgewählte NUKI Gerät eine Instanz        
 
 __Vorgehensweise__:
 
-Über die Schaltfläche `AKTUALISIEREN` können Sie im NUKI Configurator die Liste der verfügbaren NUKI Smart Locks jederzeit aktualisieren.  
-Wählen Sie `ALLE ERSTELLEN` oder wählen Sie ein NUKI Smart Lock aus der Liste aus und drücken dann die Schaltfläche `ERSTELLEN`, um die NUKI Smart Locks automatisch anzulegen.
+Über die Schaltfläche `AKTUALISIEREN` können Sie im NUKI Configurator die Liste der verfügbaren NUKI Geräte jederzeit aktualisieren.  
+Wählen Sie `ALLE ERSTELLEN` oder wählen Sie ein NUKI Gerät aus der Liste aus und drücken dann die Schaltfläche `ERSTELLEN`, um das NUKI Gerät automatisch anzulegen.
 Sofern noch keine NUKI Bridge installiert wurde, muss einmalig beim Erstellen der NUKI Configurator Instanz die Konfiguration der NUKI Bridge vorgenommen werden.  
 Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout, die Bridge ID und den API Token der NUKI Bridge an. 
 Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt.  
@@ -82,7 +77,7 @@ Es werden keine Statusvariablen angelegt.
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
-Es werden keine neuen Profile angelegt.
+Es werden keine Profile angelegt.
 
 ### 6. WebFront
 

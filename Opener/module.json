@@ -1,10 +1,10 @@
 {
-  "id": "{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}",
-  "name": "NUKI Smart Lock",
+  "id": "{057995F0-F9A9-C6F4-C882-C47A259419CE}",
+  "name": "NUKI Opener",
   "type": 3,
   "vendor": "NUKI",
   "aliases": [
-    "NUKI Smart Lock"
+    "NUKI Opener"
   ],
   "url": "https://github.com/ubittner/SymconNUKI",
   "parentRequirements": [

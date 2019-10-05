@@ -11,9 +11,9 @@
  * @copyright   (c) 2019
  * @license     CC BY-NC-SA 4.0
  *
- * @version     1.04
- * @build       1007
- * @date        2019-08-07, 18:00
+ * @version     1.05
+ * @build       1008
+ * @date        2019-09-26, 18:00
  *
  * @see         https://github.com/ubittner/SymconNUKI
  *

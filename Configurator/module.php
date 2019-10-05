@@ -11,9 +11,9 @@
  * @copyright   (c) 2019
  * @license     CC BY-NC-SA 4.0
  *
- * @version     1.04
- * @build       1007
- * @date        2019-08-07, 18:00
+ * @version     1.05
+ * @build       1008
+ * @date        2019-09-26, 18:00
  *
  * @see         https://github.com/ubittner/SymconNUKI
  *
@@ -53,77 +53,74 @@ class NUKIConfigurator extends IPSModule
     /**
      * Creates a dynamic configuration form.
      *
-     * @return string
+     * @return false|string
      */
-    public function GetConfigurationForm(): string
+    public function GetConfigurationForm()
     {
         $form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
-        $values = $this->GetConfigurationList();
-        $form['actions'][1]['values'] = $values;
+        $pairedDevices = json_decode($this->GetPairedDevices(), true);
+        $this->SendDebug(__FUNCTION__ . ' Paired Devices', json_encode($pairedDevices), 0);
+        $values = [];
+        $location = $this->GetCategoryPath($this->ReadPropertyInteger(('CategoryID')));
+        // Paired devices
+        if (!empty($pairedDevices)) {
+            foreach ($pairedDevices as $key => $device) {
+                if (array_key_exists('deviceType', $device)) {
+                    $deviceType = $device['deviceType'];
+                    $deviceName = $device['name'];
+                    $nukiID = $device['nukiId'];
+                    switch ($deviceType) {
+                        // Smart Lock
+                        case 0:
+                            $instanceID = $this->GetDeviceInstances($nukiID, 0);
+                            $this->SendDebug(__FUNCTION__ . ' NUKI Smart Lock ID', json_encode($nukiID), 0);
+                            $this->SendDebug(__FUNCTION__ . ' NUKI Smart Lock Instance ID', json_encode($instanceID), 0);
+                            $values[] = [
+                                'DeviceID' => $nukiID,
+                                'DeviceType' => $deviceType,
+                                'ProductDesignation' => 'Smart Lock',
+                                'DeviceName' => $deviceName,
+                                'instanceID' => $instanceID,
+                                'create' => [
+                                    'moduleID' => '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}',
+                                    'configuration' => [
+                                        'SmartLockUID' => (string)$nukiID,
+                                        'SmartLockName' => (string)$deviceName
+                                    ],
+                                    'location' => $location
+                                ]
+                            ];
+                            break;
+                        // Opener
+                        case 2:
+                            $instanceID = $this->GetDeviceInstances($nukiID, 2);
+                            $this->SendDebug(__FUNCTION__ . ' NUKI Opener ID', json_encode($nukiID), 0);
+                            $this->SendDebug(__FUNCTION__ . ' NUKI Opener Instance ID', json_encode($instanceID), 0);
+                            $values[] = [
+                                'DeviceID' => $nukiID,
+                                'DeviceType' => $deviceType,
+                                'ProductDesignation' => 'Opener',
+                                'DeviceName' => $deviceName,
+                                'instanceID' => $instanceID,
+                                'create' => [
+                                    'moduleID' => '{057995F0-F9A9-C6F4-C882-C47A259419CE}',
+                                    'configuration' => [
+                                        'OpenerUID' => (string)$nukiID,
+                                        'OpenerName' => (string)$deviceName
+                                    ],
+                                    'location' => $location
+                                ]
+                            ];
+                            break;
+                    }
+                }
+            }
+        }
+        $form['actions'][0]['values'] = $values;
         return json_encode($form);
     }
 
-    /**
-     * Gets the devices for the configuration list.
-     *
-     * @return array
-     */
-    private function GetConfigurationList(): array
-    {
-        // Get already existing smart lock instances
-        $smartLockDevices = IPS_GetInstanceListByModuleID('{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}');
-        $this->SendDebug('ExistingInstances', json_encode($smartLockDevices), 0);
-        // Get available smart locks from the bridge
-        $devices = [];
-        $parentID = IPS_GetInstance($this->InstanceID)['ConnectionID'];
-        if ($parentID > 0) {
-            $status = IPS_GetInstance($parentID)['InstanceStatus'];
-            if ($status === 102) {
-                $pairedDevices = NUKI_GetSmartLocks(IPS_GetInstance($this->InstanceID)['ConnectionID']);
-                if (!empty($pairedDevices)) {
-                    $this->SendDebug('PairedDevices', $pairedDevices, 0);
-                    $devices = json_decode($pairedDevices, true);
-                } else {
-                    $devices = null;
-                }
-                if (empty($devices)) {
-                    return [];
-                }
-            }
-        } else {
-            return [];
-        }
-        // Prepare data for configuration list
-        $configurationList = [];
-        foreach ($devices as $key => $device) {
-            $instanceID = 0;
-            $smartLockName = $device['name'];
-            $smartLockID = (string) $device['nukiId'];
-            $this->SendDebug('NukiID', $smartLockID, 0);
-            foreach ($smartLockDevices as $smartLockDevice) {
-                $this->SendDebug('Device', $smartLockDevice, 0);
-                $smartLockUID = (string) IPS_GetProperty($smartLockDevice, 'SmartLockUID');
-                $this->SendDebug('NukiID', $smartLockUID, 0);
-                if (($smartLockID === $smartLockUID) && (IPS_GetInstance($smartLockDevice)['ConnectionID'] === $parentID)) {
-                    $instanceID = $smartLockDevice;
-                    $this->SendDebug('InstanceID', $instanceID, 0);
-                } else {
-                    $this->SendDebug('InstanceID', 'not found!', 0);
-                }
-            }
-            $configurationList[] = [
-                'instanceID'      => $instanceID,
-                'SmartLockName'   => $smartLockName,
-                'SmartLockID'     => $smartLockID,
-                'create'          => [
-                    'moduleID'      => '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}',
-                    'configuration' => [
-                        'SmartLockUID'  => $smartLockID,
-                        'SmartLockName' => $smartLockName],
-                    'location' => $this->GetCategoryPath($this->ReadPropertyInteger('CategoryID'))]];
-        }
-        return $configurationList;
-    }
+    //################### Private
 
     /**
      * Gets the path for Smart Lock category.
@@ -144,5 +141,63 @@ class NUKIConfigurator extends IPSModule
             $parentID = IPS_GetObject($parentID)['ParentID'];
         }
         return array_reverse($path);
+    }
+
+    /**
+     * Gets the paired devices of the bridge.
+     *
+     * @return array|mixed
+     */
+    private function GetPairedDevices(): string
+    {
+        if (!$this->HasActiveParent()) {
+            return '';
+        }
+        $data = [];
+        $buffer = [];
+        $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
+        $buffer['Command'] = 'GetPairedDevices';
+        $buffer['Params'] = '';
+        $data['Buffer'] = $buffer;
+        $data = json_encode($data);
+        $result = json_decode($this->SendDataToParent($data), true);
+        if (!$result) {
+            return '';
+        }
+        return $result;
+    }
+
+    /**
+     * Gets the instance id for an existing device.
+     *
+     * @param $DeviceUID
+     * @param $DeviceType
+     * @return int
+     */
+    private function GetDeviceInstances($DeviceUID, $DeviceType)
+    {
+        $instanceID = 0;
+        switch ($DeviceType) {
+            // Smart Lock
+            case 0:
+                $moduleID = '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}';
+                $propertyUIDName = 'SmartLockUID';
+                break;
+            // Opener
+            case 2:
+                $moduleID = '{057995F0-F9A9-C6F4-C882-C47A259419CE}';
+                $propertyUIDName = 'OpenerUID';
+                break;
+            default:
+                $moduleID = '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}';
+                $propertyUIDName = 'SmartLockUID';
+        }
+        $instanceIDs = IPS_GetInstanceListByModuleID($moduleID);
+        foreach ($instanceIDs as $id) {
+            if (IPS_GetProperty($id, $propertyUIDName) == $DeviceUID) {
+                $instanceID = $id;
+            }
+        }
+        return $instanceID;
     }
 }

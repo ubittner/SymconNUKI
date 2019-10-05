@@ -4,14 +4,11 @@
 
 [![Image](../imgs/NUKI_SmartLock.png)]()  
 
-Dieses Modul integriert das elektronische Türschloss [NUKI Smart Lock](https://nuki.io/de/smart-lock/) in [IP-Symcon](https://www.symcon.de).
+Dieses Modul integriert das elektronische Türschloss [NUKI Smart Lock](https://nuki.io/de/smart-lock/) in [IP-Symcon](https://www.symcon.de).  
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
-
 Bevor das Modul installiert wird, sollte unbedingt ein Backup von IP-Symcon durchgeführt werden.
-
 Der Entwickler haftet nicht für eventuell auftretende Datenverluste oder sonstige Schäden.
-
 Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklich zu.
 
 ### Inhaltverzeichnis
@@ -69,10 +66,10 @@ Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
 (1) Smart Lock                      | 
 Status anzeigen                     | Zeigt den Status des NUKI Smart Locks an
-Unpair                              | Entfernt das Smart Lock von der Bridge
-Bedienungsanleitung                 | Zeigt Informationen zu diesem Modul an
 
 __Vorgehensweise__:  
+
+Geben Sie bei manueller Konfiguration die NUKI ID und einen Namen für den NUKI Opener an.  
 
 ### 5. Statusvariablen und Profile
 
@@ -83,30 +80,46 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 Name                    | Typ       | Beschreibung
 ----------------------- | --------- | ----------------
 SmartLockSwitch         | Boolean   | Schalter zum auf- und zusperren des NUKI Smart Locks
-SmartLockStatus         | String    | Zeigt den Status des NUKI Smart Locks an
-SmartLockBatteryState   | Boolean   | Zeigt den Batteriezustand des NUKI Smart Locks an
-Protocol                | String    | Zeigt die letzten Protokolleinträge an
+SmartLockMode           | String    | Modus des NUKI Smart Locks
+SmartLockStatus         | String    | Status des NUKI Smart Locks
+SmartLockBatteryState   | Boolean   | Batteriezustand des NUKI Smart Locks
 
 ##### Profile:
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
-NUKI.SmartLockSwitch
+NUKI.InstanzID.SmartLockSwitch
 
-Werden alle NUKI Smart Lock Instanzen gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
+Wird die NUKI Smart Lock Instanz gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
 
 ### 6. WebFront
 
-Über das WebFront kann das NUKI Smart Lock auf- oder zugesperrt werden.
-Weiherhin werden Statusinformationen über das NUKI Smart Lock und ein Protokoll angezeigt.
+Über das WebFront kann das NUKI Smart Lock zu- oder aufgesperrt werden. Informationen über den Modus, Status und den Batteriestatus werden angezeigt.  
  
 ### 7. PHP-Befehlsreferenz
 
-`NUKI_ShowLockStateOfSmartLock(integer $SmartLockInstanceID)`  
-Zeigt den Status eines smarten NUKI Türschlosses an.  
+```text
+Status aktualisieren:  
 
-`NUKI_ToggleSmartLock(integer $SmartLockInstanceID, bool $State)`  
-Sperrt das NUKI Smart Lock mit `true` auf oder sperrt mit `false` das NUKI Smart Lock zu.  
+NUKI_GetSmartLockState(integer $InstanzID);  
+Fragt den aktuellen Status des NUKI Smart Locks ab und aktualisiert die Werte der entsprechenden Variablen.  
+Rückgabewert: Die aktuellen Werte als String  
 
-`NUKI_UnpairSmartLock(integer $SmartLockInstanceID, bool $State)`  
-Löscht das NUKI Smart Lock von der Bridge.
+Beispiel:  
+$state = NUKI_GetSmartLockState(12345);  
+
+Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+NUKI_ShowLockStateOfSmartLock(integer $InstanceID);
+```  
+
+```text
+Türschloß zu und aufsperren:  
+
+NUKI_ToggleSmartLock(integer $InstanzID, boolean $Status);  
+$Status: false = Funktion gemäss Konfiguration (i.d.R. zusperren), true = Funktion gemäss Konfiguration (i.d.R. aufsperren)    
+Rückgabewert: Gibt true oder false zurück  
+
+Beispiel:  
+Zusperren:      $toggle = NUKI_ToggleSmartLock(12345, false);
+Aufsperren:     $toggle = NUKI_ToggleSmartLock(12345, true);
+```  

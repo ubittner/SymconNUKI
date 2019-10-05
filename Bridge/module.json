@@ -6,14 +6,13 @@
   "aliases": [
     "NUKI Bridge"
   ],
+  "url": "https://github.com/ubittner/SymconNUKI",
   "parentRequirements": [
-    "{79827379-F36E-4ADA-8A95-5F8D1DC92FA9}"
   ],
   "childRequirements": [
     "{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}"
   ],
   "implemented": [
-    "{018EF6B5-AB94-40C6-AA53-46943E824ACF}",
     "{73188E44-8BBA-4EBF-8BAD-40201B8866B9}"
   ],
   "prefix": "NUKI"
