@@ -172,7 +172,7 @@ class NUKIOpener extends IPSModule
         $buffer = [];
         $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
         $buffer['Command'] = 'GetLockState';
-        $buffer['Params'] = ['nukiId' => (int)$nukiID, 'deviceType' => 2];
+        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'deviceType' => 2];
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
         $result = $this->SendDataToParent($data);
@@ -328,7 +328,7 @@ class NUKIOpener extends IPSModule
         $buffer = [];
         $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
         $buffer['Command'] = 'SetLockAction';
-        $buffer['Params'] = ['nukiId' => (int)$nukiID, 'lockAction' => $LockAction, 'deviceType' => 2];
+        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $LockAction, 'deviceType' => 2];
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
         $result = json_decode(json_decode($this->SendDataToParent($data), true), true);

@@ -17,7 +17,7 @@
  *
  * @see         https://github.com/ubittner/SymconNUKI
  *
-  * @guids		Library
+ * @guids		Library
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
  *
  *              NUKI Configurator
@@ -76,16 +76,16 @@ class NUKIConfigurator extends IPSModule
                             $this->SendDebug(__FUNCTION__ . ' NUKI Smart Lock ID', json_encode($nukiID), 0);
                             $this->SendDebug(__FUNCTION__ . ' NUKI Smart Lock Instance ID', json_encode($instanceID), 0);
                             $values[] = [
-                                'DeviceID' => $nukiID,
-                                'DeviceType' => $deviceType,
+                                'DeviceID'           => $nukiID,
+                                'DeviceType'         => $deviceType,
                                 'ProductDesignation' => 'Smart Lock',
-                                'DeviceName' => $deviceName,
-                                'instanceID' => $instanceID,
-                                'create' => [
-                                    'moduleID' => '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}',
+                                'DeviceName'         => $deviceName,
+                                'instanceID'         => $instanceID,
+                                'create'             => [
+                                    'moduleID'      => '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}',
                                     'configuration' => [
-                                        'SmartLockUID' => (string)$nukiID,
-                                        'SmartLockName' => (string)$deviceName
+                                        'SmartLockUID'  => (string) $nukiID,
+                                        'SmartLockName' => (string) $deviceName
                                     ],
                                     'location' => $location
                                 ]
@@ -97,16 +97,16 @@ class NUKIConfigurator extends IPSModule
                             $this->SendDebug(__FUNCTION__ . ' NUKI Opener ID', json_encode($nukiID), 0);
                             $this->SendDebug(__FUNCTION__ . ' NUKI Opener Instance ID', json_encode($instanceID), 0);
                             $values[] = [
-                                'DeviceID' => $nukiID,
-                                'DeviceType' => $deviceType,
+                                'DeviceID'           => $nukiID,
+                                'DeviceType'         => $deviceType,
                                 'ProductDesignation' => 'Opener',
-                                'DeviceName' => $deviceName,
-                                'instanceID' => $instanceID,
-                                'create' => [
-                                    'moduleID' => '{057995F0-F9A9-C6F4-C882-C47A259419CE}',
+                                'DeviceName'         => $deviceName,
+                                'instanceID'         => $instanceID,
+                                'create'             => [
+                                    'moduleID'      => '{057995F0-F9A9-C6F4-C882-C47A259419CE}',
                                     'configuration' => [
-                                        'OpenerUID' => (string)$nukiID,
-                                        'OpenerName' => (string)$deviceName
+                                        'OpenerUID'  => (string) $nukiID,
+                                        'OpenerName' => (string) $deviceName
                                     ],
                                     'location' => $location
                                 ]

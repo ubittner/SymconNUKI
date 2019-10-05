@@ -127,11 +127,11 @@ class NUKIBridge extends IPSModule
                 $result = $this->GetPairedDevices();
                 break;
             case 'GetLockState':
-                $params = (array)$data->Buffer->Params;
+                $params = (array) $data->Buffer->Params;
                 $result = $this->GetLockState($params['nukiId'], $params['deviceType']);
                 break;
             case 'SetLockAction':
-                $params = (array)$data->Buffer->Params;
+                $params = (array) $data->Buffer->Params;
                 $result = $this->SetLockAction($params['nukiId'], $params['lockAction'], $params['deviceType']);
                 break;
             default:
