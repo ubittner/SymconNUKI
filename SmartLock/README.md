@@ -25,7 +25,6 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 
 * Auf- und Zusperren des NUKI Smart Locks
 * Anzeige von Statusinformationen
-* Protokollierung der Schaltvorgänge
 
 ### 2. Voraussetzungen
 
@@ -58,7 +57,6 @@ Name                                | Beschreibung
 (0) Instanzinformationen            | Informationen zu NUKI Smart Lock Instanz
 (1) Smart Lock                      | Eigenschaften des NUKI Smart Locks
 (2) Schaltvorgänge                  | Definieren der Schaltvorgänge
-(3) Protokoll                       | Eigenschaften zur Protokollierung
 
 __Schaltflächen im Aktionsbereich__:
 
@@ -80,8 +78,8 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 Name                    | Typ       | Beschreibung
 ----------------------- | --------- | ----------------
 SmartLockSwitch         | Boolean   | Schalter zum auf- und zusperren des NUKI Smart Locks
-SmartLockMode           | String    | Modus des NUKI Smart Locks
 SmartLockStatus         | String    | Status des NUKI Smart Locks
+SmartLockMode           | String    | Modus des NUKI Smart Locks
 SmartLockBatteryState   | Boolean   | Batteriezustand des NUKI Smart Locks
 
 ##### Profile:
