@@ -2,12 +2,11 @@
   "id": "{752C865A-5290-4DBE-AC30-01C7B1C3312F}",
   "author": "Ulrich Bittner",
   "name": "NUKI",
-  "url": "https://nuki.io",
+  "url": "https://github.com/ubittner/SymconNUKI",
   "compatibility": {
-    "version": "5.1",
-    "date": 1554076800
+    "version": "5.1"
   },
-  "version": "1.05",
-  "build": 1008,
-  "date": 1569513600
+  "version": "1.06",
+  "build": 1009,
+  "date": 1592936908
 }

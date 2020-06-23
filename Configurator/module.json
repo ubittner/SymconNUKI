@@ -4,7 +4,8 @@
   "type": 4,
   "vendor": "NUKI",
   "aliases": [
-    "NUKI Configurator"
+    "NUKI Configurator",
+    "NUKI Konfigurator"
   ],
   "url": "https://github.com/ubittner/SymconNUKI",
   "parentRequirements": [

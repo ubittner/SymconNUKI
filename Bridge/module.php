@@ -3,117 +3,106 @@
 /*
  * @module      NUKI Bridge
  *
+ * @prefix      NUKI
+ *
  * @file        module.php
  *
- * prefix       NUKI
- *
  * @author      Ulrich Bittner
- * @copyright   (c) 2019
+ * @copyright   (c) 2019, 2020
  * @license     CC BY-NC-SA 4.0
+ *              https://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @version     1.05
- * @build       1008
- * @date        2019-09-26, 18:00
- *
- * @see         https://github.com/ubittner/SymconNUKI
+ * @see         https://github.com/ubittner/SymconNUKI/Bridge
  *
  * @guids		Library
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
  *
  *				NUKI Bridge (Spliter)
- *				{B41AE29B-39C1-4144-878F-94C0F7EEC725} (Module GUID)
- *
- * 				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (CR: Device_RX)
- *              {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (I:	Device_TX)
- *
+ *				{B41AE29B-39C1-4144-878F-94C0F7EEC725}
  */
 
-// Declare
 declare(strict_types=1);
 
-// Definitions
-if (!defined('SMARTLOCK_MODULE_GUID')) {
-    define('SMARTLOCK_MODULE_GUID', '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}');
-}
-
-if (!defined('OPENER_MODULE_GUID')) {
-    define('OPENER_MODULE_GUID', '{057995F0-F9A9-C6F4-C882-C47A259419CE}');
-}
-
 // Include
+include_once __DIR__ . '/../libs/helper/autoload.php';
 include_once __DIR__ . '/helper/autoload.php';
 
 class NUKIBridge extends IPSModule
 {
     // Helper
-    use bridgeAPI;
+    use libs_helper_getModuleInfo;
+    use NUKI_bridgeAPI;
+    use NUKI_webHook;
 
     public function Create()
     {
+        // Never delete this line!
         parent::Create();
+        $this->RegisterProperties();
+    }
 
-        // Register properties
-        $this->RegisterPropertyString('BridgeIP', '');
-        $this->RegisterPropertyInteger('BridgePort', 8080);
-        $this->RegisterPropertyInteger('Timeout', 5000);
-        $this->RegisterPropertyString('BridgeAPIToken', '');
-        $this->RegisterPropertyBoolean('UseCallback', false);
-        $this->RegisterPropertyString('SocketIP', '');
-        $this->RegisterPropertyInteger('SocketPort', 3777);
-        $this->RegisterPropertyInteger('CallbackID', 0);
+    public function Destroy()
+    {
+        // Unregister WebHook
+        if (!IPS_InstanceExists($this->InstanceID)) {
+            $this->UnregisterHook('/hook/nuki/bridge/' . $this->InstanceID);
+        }
+        // Never delete this line!
+        parent::Destroy();
     }
 
     public function ApplyChanges()
     {
         // Wait until IP-Symcon is started
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
-
+        // Never delete this line!
         parent::ApplyChanges();
-
-        // Check kernel runlevel
+        // Check runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
-
         // Callback
         if ($this->ReadPropertyBoolean('UseCallback')) {
             $this->RegisterHook('/hook/nuki/bridge/' . $this->InstanceID);
         } else {
             $this->UnregisterHook('/hook/nuki/bridge/' . $this->InstanceID);
         }
-
         // Validate configuration
         $this->ValidateBridgeConfiguration();
     }
 
-    public function Destroy()
-    {
-        if (!IPS_InstanceExists($this->InstanceID)) {
-            $this->UnregisterHook('/hook/nuki/bridge/' . $this->InstanceID);
-        }
-        parent::Destroy();
-    }
-
     public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     {
-        $this->SendDebug('MessageSink', 'SenderID: ' . $SenderID . ', Message: ' . $Message, 0);
+        $this->SendDebug(__FUNCTION__, $TimeStamp . ', SenderID: ' . $SenderID . ', Message: ' . $Message . ', Data: ' . print_r($Data, true), 0);
+        if (!empty($Data)) {
+            foreach ($Data as $key => $value) {
+                $this->SendDebug(__FUNCTION__, 'Data[' . $key . '] = ' . json_encode($value), 0);
+            }
+        }
         switch ($Message) {
             case IPS_KERNELSTARTED:
                 $this->KernelReady();
                 break;
+
         }
     }
 
-    /**
-     * Applies changes when the kernel is ready.
-     */
-    private function KernelReady()
+    public function GetConfigurationForm()
     {
-        $this->ApplyChanges();
+        $formData = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
+        $moduleInfo = $this->GetModuleInfo(NUKI_BRIDGE_GUID);
+        $formData['elements'][1]['items'][1]['caption'] = $this->Translate("Instance ID:\t\t") . $this->InstanceID;
+        $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
+        $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
+        $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
+        $formData['elements'][1]['items'][5]['caption'] = $this->Translate("Time:\t\t\t") . $moduleInfo['time'];
+        $formData['elements'][1]['items'][6]['caption'] = $this->Translate("Developer:\t\t") . $moduleInfo['developer'];
+        $formData['elements'][1]['items'][7]['caption'] = "API Version:\t\t" . $this->apiVersion;
+        return json_encode($formData);
     }
 
     /**
-     * Receives data from the children and sends the result back to the child.
+     * Receives data from a child and sends the result back to the child.
      *
      * @param $JSONString
      * @return false|string
@@ -126,14 +115,17 @@ class NUKIBridge extends IPSModule
             case 'GetPairedDevices':
                 $result = $this->GetPairedDevices();
                 break;
+
             case 'GetLockState':
                 $params = (array) $data->Buffer->Params;
                 $result = $this->GetLockState($params['nukiId'], $params['deviceType']);
                 break;
+
             case 'SetLockAction':
                 $params = (array) $data->Buffer->Params;
                 $result = $this->SetLockAction($params['nukiId'], $params['lockAction'], $params['deviceType']);
                 break;
+
             default:
                 $this->SendDebug(__FUNCTION__, 'Invalid Command: ' . $data->Buffer->Command, 0);
                 $result = '';
@@ -143,110 +135,51 @@ class NUKIBridge extends IPSModule
         return json_encode($result);
     }
 
-    //#################### Private
+    #################### Private
 
-    /**
-     * Registers the webhook to the WebHook control instance.
-     *
-     * @param $WebHook
-     */
-    private function RegisterHook($WebHook)
+    private function KernelReady()
     {
-        $ids = IPS_GetInstanceListByModuleID('{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}');
-        if (count($ids) > 0) {
-            $hooks = json_decode(IPS_GetProperty($ids[0], 'Hooks'), true);
-            $found = false;
-            foreach ($hooks as $index => $hook) {
-                if ($hook['Hook'] == $WebHook) {
-                    if ($hook['TargetID'] == $this->InstanceID) {
-                        return;
-                    }
-                    $hooks[$index]['TargetID'] = $this->InstanceID;
-                    $found = true;
-                }
-            }
-            if (!$found) {
-                $hooks[] = ['Hook' => $WebHook, 'TargetID' => $this->InstanceID];
-            }
-            IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
-            IPS_ApplyChanges($ids[0]);
-        }
+        $this->ApplyChanges();
     }
 
-    /**
-     * Unregisters the webhook from the WebHook control instance.
-     *
-     * @param $WebHook
-     */
-    private function UnregisterHook($WebHook)
+    private function RegisterProperties()
     {
-        $ids = IPS_GetInstanceListByModuleID('{015A6EB8-D6E5-4B93-B496-0D3F77AE9FE1}');
-        if (count($ids) > 0) {
-            $hooks = json_decode(IPS_GetProperty($ids[0], 'Hooks'), true);
-            $found = false;
-            $index = null;
-            foreach ($hooks as $key => $hook) {
-                if ($hook['Hook'] == $WebHook) {
-                    $found = true;
-                    $index = $key;
-                    break;
-                }
-            }
-            if ($found === true && !is_null($index)) {
-                array_splice($hooks, $index, 1);
-                IPS_SetProperty($ids[0], 'Hooks', json_encode($hooks));
-                IPS_ApplyChanges($ids[0]);
-            }
-        }
+        $this->RegisterPropertyString('Note', '');
+        $this->RegisterPropertyString('BridgeIP', '');
+        $this->RegisterPropertyInteger('BridgePort', 8080);
+        $this->RegisterPropertyInteger('Timeout', 5000);
+        $this->RegisterPropertyString('BridgeAPIToken', '');
+        $this->RegisterPropertyBoolean('UseCallback', false);
+        $this->RegisterPropertyString('SocketIP', '');
+        $this->RegisterPropertyInteger('SocketPort', 3777);
+        $this->RegisterPropertyInteger('CallbackID', 0);
     }
 
-    /**
-     * Validates the configuration.
-     */
     private function ValidateBridgeConfiguration()
     {
-        $this->SetStatus(102);
+        $status = 102;
         // Check callback
-        if ($this->ReadPropertyBoolean('UseCallback') == true) {
-            if ($this->ReadPropertyString('SocketIP') == '' || $this->ReadPropertyInteger('SocketPort') == '') {
-                $this->SetStatus(104);
+        if ($this->ReadPropertyBoolean('UseCallback')) {
+            if (empty($this->ReadPropertyString('SocketIP')) || empty($this->ReadPropertyInteger('SocketPort'))) {
+                $status = 104;
             }
         }
         // Check bridge data
-        if ($this->ReadPropertyString('BridgeIP') == '' || $this->ReadPropertyInteger('BridgePort') == '' || $this->ReadPropertyString('BridgeAPIToken') == '') {
-            $this->SetStatus(104);
+        if (empty($this->ReadPropertyString('BridgeIP')) || empty($this->ReadPropertyInteger('BridgePort')) || empty($this->ReadPropertyString('BridgeAPIToken'))) {
+            $status = 104;
         } else {
             $reachable = false;
             $timeout = 1000;
-            if ($timeout && Sys_Ping($this->ReadPropertyString('BridgeIP'), $timeout) == true) {
+            if ($timeout && Sys_Ping($this->ReadPropertyString('BridgeIP'), $timeout)) {
                 $data = $this->GetBridgeInfo();
-                if ($data != false) {
+                if ($data) {
                     $reachable = true;
                 }
             }
-            if ($reachable == false) {
-                $this->SetStatus(201);
+            if (!$reachable) {
+                $status = 201;
             }
         }
-    }
-
-    //#################### Protected
-
-    /**
-     * This function will be called by the hook control. It will forward the incomming data to all children.
-     */
-    protected function ProcessHookData()
-    {
-        $this->SendDebug(__FUNCTION__ . ' Incomming Data', print_r($_SERVER, true), 0);
-        // Get content
-        $data = file_get_contents('php://input');
-        $this->SendDebug(__FUNCTION__ . ' Data', $data, 0);
-        // Send data to children
-        $forwardData = [];
-        $forwardData['DataID'] = '{3DED8598-AA95-4EC4-BB5D-5226ECD8405C}';
-        $forwardData['Buffer'] = json_decode($data);
-        $forwardData = json_encode($forwardData);
-        $this->SendDebug(__FUNCTION__ . ' Forward Data', $forwardData, 0);
-        $this->SendDataToChildren($forwardData);
+        $this->SetStatus($status);
     }
 }

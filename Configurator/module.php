@@ -3,61 +3,86 @@
 /*
  * @module      NUKI Configurator
  *
- * @file        module.php
- *
  * @prefix      NUKI
  *
+ * @file        module.php
+ *
  * @author      Ulrich Bittner
- * @copyright   (c) 2019
+ * @copyright   (c) 2019, 2020
  * @license     CC BY-NC-SA 4.0
+ *              https://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @version     1.05
- * @build       1008
- * @date        2019-09-26, 18:00
- *
- * @see         https://github.com/ubittner/SymconNUKI
+ * @see         https://github.com/ubittner/SymconNUKI/Configurator
  *
  * @guids		Library
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
  *
  *              NUKI Configurator
- *              {1ADAB09D-67EF-412C-B851-B2848C33F67B} (Module GUID)
- *              {73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
- *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
- *
+ *              {1ADAB09D-67EF-412C-B851-B2848C33F67B}
  */
 
-// Declare
 declare(strict_types=1);
+
+// Include
+include_once __DIR__ . '/../libs/helper/autoload.php';
 
 class NUKIConfigurator extends IPSModule
 {
+    use libs_helper_getModuleInfo;
+
     public function Create()
     {
         //Never delete this line!
         parent::Create();
-
-        // Register properties
-        $this->RegisterPropertyInteger('CategoryID', 0);
-
+        $this->RegisterProperties();
         // Connect to parent (NUKI Bridge, Splitter)
-        $this->ConnectParent('{B41AE29B-39C1-4144-878F-94C0F7EEC725}');
+        $this->ConnectParent(NUKI_BRIDGE_GUID);
+    }
+
+    public function Destroy()
+    {
+        // Never delete this line!
+        parent::Destroy();
     }
 
     public function ApplyChanges()
     {
-        //Never delete this line!
+        // Wait until IP-Symcon is started
+        $this->RegisterMessage(0, IPS_KERNELSTARTED);
+        // Never delete this line!
         parent::ApplyChanges();
+        // Check runlevel
+        if (IPS_GetKernelRunlevel() != KR_READY) {
+            return;
+        }
     }
 
-    /**
-     * Creates a dynamic configuration form.
-     *
-     * @return false|string
-     */
+    public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
+    {
+        $this->SendDebug(__FUNCTION__, $TimeStamp . ', SenderID: ' . $SenderID . ', Message: ' . $Message . ', Data: ' . print_r($Data, true), 0);
+        if (!empty($Data)) {
+            foreach ($Data as $key => $value) {
+                $this->SendDebug(__FUNCTION__, 'Data[' . $key . '] = ' . json_encode($value), 0);
+            }
+        }
+        switch ($Message) {
+            case IPS_KERNELSTARTED:
+                $this->KernelReady();
+                break;
+
+        }
+    }
+
     public function GetConfigurationForm()
     {
-        $form = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
+        $formData = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
+        $moduleInfo = $this->GetModuleInfo(NUKI_CONFIGURATOR_GUID);
+        $formData['elements'][1]['items'][1]['caption'] = $this->Translate("Instance ID:\t\t") . $this->InstanceID;
+        $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
+        $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
+        $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
+        $formData['elements'][1]['items'][5]['caption'] = $this->Translate("Time:\t\t\t") . $moduleInfo['time'];
+        $formData['elements'][1]['items'][6]['caption'] = $this->Translate("Developer:\t\t") . $moduleInfo['developer'];
         $pairedDevices = json_decode($this->GetPairedDevices(), true);
         $this->SendDebug(__FUNCTION__ . ' Paired Devices', json_encode($pairedDevices), 0);
         $values = [];
@@ -82,7 +107,7 @@ class NUKIConfigurator extends IPSModule
                                 'DeviceName'         => $deviceName,
                                 'instanceID'         => $instanceID,
                                 'create'             => [
-                                    'moduleID'      => '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}',
+                                    'moduleID'      => NUKI_SMARTLOCK_GUID,
                                     'configuration' => [
                                         'SmartLockUID'  => (string) $nukiID,
                                         'SmartLockName' => (string) $deviceName
@@ -91,6 +116,7 @@ class NUKIConfigurator extends IPSModule
                                 ]
                             ];
                             break;
+
                         // Opener
                         case 2:
                             $instanceID = $this->GetDeviceInstances($nukiID, 2);
@@ -103,7 +129,7 @@ class NUKIConfigurator extends IPSModule
                                 'DeviceName'         => $deviceName,
                                 'instanceID'         => $instanceID,
                                 'create'             => [
-                                    'moduleID'      => '{057995F0-F9A9-C6F4-C882-C47A259419CE}',
+                                    'moduleID'      => NUKI_OPENER_GUID,
                                     'configuration' => [
                                         'OpenerUID'  => (string) $nukiID,
                                         'OpenerName' => (string) $deviceName
@@ -112,23 +138,28 @@ class NUKIConfigurator extends IPSModule
                                 ]
                             ];
                             break;
+
                     }
                 }
             }
         }
-        $form['actions'][0]['values'] = $values;
-        return json_encode($form);
+        $formData['actions'][0]['values'] = $values;
+        return json_encode($formData);
     }
 
-    //################### Private
+    #################### Private
 
-    /**
-     * Gets the path for Smart Lock category.
-     *
-     * @param int $CategoryID
-     *
-     * @return array
-     */
+    private function KernelReady()
+    {
+        $this->ApplyChanges();
+    }
+
+    private function RegisterProperties()
+    {
+        $this->RegisterPropertyString('Note', '');
+        $this->RegisterPropertyInteger('CategoryID', 0);
+    }
+
     private function GetCategoryPath(int $CategoryID): array
     {
         if ($CategoryID === 0) {
@@ -143,11 +174,6 @@ class NUKIConfigurator extends IPSModule
         return array_reverse($path);
     }
 
-    /**
-     * Gets the paired devices of the bridge.
-     *
-     * @return array|mixed
-     */
     private function GetPairedDevices(): string
     {
         if (!$this->HasActiveParent()) {
@@ -155,7 +181,7 @@ class NUKIConfigurator extends IPSModule
         }
         $data = [];
         $buffer = [];
-        $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
+        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
         $buffer['Command'] = 'GetPairedDevices';
         $buffer['Params'] = '';
         $data['Buffer'] = $buffer;
@@ -167,29 +193,24 @@ class NUKIConfigurator extends IPSModule
         return $result;
     }
 
-    /**
-     * Gets the instance id for an existing device.
-     *
-     * @param $DeviceUID
-     * @param $DeviceType
-     * @return int
-     */
     private function GetDeviceInstances($DeviceUID, $DeviceType)
     {
         $instanceID = 0;
         switch ($DeviceType) {
             // Smart Lock
             case 0:
-                $moduleID = '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}';
+                $moduleID = NUKI_SMARTLOCK_GUID;
                 $propertyUIDName = 'SmartLockUID';
                 break;
+
             // Opener
             case 2:
-                $moduleID = '{057995F0-F9A9-C6F4-C882-C47A259419CE}';
+                $moduleID = NUKI_OPENER_GUID;
                 $propertyUIDName = 'OpenerUID';
                 break;
+
             default:
-                $moduleID = '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}';
+                $moduleID = NUKI_SMARTLOCK_GUID;
                 $propertyUIDName = 'SmartLockUID';
         }
         $instanceIDs = IPS_GetInstanceListByModuleID($moduleID);

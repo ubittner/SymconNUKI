@@ -1,17 +1,14 @@
 {
   "translations": {
     "de": {
-      "Description:": "Beschreibung:",
-      "This instance integrates the NUKI Bridge into IP-Symcon.": "Diese Instanz integriert die NUKI Bridge in IP-Symcon.",
-      "In conjunction with a NUKI Smart Lock, you can unlock and lock your door lock.": "In Verbindung mit einem NUKI Smart Lock können Sie Ihr Türschloss auf- und zusperren.",
-      "In conjunction with a NUKI Opener you can turn your existing intercom into a smart door opener.": "In Verbindung mit einem NUKI Opener nutzt du deine bestehende Gegensprechanlage als smarten Türöffner.",
-      "For further information, please refer to the documentation or the notes here in the configuration.": "Weitere Informationen entnehmen Sie bitte der Dokumentation oder den Hinweisen hier in der Konfiguration.",
-      "Configuration:": "Konfiguration:",
-      "(0) Instance information": "(0) Instanzinformationen",
-      "Date:\t\t\tSeptember 26, 2019": "Datum:\t\t\t26. September 2019",
-      "Time:\t\t\t18:00": "Uhrzeit:\t\t\t18:00",
-      "Developer:\t\tUlrich Bittner": "Entwickler:\t\tUlrich Bittner",
-      "Prefix:\t\t\tNUKI": "Präfix:\t\t\tNUKI",
+      "This instance integrates the NUKI Bridge into IP-Symcon.\nPlease refer to the documentation for further information.\n": "Diese Instanz integriert die NUKI Bridge in IP-Symcon.\nWeitere Informationen entnehmen Sie bitte der Dokumentation.\n",
+      "Instance ID:\t\t": "Instanz ID:\t\t",
+      "Module:\t\t\t": "Modul:\t\t\t",
+      "Date:\t\t\t": "Datum:\t\t\t",
+      "Time:\t\t\t": "Uhrzeit:\t\t\t",
+      "Developer:\t\t": "Entwickler:\t\t",
+      "Note": "Notiz",
+      "Configuration": "Konfiguration",
       "Please refer to the iOS / Android App for the required data.": "Die erforderlichen Daten entnehmen Sie bitte der iOS / Android App.",
       "Please enter the IP address of the NUKI Bridge:": "Bitte geben Sie die IP-Adresse der NUKI Bridge an:",
       "IP address": "IP-Adresse",
@@ -25,10 +22,10 @@
       "Please enter the IP address of this IP-Symcon server:": "Bitte geben Sie die IP-Adresse dieses IP-Symcon Servers an:",
       "Please enter the port for the Webhook Control (normally 3777) of this IP-Symcon server:": "Bitte geben Sie den Port für den Webhook Control (normalerweise 3777) dieses IP-Symcon Servers an:",
       "Please enter the callback ID if you want to delete a callback:": "Bitte geben Sie die Callback ID an, wenn Sie einen Callback löschen wollen:",
-      "After accepting any changes, you can press in the action area under (2) Callbackthe the CREATE button to create a callback on the NUKI Bridge.": "Nach Übernahme eventueller Änderungen können Sie im Aktionsbereich unter (2) Callback die Schaltfläche ANLEGEN drücken, um den Callback auf der NUKI Bridge anzulegen.",
+      "After accepting any changes, you can press the CREATE button in the developer area to create a callback on the NUKI Bridge.": "Nach Übernahme eventueller Änderungen können Sie im Entwicklerbereich die Schaltfläche ANLEGEN drücken, um den Callback auf der NUKI Bridge anzulegen.",
       "With the button DISPLAY you can display the existing callbacks of the NUKI Bridge.": "Mit der Schaltfläche ANZEIGEN werden die existierenden Callbacks der NUKI Bridge angezeigt.",
       "With the button DELETE you can delete the callback with the specified ID from the NUKI Bridge.": "Mit der Schaltfläche LÖSCHEN können Sie den Callback mit der angegebenen ID von der NUKI Bridge löschen.",
-      "Action area": "Aktionsbereich",
+      "Developer area": "Entwicklerbereich",
       "Show Info": "Info anzeigen",
       "Show Log": "Logdatei anzeigen",
       "Delete Log": "Logdatei löschen",
@@ -58,7 +55,7 @@
       "NUKI Bridge will be deleted": "NUKI Bridge wird gelöscht",
       "Please edit all configuration parameters of the NUKI Bridge.": "Bitte alle Konfigurationsparameter der NUKI Bridge eintragen.",
       "NUKI Bridge configuration has an error!": "NUKI Bridge Konfiguration hat einen Fehler!",
-      "An unknown error has occurred!": "Es ist ein unbekannter Fehler aufgetreten!",
+      "An error has occurred, for further information see messages, log file or debug": "Es ist Fehler aufgetreten, weitere Informationen unter Meldungen, im Log oder Debug",
       "Please enter the IP address of the IP-Symcon server and the port for the Webhook!": "Bitte geben Sie die IP-Adresse des IP-Symcon Servers und den Port für den Webhook an!"
     }
   }

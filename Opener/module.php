@@ -8,115 +8,91 @@
  * @file        module.php
  *
  * @author      Ulrich Bittner
- * @copyright   (c) 2019
+ * @copyright   (c) 2019, 2020
  * @license     CC BY-NC-SA 4.0
+ *              https://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @version     1.05
- * @build       1008
- * @date        2019-09-26, 18:00
- *
- * @see         https://github.com/ubittner/SymconNUKI
+ * @see         https://github.com/ubittner/SymconNUKI7OPENER
  *
  * @guids		Library
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
  *
  *				NUKI Opener (Device)
- *				{057995F0-F9A9-C6F4-C882-C47A259419CE} (Module GUID)
- * 				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
- *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
- *
+ *				{057995F0-F9A9-C6F4-C882-C47A259419CE}
  */
 
-// Declare
 declare(strict_types=1);
 
-// Definitions
-if (!defined('OPENER_MODULE_GUID')) {
-    define('OPENER_MODULE_GUID', '{057995F0-F9A9-C6F4-C882-C47A259419CE}');
-}
+// Include
+include_once __DIR__ . '/../libs/helper/autoload.php';
 
 class NUKIOpener extends IPSModule
 {
+    use libs_helper_getModuleInfo;
+
     public function Create()
     {
+        // Never delete this line!
         parent::Create();
+        $this->RegisterProperties();
+        $this->CreateProfiles();
+        // Connect to NUKI bridge (Splitter)
+        $this->ConnectParent(NUKI_BRIDGE_GUID);
+    }
 
-        // Connect to NUKI bridge or create NUKI bridge
-        $this->ConnectParent('{B41AE29B-39C1-4144-878F-94C0F7EEC725}');
-
-        // Register properties
-        $this->RegisterPropertyString('OpenerUID', '');
-        $this->RegisterPropertyString('OpenerName', '');
-
-        // Register profiles
-        $profile = 'NUKI.' . $this->InstanceID . '.DoorBuzzer';
-        if (!IPS_VariableProfileExists($profile)) {
-            IPS_CreateVariableProfile($profile, 1);
-        }
-        IPS_SetVariableProfileIcon($profile, '');
-        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Actuate'), 'Door', 0x00FF00);
+    public function Destroy()
+    {
+        // Never delete this line!
+        parent::Destroy();
+        $this->DeleteProfiles();
     }
 
     public function ApplyChanges()
     {
         // Wait until IP-Symcon is started
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
-
+        // Never delete this line!
         parent::ApplyChanges();
-
         // Check kernel runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
-
         // Rename instance
         $name = $this->ReadPropertyString('OpenerName');
         if ($name != '') {
             IPS_SetName($this->InstanceID, $name);
         }
-
-        // Register variables
-        $profile = 'NUKI.' . $this->InstanceID . '.DoorBuzzer';
-        $this->MaintainVariable('DoorBuzzer', $this->Translate('Door buzzer'), 1, $profile, 1, true);
-        $this->EnableAction('DoorBuzzer');
-
-        $this->MaintainVariable('OpenerState', $this->Translate('State'), 3, '', 2, true);
-        IPS_SetIcon($this->GetIDForIdent('OpenerState'), 'Information');
-
-        $this->MaintainVariable('OpenerMode', $this->Translate('Mode'), 3, '', 3, true);
-        IPS_SetIcon($this->GetIDForIdent('OpenerMode'), 'Information');
-
-        $this->MaintainVariable('BatteryState', $this->Translate('Battery'), 0, '~Battery', 4, true);
-
-        // Get actual state
+        $this->MaintainVariables();
         $this->GetOpenerState();
-    }
-
-    public function Destroy()
-    {
-        // Delete profiles
-        $profile = 'NUKI.' . $this->InstanceID . '.DoorBuzzer';
-        if (IPS_VariableProfileExists($profile)) {
-            IPS_DeleteVariableProfile($profile);
-        }
     }
 
     public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     {
-        $this->SendDebug('MessageSink', 'SenderID: ' . $SenderID . ', Message: ' . $Message, 0);
+        $this->SendDebug(__FUNCTION__, $TimeStamp . ', SenderID: ' . $SenderID . ', Message: ' . $Message . ', Data: ' . print_r($Data, true), 0);
+        if (!empty($Data)) {
+            foreach ($Data as $key => $value) {
+                $this->SendDebug(__FUNCTION__, 'Data[' . $key . '] = ' . json_encode($value), 0);
+            }
+        }
         switch ($Message) {
             case IPS_KERNELSTARTED:
                 $this->KernelReady();
                 break;
+
         }
     }
 
-    /**
-     * Applies changes when the kernel is ready.
-     */
-    private function KernelReady()
+    public function GetConfigurationForm()
     {
-        $this->ApplyChanges();
+        $formData = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
+        $moduleInfo = $this->GetModuleInfo(NUKI_OPENER_GUID);
+        $formData['elements'][1]['items'][1]['caption'] = $this->Translate("Instance ID:\t\t") . $this->InstanceID;
+        $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
+        $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
+        $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
+        $formData['elements'][1]['items'][5]['caption'] = $this->Translate("Time:\t\t\t") . $moduleInfo['time'];
+        $formData['elements'][1]['items'][6]['caption'] = $this->Translate("Developer:\t\t") . $moduleInfo['developer'];
+        return json_encode($formData);
     }
 
     /**
@@ -141,7 +117,7 @@ class NUKIOpener extends IPSModule
         $this->SetOpenerState(json_encode($buffer));
     }
 
-    //#################### Request Action
+    #################### Request Action
 
     public function RequestAction($Ident, $Value)
     {
@@ -152,7 +128,7 @@ class NUKIOpener extends IPSModule
         }
     }
 
-    //#################### Public
+    #################### Public
 
     /**
      * Gets the actual state of the opener.
@@ -170,7 +146,7 @@ class NUKIOpener extends IPSModule
         }
         $data = [];
         $buffer = [];
-        $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
+        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
         $buffer['Command'] = 'GetLockState';
         $buffer['Params'] = ['nukiId' => (int) $nukiID, 'deviceType' => 2];
         $data['Buffer'] = $buffer;
@@ -198,8 +174,7 @@ class NUKIOpener extends IPSModule
         if ($State) {
             $lockAction = 1;
         }
-        $result = $this->SetLockAction($lockAction);
-        return $result;
+        return $this->SetLockAction($lockAction);
     }
 
     /**
@@ -216,8 +191,7 @@ class NUKIOpener extends IPSModule
         if ($State) {
             $lockAction = 4;
         }
-        $result = $this->SetLockAction($lockAction);
-        return $result;
+        return $this->SetLockAction($lockAction);
     }
 
     /**
@@ -227,11 +201,59 @@ class NUKIOpener extends IPSModule
      */
     public function BuzzDoor(): bool
     {
-        $result = $this->SetLockAction(3);
-        return $result;
+        return $this->SetLockAction(3);
     }
 
-    //#################### Private
+    #################### Private
+
+    private function KernelReady()
+    {
+        $this->ApplyChanges();
+    }
+
+    private function RegisterProperties()
+    {
+        $this->RegisterPropertyString('Note', '');
+        $this->RegisterPropertyString('OpenerUID', '');
+        $this->RegisterPropertyString('OpenerName', '');
+    }
+
+    private function CreateProfiles()
+    {
+        $profile = 'NUKI.' . $this->InstanceID . '.DoorBuzzer';
+        if (!IPS_VariableProfileExists($profile)) {
+            IPS_CreateVariableProfile($profile, 1);
+        }
+        IPS_SetVariableProfileIcon($profile, '');
+        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Actuate'), 'Door', 0x00FF00);
+    }
+
+    private function DeleteProfiles()
+    {
+        $profiles = ['DoorBuzzer'];
+        foreach ($profiles as $profile) {
+            $profileName = 'NUKI.' . $this->InstanceID . '.' . $profile;
+            if (@IPS_VariableProfileExists($profileName)) {
+                IPS_DeleteVariableProfile($profileName);
+            }
+        }
+    }
+
+    private function MaintainVariables()
+    {
+        // Buzzer
+        $profile = 'NUKI.' . $this->InstanceID . '.DoorBuzzer';
+        $this->MaintainVariable('DoorBuzzer', $this->Translate('Door buzzer'), 1, $profile, 10, true);
+        $this->EnableAction('DoorBuzzer');
+        // State
+        $this->MaintainVariable('OpenerState', $this->Translate('State'), 3, '', 20, true);
+        IPS_SetIcon($this->GetIDForIdent('OpenerState'), 'Information');
+        // Mode
+        $this->MaintainVariable('OpenerMode', $this->Translate('Mode'), 3, '', 30, true);
+        IPS_SetIcon($this->GetIDForIdent('OpenerMode'), 'Information');
+        // Battery
+        $this->MaintainVariable('BatteryState', $this->Translate('Battery'), 0, '~Battery', 40, true);
+    }
 
     /**
      * Set the state of the opener.
@@ -326,7 +348,7 @@ class NUKIOpener extends IPSModule
         }
         $data = [];
         $buffer = [];
-        $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
+        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
         $buffer['Command'] = 'SetLockAction';
         $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $LockAction, 'deviceType' => 2];
         $data['Buffer'] = $buffer;

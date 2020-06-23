@@ -51,15 +51,15 @@ __Konfigurationsseite__:
 
 Name                                | Beschreibung
 ----------------------------------- | --------------------------------------------------------------
-(0) Instanzinformationen            | Informationen zu der NUKI Bridge Instanz
-(1) Bridge                          | Eigenschaften der NUKI Bridge
-(2) Callback                        | Eigenschaften zum Callback der NUKI Bridge via WebHook Control
+NUKI Bridge                         | Informationen zu der NUKI Bridge Instanz
+Konfiguration                       | Konfiguration der NUKI Bridge
+Callback                            | Eigenschaften zum Callback der NUKI Bridge via WebHook Control
 
-__Schaltflächen im Aktionsbereich__:
+__Schaltflächen im Entwicklerbereich__:
 
 Name                                | Beschreibung
 ----------------------------------- | --------------------------------------------------------------
-(1) Bridge                          | 
+Bridge                              | 
 Info anzeigen                       | Zeigt weitere Informationen der NUKI Bridge an
 Logdatei anzeigen                   | Zeigt die Logdatei der NUKI Bridge an
 Logdatei löschen                    | Löscht die Logdatei der NUKI Bridge
@@ -67,7 +67,7 @@ Firmware aktualisieren              | Führt eine aktualisierung der Firmware du
 Neustart                            | Starte die NUKI Bridge neu
 Werkseinstellungen                  | Setzt die NUKI Brige zurück in die Werkseinstellungen
 Gekoppelte Geräte anzeigen          | Zeigt die gekoppelten NUKI Geräte der NUKI Bridge an
-(2) Callback Socket                 | 
+Callback                            | 
 Anlegen                             | Legt einen Callback auf der NUKI Bridge an
 Anzeigen                            | Zeigt die angelegten Callbacks der NUKI Bridge an
 Löschen                             | Löscht den Callback mit der definierten ID von der NUKI Bridge

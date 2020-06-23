@@ -54,14 +54,13 @@ __Konfigurationsseite__:
 
 Name                                | Beschreibung
 ----------------------------------- | -----------------------------------------------------
-(0) Instanzinformationen            | Informationen zur NUKI Opener Instanz
-(1) Opener                          | Eigenschaften des NUKI Openers
+NUKI Opener                         | Informationen zur NUKI Opener Instanz
+Konfiguration                       | Eigenschaften des NUKI Openers
 
 __Schaltflächen im Aktionsbereich__:
 
 Name                                | Beschreibung
 ----------------------------------- | -----------------------------------------------------
-(1) Opener                          | 
 Status aktualisieren                | Aktualisiert den aktuellen Status des NUKI Openers an
 Ring to Open deaktivieren           | Deaktiviert die Ring to Open Funktion
 Ring to Open aktivieren             | Aktiviert die Ring to Open Funktion

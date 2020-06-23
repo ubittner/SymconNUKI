@@ -54,15 +54,14 @@ __Konfigurationsseite__:
 
 Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
-(0) Instanzinformationen            | Informationen zu NUKI Smart Lock Instanz
-(1) Smart Lock                      | Eigenschaften des NUKI Smart Locks
-(2) Schaltvorgänge                  | Definieren der Schaltvorgänge
+NUKI Smart Lock                     | Informationen zu NUKI Smart Lock Instanz
+Konfiguration                       | Eigenschaften des NUKI Smart Locks
+Schaltvorgänge                      | Definieren der Schaltvorgänge
 
 __Schaltflächen im Aktionsbereich__:
 
 Name                                | Beschreibung
 ----------------------------------- | ---------------------------------
-(1) Smart Lock                      | 
 Status anzeigen                     | Zeigt den Status des NUKI Smart Locks an
 
 __Vorgehensweise__:  
@@ -81,12 +80,17 @@ SmartLockSwitch         | Boolean   | Schalter zum auf- und zusperren des NUKI S
 SmartLockStatus         | String    | Status des NUKI Smart Locks
 SmartLockMode           | String    | Modus des NUKI Smart Locks
 SmartLockBatteryState   | Boolean   | Batteriezustand des NUKI Smart Locks
+Door                    | Boolean   | Status der Türe (geschlossen/geöffnet)
+DoorSensorState         | Integer   | Türsensorstatus 
 
 ##### Profile:
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
 NUKI.InstanzID.SmartLockSwitch
+NUKI.InstanzID.Door.Reversed
+NUKI.InstanzID.DoorSensorState
+
 
 Wird die NUKI Smart Lock Instanz gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
 

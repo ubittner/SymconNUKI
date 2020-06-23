@@ -8,131 +8,91 @@
  * @file        module.php
  *
  * @author      Ulrich Bittner
- * @copyright   (c) 2019
+ * @copyright   (c) 2019, 2020
  * @license     CC BY-NC-SA 4.0
+ *              https://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @version     1.05
- * @build       1008
- * @date        2019-09-26, 18:00
- *
- * @see         https://github.com/ubittner/SymconNUKI
+ * @see         https://github.com/ubittner/SymconNUKI/SmartLock
  *
  * @guids		Library
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
  *
  *				NUKI Smart Lock (Device)
- *				{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14} (Module GUID)
- * 				{73188E44-8BBA-4EBF-8BAD-40201B8866B9} (PR: Device_TX)
- *				{3DED8598-AA95-4EC4-BB5D-5226ECD8405C} (I: 	Device_RX)
- *
+ *				{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}
  */
 
-// Declare
 declare(strict_types=1);
 
-// Definitions
-if (!defined('SMARTLOCK_MODULE_GUID')) {
-    define('SMARTLOCK_MODULE_GUID', '{37C54A7E-53E0-4BE9-BE26-FB8C2C6A3D14}');
-}
+// Include
+include_once __DIR__ . '/../libs/helper/autoload.php';
 
 class NUKISmartLock extends IPSModule
 {
+    use libs_helper_getModuleInfo;
+
     public function Create()
     {
+        // Never delete this line!
         parent::Create();
+        $this->RegisterProperties();
+        $this->CreateProfiles();
+        // Connect to NUKI bridge (Splitter)
+        $this->ConnectParent(NUKI_BRIDGE_GUID);
+    }
 
-        // Connect to NUKI bridge or create NUKI bridge
-        $this->ConnectParent('{B41AE29B-39C1-4144-878F-94C0F7EEC725}');
-
-        // Register properties
-        $this->RegisterPropertyString('SmartLockUID', '');
-        $this->RegisterPropertyString('SmartLockName', '');
-        /*
-         *  Switch Off / On Action:
-         *
-         * 	1 unlock
-         * 	2 lock
-         * 	3 unlatch
-         * 	4 lock ‘n’ go
-         * 	5 lock ‘n’ go with unlatch
-         */
-        $this->RegisterPropertyString('SwitchOffAction', '2');
-        $this->RegisterPropertyString('SwitchOnAction', '1');
-        $this->RegisterPropertyBoolean('HideSmartLockSwitch', false);
-
-        // Register profiles
-        $profile = 'NUKI.' . $this->InstanceID . '.SmartLockSwitch';
-        if (!IPS_VariableProfileExists($profile)) {
-            IPS_CreateVariableProfile($profile, 0);
-        }
-        IPS_SetVariableProfileIcon($profile, '');
-        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Locking'), 'LockClosed', 0xFF0000);
-        IPS_SetVariableProfileAssociation($profile, 1, $this->Translate('Unlocking'), 'LockOpen', 0x00FF00);
+    public function Destroy()
+    {
+        // Never delete this line!
+        parent::Destroy();
+        $this->DeleteProfiles();
     }
 
     public function ApplyChanges()
     {
         // Wait until IP-Symcon is started
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
-
+        // Never delete this line!
         parent::ApplyChanges();
-
         // Check kernel runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
-
         // Rename instance
         $name = $this->ReadPropertyString('SmartLockName');
         if ($name != '') {
             IPS_SetName($this->InstanceID, $name);
         }
-
-        // Register variables
-        $profile = 'NUKI.' . $this->InstanceID . '.SmartLockSwitch';
-        $this->MaintainVariable('SmartLockSwitch', $this->Translate('Door lock'), 0, $profile, 1, true);
-        $this->EnableAction('SmartLockSwitch');
-        IPS_SetHidden($this->GetIDForIdent('SmartLockSwitch'), $this->ReadPropertyBoolean('HideSmartLockSwitch'));
-
-        $this->MaintainVariable('SmartLockStatus', $this->Translate('State'), 3, '', 2, true);
-        IPS_SetIcon($this->GetIDForIdent('SmartLockStatus'), 'Information');
-
-        $this->MaintainVariable('SmartLockMode', $this->Translate('Mode'), 3, '', 3, true);
-        IPS_SetIcon($this->GetIDForIdent('SmartLockMode'), 'Information');
-
-        $this->MaintainVariable('SmartLockBatteryState', $this->Translate('Battery'), 0, '~Battery', 3, true);
-
-        $this->MaintainVariable('Protocol', $this->Translate('Protocol'), 3, '~TextBox', 4, false);
-
-        // Update state
+        $this->MaintainVariables();
         $this->GetSmartLockState();
-    }
-
-    public function Destroy()
-    {
-        // Delete profiles
-        $profile = 'NUKI.' . $this->InstanceID . '.SmartLockSwitch';
-        if (IPS_VariableProfileExists($profile)) {
-            IPS_DeleteVariableProfile($profile);
-        }
     }
 
     public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
     {
-        $this->SendDebug('MessageSink', 'SenderID: ' . $SenderID . ', Message: ' . $Message, 0);
+        $this->SendDebug(__FUNCTION__, $TimeStamp . ', SenderID: ' . $SenderID . ', Message: ' . $Message . ', Data: ' . print_r($Data, true), 0);
+        if (!empty($Data)) {
+            foreach ($Data as $key => $value) {
+                $this->SendDebug(__FUNCTION__, 'Data[' . $key . '] = ' . json_encode($value), 0);
+            }
+        }
         switch ($Message) {
             case IPS_KERNELSTARTED:
                 $this->KernelReady();
                 break;
+
         }
     }
 
-    /**
-     * Applies changes when the kernel is ready.
-     */
-    private function KernelReady()
+    public function GetConfigurationForm()
     {
-        $this->ApplyChanges();
+        $formData = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
+        $moduleInfo = $this->GetModuleInfo(NUKI_SMARTLOCK_GUID);
+        $formData['elements'][1]['items'][1]['caption'] = $this->Translate("Instance ID:\t\t") . $this->InstanceID;
+        $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
+        $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
+        $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
+        $formData['elements'][1]['items'][5]['caption'] = $this->Translate("Time:\t\t\t") . $moduleInfo['time'];
+        $formData['elements'][1]['items'][6]['caption'] = $this->Translate("Developer:\t\t") . $moduleInfo['developer'];
+        return json_encode($formData);
     }
 
     /**
@@ -157,7 +117,7 @@ class NUKISmartLock extends IPSModule
         $this->SetSmartLockState(json_encode($buffer));
     }
 
-    //#################### Request Action
+    #################### Request Action
 
     public function RequestAction($Ident, $Value)
     {
@@ -168,7 +128,7 @@ class NUKISmartLock extends IPSModule
         }
     }
 
-    //#################### Public
+    #################### Public
 
     /**
      * Gets the actual state of the smart lock.
@@ -186,7 +146,7 @@ class NUKISmartLock extends IPSModule
         }
         $data = [];
         $buffer = [];
-        $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
+        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
         $buffer['Command'] = 'GetLockState';
         $buffer['Params'] = ['nukiId' => (int) $nukiID, 'deviceType' => 0];
         $data['Buffer'] = $buffer;
@@ -209,8 +169,7 @@ class NUKISmartLock extends IPSModule
      */
     public function ShowLockStateOfSmartLock(): string
     {
-        $state = $this->GetSmartLockState();
-        return $state;
+        return $this->GetSmartLockState();
     }
 
     /**
@@ -248,7 +207,100 @@ class NUKISmartLock extends IPSModule
         return $result;
     }
 
-    //#################### Private
+    #################### Private
+
+    private function KernelReady()
+    {
+        $this->ApplyChanges();
+    }
+
+    private function RegisterProperties()
+    {
+        $this->RegisterPropertyString('Note', '');
+        $this->RegisterPropertyString('SmartLockUID', '');
+        $this->RegisterPropertyString('SmartLockName', '');
+        /*
+         *  Switch Off / On Action:
+         *
+         * 	1 unlock
+         * 	2 lock
+         * 	3 unlatch
+         * 	4 lock ‘n’ go
+         * 	5 lock ‘n’ go with unlatch
+         */
+        $this->RegisterPropertyString('SwitchOffAction', '2');
+        $this->RegisterPropertyString('SwitchOnAction', '1');
+        $this->RegisterPropertyBoolean('HideSmartLockSwitch', false);
+    }
+
+    private function CreateProfiles()
+    {
+        // Smart Lock
+        $profile = 'NUKI.' . $this->InstanceID . '.SmartLockSwitch';
+        if (!IPS_VariableProfileExists($profile)) {
+            IPS_CreateVariableProfile($profile, 0);
+        }
+        IPS_SetVariableProfileIcon($profile, '');
+        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Locking'), 'LockClosed', 0xFF0000);
+        IPS_SetVariableProfileAssociation($profile, 1, $this->Translate('Unlocking'), 'LockOpen', 0x00FF00);
+        // Door
+        $profile = 'NUKI.' . $this->InstanceID . '.Door.Reversed';
+        if (!IPS_VariableProfileExists($profile)) {
+            IPS_CreateVariableProfile($profile, 0);
+        }
+        IPS_SetVariableProfileIcon($profile, 'Door');
+        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Closed'), '', 0x00FF00);
+        IPS_SetVariableProfileAssociation($profile, 1, $this->Translate('Opened'), '', 0xFF0000);
+        // Door sensor state
+        $profile = 'NUKI.' . $this->InstanceID . '.DoorSensorState';
+        if (!IPS_VariableProfileExists($profile)) {
+            IPS_CreateVariableProfile($profile, 1);
+        }
+        IPS_SetVariableProfileIcon($profile, 'Information');
+        IPS_SetVariableProfileAssociation($profile, 0, $this->Translate('Unavailable'), '', -1);
+        IPS_SetVariableProfileAssociation($profile, 1, $this->Translate('Deactivated'), '', -1);
+        IPS_SetVariableProfileAssociation($profile, 2, $this->Translate('Door closed'), '', -1);
+        IPS_SetVariableProfileAssociation($profile, 3, $this->Translate('Door opened'), '', -1);
+        IPS_SetVariableProfileAssociation($profile, 4, $this->Translate('Door state unknown'), '', -1);
+        IPS_SetVariableProfileAssociation($profile, 5, $this->Translate('Calibrating'), '', -1);
+    }
+
+    private function DeleteProfiles()
+    {
+        $profiles = ['SmartLockSwitch', 'Door.Reversed', 'DoorSensorState'];
+        foreach ($profiles as $profile) {
+            $profileName = 'NUKI.' . $this->InstanceID . '.' . $profile;
+            if (@IPS_VariableProfileExists($profileName)) {
+                IPS_DeleteVariableProfile($profileName);
+            }
+        }
+
+    }
+
+    private function MaintainVariables()
+    {
+        // Switch
+        $profile = 'NUKI.' . $this->InstanceID . '.SmartLockSwitch';
+        $this->MaintainVariable('SmartLockSwitch', $this->Translate('Door lock'), 0, $profile, 10, true);
+        $this->EnableAction('SmartLockSwitch');
+        IPS_SetHidden($this->GetIDForIdent('SmartLockSwitch'), $this->ReadPropertyBoolean('HideSmartLockSwitch'));
+        // State
+        $this->MaintainVariable('SmartLockStatus', $this->Translate('State'), 3, '', 20, true);
+        IPS_SetIcon($this->GetIDForIdent('SmartLockStatus'), 'Information');
+        // Mode
+        $this->MaintainVariable('SmartLockMode', $this->Translate('Mode'), 3, '', 30, true);
+        IPS_SetIcon($this->GetIDForIdent('SmartLockMode'), 'Information');
+        // Battery
+        $this->MaintainVariable('SmartLockBatteryState', $this->Translate('Battery'), 0, '~Battery', 40, true);
+        // Door
+        $profile = 'NUKI.' . $this->InstanceID . '.Door.Reversed';
+        $this->MaintainVariable('Door', $this->Translate('Door'), 0, $profile, 50, true);
+        // Door sensor
+        $profile = 'NUKI.' . $this->InstanceID . '.DoorSensorState';
+        $this->MaintainVariable('DoorSensorState', $this->Translate('Door Sensor State'), 1, $profile, 60, true);
+        // Protocol (Deprecated)
+        $this->MaintainVariable('Protocol', $this->Translate('Protocol'), 3, '~TextBox', 100, false);
+    }
 
     private function SetSmartLockState(string $Data)
     {
@@ -257,21 +309,7 @@ class NUKISmartLock extends IPSModule
             return;
         }
         $result = json_decode($Data, true);
-        if (array_key_exists('mode', $result)) {
-            /*
-             *  2    door mode
-             *  3    -
-             */
-            switch ($result['mode']) {
-                case 2:
-                    $modeText = $this->translate('Door Mode');
-                    break;
-                default:
-                    $modeText = $this->translate('Unknown');
-            }
-            $this->SendDebug(__FUNCTION__ . ' Mode', $modeText, 0);
-            // Not used at the moment, prepared for future, create mode variable
-        }
+        // Mode
         if (array_key_exists('mode', $result)) {
             /*
              *  2    door mode, operation mode after complete setup
@@ -281,17 +319,20 @@ class NUKISmartLock extends IPSModule
                 case 2:
                     $modeText = $this->translate('Door Mode');
                     break;
+
                 case 3:
                     $modeText = $this->translate('-');
                     break;
+
                 default:
                     $modeText = $this->translate('Unknown');
             }
             $this->SetValue('SmartLockMode', $modeText);
         }
+        // State
         if (array_key_exists('state', $result)) {
             /*
-             *  State values for a smart lock are:
+             *  ID	Name
              *
              *  0   uncalibrated
              *  1   locked
@@ -311,42 +352,52 @@ class NUKISmartLock extends IPSModule
                     $stateText = $this->Translate('Uncalibrated');
                     $switchState = false;
                     break;
+
                 case 1:
                     $stateText = $this->Translate('Locked');
                     $switchState = false;
                     break;
+
                 case 2:
                     $stateText = $this->Translate('Unlocking');
                     $switchState = true;
                     break;
+
                 case 3:
                     $stateText = $this->Translate('Unlocked');
                     $switchState = true;
                     break;
+
                 case 4:
                     $stateText = $this->Translate('Locking');
                     $switchState = false;
                     break;
+
                 case 5:
                     $stateText = $this->Translate('Unlatched');
                     $switchState = true;
                     break;
+
                 case 6:
                     $stateText = $this->Translate('Unlocked (lock ‘n’ go)');
                     $switchState = true;
                     break;
+
                 case 7:
                     $stateText = $this->Translate('Unlatching');
                     $switchState = true;
                     break;
+
                 case 254:
                     $stateText = $this->Translate('Motor blocked');
                     $switchState = false;
                     break;
+
                 case 255:
                     $stateText = $this->Translate('Undefined');
                     $switchState = false;
                     break;
+
                 default:
                     $stateText = $this->Translate('Unknown');
                     $switchState = false;
@@ -354,13 +405,34 @@ class NUKISmartLock extends IPSModule
             $this->SetValue('SmartLockSwitch', $switchState);
             $this->SetValue('SmartLockStatus', $stateText);
         }
+        // Battery
         if (array_key_exists('batteryCritical', $result)) {
             $this->SetValue('SmartLockBatteryState', $result['batteryCritical']);
         }
+        // Door sensor
+        $doorState = false;
+        $value = 0;
+        if (array_key_exists('doorsensorState', $result)) {
+            /*
+             * ID	Name
+             * 0	unavailable
+             * 1	deactivated
+             * 2	door closed
+             * 3	door opened
+             * 4	door state unknown
+             * 5	calibrating
+             */
+            $value = $result['doorsensorState'];
+            if ($value == 3) {
+                $doorState = true;
+            }
+        }
+        $this->SetValue('Door', $doorState);
+        $this->SetValue('DoorSensorState', $value);
     }
 
     /**
-     * Set the lock action of the opener.
+     * Sets the lock action of the smart lock.
      *
      * @param int $LockAction
      * @return bool
@@ -377,7 +449,7 @@ class NUKISmartLock extends IPSModule
         }
         $data = [];
         $buffer = [];
-        $data['DataID'] = '{73188E44-8BBA-4EBF-8BAD-40201B8866B9}';
+        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
         $buffer['Command'] = 'SetLockAction';
         $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $LockAction, 'deviceType' => 0];
         $data['Buffer'] = $buffer;

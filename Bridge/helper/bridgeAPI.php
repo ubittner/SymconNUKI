@@ -1,10 +1,11 @@
 <?php
 
-// Declare
 declare(strict_types=1);
 
-trait bridgeAPI
+trait NUKI_bridgeAPI
 {
+    private $apiVersion = '1.9';
+
     /**
      * Enables the API.
      *
@@ -25,7 +26,7 @@ trait bridgeAPI
             $data = json_decode($data, true);
             if ($data['success']) {
                 $token = $data['token'];
-                $this->SendDebug('EnableAPI', 'Token: ' . $token, 0);
+                $this->SendDebug(__FUNCTION__, 'Token: ' . $token, 0);
             }
         }
         return $data;
@@ -43,8 +44,7 @@ trait bridgeAPI
     public function ToggleConfigAuth(bool $Enable): string
     {
         $endpoint = '/configAuth?enable=' . $Enable . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
@@ -55,8 +55,7 @@ trait bridgeAPI
     public function GetPairedDevices(): string
     {
         $endpoint = '/list?token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
@@ -68,8 +67,7 @@ trait bridgeAPI
      */
     public function GetSmartLocks(): string
     {
-        $data = $this->GetPairedDevices();
-        return $data;
+        return $this->GetPairedDevices();
     }
 
     /**
@@ -90,8 +88,7 @@ trait bridgeAPI
          */
 
         $endpoint = '/lockState?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
 
         /*
          *  Response example for a locked smart lock
@@ -146,8 +143,7 @@ trait bridgeAPI
      */
     public function GetLockStateOfSmartLock(int $SmartLockUniqueID): string
     {
-        $data = $this->GetLockState($SmartLockUniqueID, 0);
-        return $data;
+        return $this->GetLockState($SmartLockUniqueID, 0);
     }
 
     /**
@@ -191,8 +187,7 @@ trait bridgeAPI
          */
 
         $endpoint = '/lockAction?nukiId=' . $NukiID . '&action=' . $LockAction . '&deviceType=' . $DeviceType . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
 
         /*
          *    Response example:
@@ -213,8 +208,7 @@ trait bridgeAPI
      */
     public function SetLockActionOfSmartLock(int $SmartLockUniqueID, int $LockAction): string
     {
-        $data = $this->SetLockAction($SmartLockUniqueID, $LockAction, 0);
-        return $data;
+        return $this->SetLockAction($SmartLockUniqueID, $LockAction, 0);
     }
 
     /**
@@ -227,8 +221,7 @@ trait bridgeAPI
     public function UnpairDevice(int $NukiID, int $DeviceType = 0): string
     {
         $endpoint = '/unpair?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
@@ -242,8 +235,7 @@ trait bridgeAPI
      */
     public function UnpairSmartLockFromBridge(int $SmartLockUniqueID): string
     {
-        $data = $this->UnpairDevice($SmartLockUniqueID, 0);
-        return $data;
+        return $this->UnpairDevice($SmartLockUniqueID, 0);
     }
 
     /**
@@ -256,8 +248,7 @@ trait bridgeAPI
     public function GetBridgeInfo(): string
     {
         $endpoint = '/info?token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
@@ -288,8 +279,7 @@ trait bridgeAPI
     public function ListCallback(): string
     {
         $endpoint = '/callback/list?token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
@@ -302,8 +292,7 @@ trait bridgeAPI
     public function DeleteCallback(int $CallbackID): string
     {
         $endpoint = '/callback/remove?id=' . $CallbackID . '&token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
@@ -314,8 +303,7 @@ trait bridgeAPI
     public function GetBridgeLog(): string
     {
         $endpoint = '/log?token=';
-        $data = $this->SendDataToBridge($endpoint);
-        return $data;
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
@@ -387,12 +375,12 @@ trait bridgeAPI
         if ($response == false) {
             $response = '';
         } else {
-            $this->SendDebug('Data', $response, 0);
+            $this->SendDebug(__FUNCTION__, $response, 0);
         }
         curl_close($ch);
         if (isset($error_msg)) {
             $response = '';
-            $this->SendDebug('Data', 'An error has occurred: ' . json_encode($error_msg), 0);
+            $this->SendDebug(__FUNCTION__, 'An error has occurred: ' . json_encode($error_msg), 0);
         }
         return $response;
     }
