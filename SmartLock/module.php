@@ -274,7 +274,6 @@ class NUKISmartLock extends IPSModule
                 IPS_DeleteVariableProfile($profileName);
             }
         }
-
     }
 
     private function MaintainVariables()
