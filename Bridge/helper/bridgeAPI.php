@@ -1,10 +1,12 @@
 <?php
 
+/** @noinspection PhpUnused */
+
 declare(strict_types=1);
 
 trait NUKI_bridgeAPI
 {
-    private string $apiVersion = '1.9';
+    private $apiVersion = '1.9';
 
     /**
      * Enables the API.

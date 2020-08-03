@@ -5,6 +5,24 @@ declare(strict_types=1);
 trait NUKI_webHook
 {
     /**
+     * This function will be called by the hook control. It will forward the incoming data to all children.
+     */
+    protected function ProcessHookData()
+    {
+        $this->SendDebug(__FUNCTION__ . ' Incoming Data: ', print_r($_SERVER, true), 0);
+        // Get content
+        $data = file_get_contents('php://input');
+        $this->SendDebug(__FUNCTION__ . ' Data: ', $data, 0);
+        // Send data to children
+        $forwardData = [];
+        $forwardData['DataID'] = NUKI_DEVICE_DATA_GUID;
+        $forwardData['Buffer'] = json_decode($data);
+        $forwardData = json_encode($forwardData);
+        $this->SendDebug(__FUNCTION__ . ' Forward Data: ', $forwardData, 0);
+        $this->SendDataToChildren($forwardData);
+    }
+
+    /**
      * Registers a WebHook to the WebHook control instance.
      *
      * @param $WebHook
@@ -59,23 +77,5 @@ trait NUKI_webHook
                 $this->SendDebug(__FUNCTION__, 'WebHook was successfully unregistered', 0);
             }
         }
-    }
-
-    /**
-     * This function will be called by the hook control. It will forward the incoming data to all children.
-     */
-    protected function ProcessHookData()
-    {
-        $this->SendDebug(__FUNCTION__ . ' Incoming Data: ', print_r($_SERVER, true), 0);
-        // Get content
-        $data = file_get_contents('php://input');
-        $this->SendDebug(__FUNCTION__ . ' Data: ', $data, 0);
-        // Send data to children
-        $forwardData = [];
-        $forwardData['DataID'] = NUKI_DEVICE_DATA_GUID;
-        $forwardData['Buffer'] = json_decode($data);
-        $forwardData = json_encode($forwardData);
-        $this->SendDebug(__FUNCTION__ . ' Forward Data: ', $forwardData, 0);
-        $this->SendDataToChildren($forwardData);
     }
 }

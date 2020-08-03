@@ -1,5 +1,9 @@
 <?php
 
+$finder = PhpCsFixer\Finder::create()
+    ->exclude('libs/vendor')
+    ->in(__DIR__);
+
 return PhpCsFixer\Config::create()
     ->setRules([
         'align_multiline_comment' => [
@@ -27,7 +31,7 @@ return PhpCsFixer\Config::create()
         //class_keyword_remove
         //combine_consecutive_issets
         //combine_consecutive_unsets
-        //combine_nested_dirname 
+        //combine_nested_dirname
         //comment_to_phpdoc
         //compact_nullable_typehint
         'concat_space' => [
@@ -40,8 +44,8 @@ return PhpCsFixer\Config::create()
         //dir_constant
         'elseif' => true,
         'encoding' => true,
-        //ereg_to_preg 
-        //error_suppression 
+        //ereg_to_preg
+        //error_suppression
         //escape_implicit_backslashes
         //explicit_indirect_variable
         //explicit_string_variable
@@ -62,7 +66,7 @@ return PhpCsFixer\Config::create()
         //is_null
         'line_ending' => true,
         'linebreak_after_opening_tag' => true,
-        //list_syntax 
+        //list_syntax
         'logical_operators' => true,
         'lowercase_cast' => true,
         'lowercase_constants' => true,
@@ -128,16 +132,16 @@ return PhpCsFixer\Config::create()
         'not_operator_with_space' => false,
         'not_operator_with_successor_space' => false,
         'object_operator_without_whitespace' => true,
-        'ordered_class_elements' => false,
-        'ordered_imports' => false,
-        'ordered_interfaces' => false,
+        'ordered_class_elements' => true,
+        'ordered_imports' => true,
+        'ordered_interfaces' => true,
         //php_unit_*
         //php_doc_*
         'pow_to_exponentiation' => false,
         'protected_to_private' => false,
         //psr0
         //psr4
-        //random_api_migration 
+        //random_api_migration
         //return_assignment
         'return_type_declaration' => true,
         'self_accessor' => true,
@@ -157,7 +161,7 @@ return PhpCsFixer\Config::create()
         'space_after_semicolon' => true,
         //standardize_increment
         'standardize_not_equals' => true,
-        //static_lambda 
+        //static_lambda
         //strict_comparison
         //strict_param
         //string_line_ending
@@ -173,5 +177,6 @@ return PhpCsFixer\Config::create()
         'whitespace_after_comma_in_array' => true,
         //yoda_style
     ])
+    ->setFinder($finder)
     ->setIndent("    ")
     ->setLineEnding("\n");

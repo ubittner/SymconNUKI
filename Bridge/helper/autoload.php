@@ -1,6 +1,7 @@
 <?php
 
-// Declare
+/** @noinspection PhpIncludeInspection */
+
 declare(strict_types=1);
 
 foreach (glob(__DIR__ . '/*.php') as $filename) {

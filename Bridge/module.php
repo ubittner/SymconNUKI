@@ -1,5 +1,8 @@
 <?php
 
+/** @noinspection DuplicatedCode */
+/** @noinspection PhpUnused */
+
 /*
  * @module      NUKI Bridge
  *
@@ -30,7 +33,6 @@ include_once __DIR__ . '/helper/autoload.php';
 class NUKIBridge extends IPSModule
 {
     // Helper
-    use libs_helper_getModuleInfo;
     use NUKI_bridgeAPI;
     use NUKI_webHook;
 
@@ -90,7 +92,14 @@ class NUKIBridge extends IPSModule
     public function GetConfigurationForm()
     {
         $formData = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
-        $moduleInfo = $this->GetModuleInfo(NUKI_BRIDGE_GUID);
+        $moduleInfo = [];
+        $library = IPS_GetLibrary(NUKI_LIBRARY_GUID);
+        $module = IPS_GetModule(NUKI_BRIDGE_GUID);
+        $moduleInfo['name'] = $module['ModuleName'];
+        $moduleInfo['version'] = $library['Version'] . '-' . $library['Build'];
+        $moduleInfo['date'] = date('d.m.Y', $library['Date']);
+        $moduleInfo['time'] = date('H:i', $library['Date']);
+        $moduleInfo['developer'] = $library['Author'];
         $formData['elements'][1]['items'][1]['caption'] = $this->Translate("Instance ID:\t\t") . $this->InstanceID;
         $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
         $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
