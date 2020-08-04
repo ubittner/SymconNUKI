@@ -1,11 +1,11 @@
 [![Image](imgs/NUKI_Logo.png)](https://nuki.io/de/)  
 
-[![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)  
+[![Version](https://img.shields.io/badge/Symcon_Version-5.1>-red.svg)](https://www.symcon.de/service/dokumentation/entwicklerbereich/sdk-tools/sdk-php/)
 [![Version](https://img.shields.io/badge/Module_Version-1.06-blue.svg)]()
 [![Version](https://img.shields.io/badge/Module_Build-1013-blue.svg)]()
-[![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()  
-[![Version](https://img.shields.io/badge/NUKI_API_Version-1.9-yellow.svg)](https://developer.nuki.io/t/bridge-http-api/26)  
-[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)  
+[![Version](https://img.shields.io/badge/Code-PHP-blue.svg)]()
+[![Version](https://img.shields.io/badge/NUKI_API_Version-1.9-yellow.svg)](https://developer.nuki.io/t/bridge-http-api/26)
+[![License](https://img.shields.io/badge/License-CC%20BY--NC--SA%204.0-green.svg)](https://creativecommons.org/licenses/by-nc-sa/4.0/)
 [![Check Style](https://github.com/ubittner/SymconNUKI/workflows/Check%20Style/badge.svg)](https://github.com/ubittner/SymconNUKI/actions)
 
 Dieses Repository integriert das elektronische Türschloss [NUKI Smart Lock](https://nuki.io/de/smart-lock/) und den [NUKI Opener](https://nuki.io/de/smart-lock/), der aus deiner bestehenden Gegensprechanlage einen smarten Türöffner macht, in [IP-Symcon](https://www.symcon.de).  
