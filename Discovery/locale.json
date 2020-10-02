@@ -2,7 +2,6 @@
   "translations": {
     "de": {
       "This instance can determine the NUKI bridges connected to the NUKI server.\nAn existing Internet connection is required.\nPlease refer to the documentation for further information.\n": "Diese Instanz kann die mit dem NUKI Server verbundenen NUKI Bridges ermitteln.\nEs wird eine bestehende Internetverbindung benötigt.\nWeitere Informationen entnehmen Sie bitte der Dokumentation.\n",
-      "Instance ID:\t\t": "Instanz ID:\t\t",
       "Module:\t\t\t": "Modul:\t\t\t",
       "Date:\t\t\t": "Datum:\t\t\t",
       "Time:\t\t\t": "Uhrzeit:\t\t\t",

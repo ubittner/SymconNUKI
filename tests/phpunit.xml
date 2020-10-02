@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<phpunit>
+    <php>
+        <const name="PHPUNIT_TESTSUITE" value="true"/>
+    </php>
+    <filter>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">../Bridge</directory>
+            <directory suffix=".php">../Configurator</directory>
+            <directory suffix=".php">../Discovery</directory>
+            <directory suffix=".php">../Opener</directory>
+            <directory suffix=".php">../SmartLock</directory>
+        </whitelist>
+    </filter>
+</phpunit>

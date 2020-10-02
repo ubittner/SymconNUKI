@@ -14,7 +14,7 @@
         },
         {
           "type": "Label",
-          "caption": "Instance ID:"
+          "caption": "ID:"
         },
         {
           "type": "Label",
@@ -37,14 +37,17 @@
           "caption": "Developer:"
         },
         {
+          "type": "Label",
+          "caption": "Prefix:"
+        },
+        {
           "type": "ValidationTextBox",
           "name": "Note",
-          "caption": "Note"
+          "caption": "Note",
+          "width": "600px"
         }
       ]
     },
-
-
     {
       "type": "ExpansionPanel",
       "caption": "Configuration",
@@ -55,7 +58,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the NUKI ID of the NUKI Smart Lock:"
+          "caption": "Please enter the NUKI ID of the NUKI Smart Lock"
         },
         {
           "type": "ValidationTextBox",
@@ -64,7 +67,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter a description for the NUKI Smart Lock:"
+          "caption": "Please enter a description for the NUKI Smart Lock"
         },
         {
           "type": "ValidationTextBox",
@@ -79,90 +82,64 @@
       "items": [
         {
           "type": "Label",
-          "caption": "Possible switching operations:"
-        },
-        {
-          "type": "Label",
-          "caption": "1 - unlock"
-        },
-        {
-          "type": "Label",
-          "caption": "2 - lock"
-        },
-        {
-          "type": "Label",
-          "caption": "3 - unlatch"
-        },
-        {
-          "type": "Label",
-          "caption": "4 - lock and go"
-        },
-        {
-          "type": "Label",
-          "caption": "5 - lock and go with unlatch"
-        },
-        {
-          "type": "Label",
-          "caption": " "
-        },
-        {
-          "type": "Label",
-          "caption": "Please select an action for the switching operation lock:"
+          "caption": "Please select an action for the switching operation lock"
         },
         {
           "type": "Select",
           "name": "SwitchOffAction",
-          "caption": "Switching process locking",
+          "caption": "Locking",
+          "width": "600px",
           "options": [
             {
-              "caption": "1",
+              "caption": "1 - unlock",
               "value": "1"
             },
             {
-              "caption": "2",
+              "caption": "2 - lock",
               "value": "2"
             },
             {
-              "caption": "3",
+              "caption": "3 - unlatch",
               "value": "3"
             },
             {
-              "caption": "4",
+              "caption": "4 - lock and go",
               "value": "4"
             },
             {
-              "caption": "5",
+              "caption": "5 - lock and go with unlatch",
               "value": "5"
             }
           ]
         },
         {
           "type": "Label",
-          "caption": "Please select an action for the switching operation unlock:"
+          "caption": "Please select an action for the switching operation unlock"
         },
         {
           "type": "Select",
           "name": "SwitchOnAction",
-          "caption": "Switching process unlocking",
+          "caption": "Unlocking",
+          "width": "600px",
           "options": [
             {
-              "caption": "1",
+              "caption": "1 - unlock",
               "value": "1"
             },
             {
-              "caption": "2",
+              "caption": "2 - lock",
               "value": "2"
             },
             {
-              "caption": "3",
+              "caption": "3 - unlatch",
               "value": "3"
             },
             {
-              "caption": "4",
+              "caption": "4 - lock and go",
               "value": "4"
             },
             {
-              "caption": "5",
+              "caption": "5 - lock and go with unlatch",
               "value": "5"
             }
           ]
@@ -173,7 +150,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please select if you want to hide the Smart Lock switch:"
+          "caption": "Please select if you want to hide the Smart Lock switch"
         },
         {
           "type": "CheckBox",

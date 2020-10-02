@@ -14,7 +14,7 @@
         },
         {
           "type": "Label",
-          "caption": "Instance ID:"
+          "caption": "ID:"
         },
         {
           "type": "Label",
@@ -41,9 +41,14 @@
           "caption": "API Version:"
         },
         {
+          "type": "Label",
+          "caption": "Prefix:"
+        },
+        {
           "type": "ValidationTextBox",
           "name": "Note",
-          "caption": "Note"
+          "caption": "Note",
+          "width": "600px"
         }
       ]
     },
@@ -65,7 +70,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the IP address of the NUKI Bridge:"
+          "caption": "Please enter the IP address of the NUKI Bridge"
         },
         {
           "type": "ValidationTextBox",
@@ -74,7 +79,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the port of the NUKI Bridge:"
+          "caption": "Please enter the port of the NUKI Bridge"
         },
         {
           "type": "NumberSpinner",
@@ -83,7 +88,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the network timeout in milliseconds:"
+          "caption": "Please enter the network timeout in milliseconds"
         },
         {
           "type": "NumberSpinner",
@@ -93,7 +98,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the API Token of the NUKI Bridge:"
+          "caption": "Please enter the API Token of the NUKI Bridge"
         },
         {
           "type": "PasswordTextBox",
@@ -116,7 +121,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please select if you want to use a callback:"
+          "caption": "Please select if you want to use a callback"
         },
         {
           "type": "CheckBox",
@@ -133,7 +138,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the IP address of this IP-Symcon server:"
+          "caption": "Please enter the IP address of this IP-Symcon server"
         },
         {
           "type": "ValidationTextBox",
@@ -142,7 +147,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the port for the Webhook Control (normally 3777) of this IP-Symcon server:"
+          "caption": "Please enter the port for the Webhook Control (normally 3777) of this IP-Symcon server"
         },
         {
           "type": "NumberSpinner",
@@ -151,7 +156,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the callback ID if you want to delete a callback:"
+          "caption": "Please enter the callback ID if you want to delete a callback"
         },
         {
           "type": "NumberSpinner",

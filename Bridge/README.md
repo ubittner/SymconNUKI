@@ -336,9 +336,10 @@ $update = NUKI_FactoryResetBridge(12345);
 Mit einem curl Befehl kann der Callback einer NUKI Bridge im Rahmen einer Entwicklungsumgebung simuliert werden. Für den normalen Gebrauch oder Einsatz der NUKI Bridge ist der curl Befehl nicht notwendig.  
 Für die Verwendung von curl über die Konsole des entsprechenden Betriebssystems informieren Sie sich bitte im Internet.  
 ```text
-curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: application/json;charset=utf-8" -X POST -d '{"nukiId": 987654321, "state": 1, "stateName": "locked", "batteryCritical": false}' http://127.0.0.1:8081
+curl -v -A "NukiBridge_12345678" -H "Connection: Close" -H "Content-Type: application/json;charset=utf-8" -X POST -d '{"nukiId": 987654321, "state": 1, "stateName": "locked", "batteryCritical": false}' http://127.0.0.1:3777/hook/nuki/bridge/12345
 ```  
 
 * `NukiBridge_12345678` ist die ID der NUKI Bridge  
 * `nukiId: 987654321` ist die ID des NUKI Smart Locks  
-* `http://127.0.0.1:8081` ist die IP-Adresse und Port des Server Sockets
+* `http://127.0.0.1:3777/hook/nuki/bridge/12345` ist die IP-Adresse und Port des IP-Symcon Servers inkl. Webhook
+* `12345` ist die Objekt ID der NUKI Bridge in IP-Symcon

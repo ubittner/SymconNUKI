@@ -14,7 +14,7 @@
         },
         {
           "type": "Label",
-          "caption": "Instance ID:"
+          "caption": "ID:"
         },
         {
           "type": "Label",
@@ -39,7 +39,8 @@
         {
           "type": "ValidationTextBox",
           "name": "Note",
-          "caption": "Note"
+          "caption": "Note",
+          "width": "600px"
         }
       ]
     },
@@ -49,7 +50,7 @@
     },
     {
       "type": "Label",
-      "caption": "Please select the category for the NUKI Devices."
+      "caption": "Please select the category for the NUKI Devices"
     },
     {
       "type": "SelectCategory",

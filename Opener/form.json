@@ -14,7 +14,7 @@
         },
         {
           "type": "Label",
-          "caption": "Instance ID:"
+          "caption": "ID:"
         },
         {
           "type": "Label",
@@ -37,9 +37,14 @@
           "caption": "Developer:"
         },
         {
+          "type": "Label",
+          "caption": "Prefix:"
+        },
+        {
           "type": "ValidationTextBox",
           "name": "Note",
-          "caption": "Note"
+          "caption": "Note",
+          "width": "600px"
         }
       ]
     },
@@ -53,7 +58,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter the NUKI ID of the NUKI Opener:"
+          "caption": "Please enter the NUKI ID of the NUKI Opener"
         },
         {
           "type": "ValidationTextBox",
@@ -62,7 +67,7 @@
         },
         {
           "type": "Label",
-          "caption": "Please enter a description for the NUKI Opener:"
+          "caption": "Please enter a description for the NUKI Opener"
         },
         {
           "type": "ValidationTextBox",

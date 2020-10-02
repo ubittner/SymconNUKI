@@ -26,31 +26,31 @@
 
 declare(strict_types=1);
 
-// Include
+//Include
 include_once __DIR__ . '/../libs/helper/autoload.php';
 
 class NUKIDiscovery extends IPSModule
 {
     public function Create()
     {
-        // Never delete this line!
+        //Never delete this line!
         parent::Create();
         $this->RegisterProperties();
     }
 
     public function Destroy()
     {
-        // Never delete this line!
+        //Never delete this line!
         parent::Destroy();
     }
 
     public function ApplyChanges()
     {
-        // Wait until IP-Symcon is started
+        //Wait until IP-Symcon is started
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
         // Never delete this line!
         parent::ApplyChanges();
-        // Check runlevel
+        //Check runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
@@ -83,7 +83,7 @@ class NUKIDiscovery extends IPSModule
         $moduleInfo['date'] = date('d.m.Y', $library['Date']);
         $moduleInfo['time'] = date('H:i', $library['Date']);
         $moduleInfo['developer'] = $library['Author'];
-        $formData['elements'][1]['items'][1]['caption'] = $this->Translate("Instance ID:\t\t") . $this->InstanceID;
+        $formData['elements'][1]['items'][1]['caption'] = "ID:\t\t\t\t" . $this->InstanceID;
         $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
         $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
         $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
@@ -133,7 +133,7 @@ class NUKIDiscovery extends IPSModule
             if (property_exists($result, 'bridges')) {
                 $bridges = $result->bridges;
                 foreach ($bridges as $bridge) {
-                    if (array_key_exists('bridgeId', $bridge) && array_key_exists('ip', $bridge) && array_key_exists('port', $bridge)) {
+                    if (property_exists($bridge, 'bridgeId') && property_exists($bridge, 'ip') && property_exists($bridge, 'port')) {
                         $discoveredBridges[$bridge->bridgeId] = ['bridgeID' => $bridge->bridgeId, 'bridgeIP' => $bridge->ip, 'bridgePort' => $bridge->port];
                     }
                 }

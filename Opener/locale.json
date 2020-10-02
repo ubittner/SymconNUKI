@@ -2,15 +2,15 @@
   "translations": {
     "de": {
       "This instance integrates the NUKI Opener into IP-Symcon.\nPlease refer to the documentation for further information.\n": "Diese Instanz integriert den NUKI Opener in IP-Symcon.\nWeitere Informationen entnehmen Sie bitte der Dokumentation.\n",
-      "Instance ID:\t\t": "Instanz ID:\t\t",
       "Module:\t\t\t": "Modul:\t\t\t",
       "Date:\t\t\t": "Datum:\t\t\t",
       "Time:\t\t\t": "Uhrzeit:\t\t\t",
       "Developer:\t\t": "Entwickler:\t\t",
+      "Prefix:\t\t\t": "Präfix\t\t\t",
       "Note": "Notiz",
       "Configuration": "Konfiguration",
-      "Please enter the NUKI ID of the NUKI Opener:": "Bitte geben Sie die NUKI ID des NUKI Openers an:",
-      "Please enter a description for the NUKI Opener:": "Bitte geben Sie eine Beschreibung für den NUKI Opener an:",
+      "Please enter the NUKI ID of the NUKI Opener": "Bitte geben Sie die NUKI ID des NUKI Openers an",
+      "Please enter a description for the NUKI Opener": "Bitte geben Sie eine Beschreibung für den NUKI Opener an",
       "Description": "Bezeichnung",
       "Action area": "Aktionsbereich",
       "Update State": "Status aktualisieren",

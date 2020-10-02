@@ -26,7 +26,7 @@
 
 declare(strict_types=1);
 
-// Include
+//Include
 include_once __DIR__ . '/../libs/helper/autoload.php';
 
 class NUKIConfigurator extends IPSModule
@@ -36,23 +36,23 @@ class NUKIConfigurator extends IPSModule
         //Never delete this line!
         parent::Create();
         $this->RegisterProperties();
-        // Connect to parent (NUKI Bridge, Splitter)
+        //Connect to parent (NUKI Bridge, Splitter)
         $this->ConnectParent(NUKI_BRIDGE_GUID);
     }
 
     public function Destroy()
     {
-        // Never delete this line!
+        //Never delete this line!
         parent::Destroy();
     }
 
     public function ApplyChanges()
     {
-        // Wait until IP-Symcon is started
+        //Wait until IP-Symcon is started
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
-        // Never delete this line!
+        //Never delete this line!
         parent::ApplyChanges();
-        // Check runlevel
+        //Check runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
@@ -85,7 +85,7 @@ class NUKIConfigurator extends IPSModule
         $moduleInfo['date'] = date('d.m.Y', $library['Date']);
         $moduleInfo['time'] = date('H:i', $library['Date']);
         $moduleInfo['developer'] = $library['Author'];
-        $formData['elements'][1]['items'][1]['caption'] = $this->Translate("Instance ID:\t\t") . $this->InstanceID;
+        $formData['elements'][1]['items'][1]['caption'] = "ID:\t\t\t\t" . $this->InstanceID;
         $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
         $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
         $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
@@ -95,7 +95,7 @@ class NUKIConfigurator extends IPSModule
         $this->SendDebug(__FUNCTION__ . ' Paired Devices', json_encode($pairedDevices), 0);
         $values = [];
         $location = $this->GetCategoryPath($this->ReadPropertyInteger(('CategoryID')));
-        // Paired devices
+        //Paired devices
         if (!empty($pairedDevices)) {
             foreach ($pairedDevices as $key => $device) {
                 if (array_key_exists('deviceType', $device)) {
@@ -103,7 +103,7 @@ class NUKIConfigurator extends IPSModule
                     $deviceName = $device['name'];
                     $nukiID = $device['nukiId'];
                     switch ($deviceType) {
-                        // Smart Lock
+                        //Smart Lock
                         case 0:
                             $instanceID = $this->GetDeviceInstances($nukiID, 0);
                             $this->SendDebug(__FUNCTION__ . ' NUKI Smart Lock ID', json_encode($nukiID), 0);
@@ -125,7 +125,7 @@ class NUKIConfigurator extends IPSModule
                             ];
                             break;
 
-                        // Opener
+                        //Opener
                         case 2:
                             $instanceID = $this->GetDeviceInstances($nukiID, 2);
                             $this->SendDebug(__FUNCTION__ . ' NUKI Opener ID', json_encode($nukiID), 0);
@@ -205,13 +205,13 @@ class NUKIConfigurator extends IPSModule
     {
         $instanceID = 0;
         switch ($DeviceType) {
-            // Smart Lock
+            //Smart Lock
             case 0:
                 $moduleID = NUKI_SMARTLOCK_GUID;
                 $propertyUIDName = 'SmartLockUID';
                 break;
 
-            // Opener
+            //Opener
             case 2:
                 $moduleID = NUKI_OPENER_GUID;
                 $propertyUIDName = 'OpenerUID';

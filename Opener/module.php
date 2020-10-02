@@ -15,7 +15,7 @@
  * @license     CC BY-NC-SA 4.0
  *              https://creativecommons.org/licenses/by-nc-sa/4.0/
  *
- * @see         https://github.com/ubittner/SymconNUKI7OPENER
+ * @see         https://github.com/ubittner/SymconNUKI/Opener
  *
  * @guids		Library
  * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
@@ -26,39 +26,39 @@
 
 declare(strict_types=1);
 
-// Include
+//Include
 include_once __DIR__ . '/../libs/helper/autoload.php';
 
 class NUKIOpener extends IPSModule
 {
     public function Create()
     {
-        // Never delete this line!
+        //Never delete this line!
         parent::Create();
         $this->RegisterProperties();
         $this->CreateProfiles();
-        // Connect to NUKI bridge (Splitter)
+        //Connect to NUKI bridge (Splitter)
         $this->ConnectParent(NUKI_BRIDGE_GUID);
     }
 
     public function Destroy()
     {
-        // Never delete this line!
+        //Never delete this line!
         parent::Destroy();
         $this->DeleteProfiles();
     }
 
     public function ApplyChanges()
     {
-        // Wait until IP-Symcon is started
+        //Wait until IP-Symcon is started
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
-        // Never delete this line!
+        //Never delete this line!
         parent::ApplyChanges();
-        // Check kernel runlevel
+        //Check kernel runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
-        // Rename instance
+        //Rename instance
         $name = $this->ReadPropertyString('OpenerName');
         if ($name != '') {
             IPS_SetName($this->InstanceID, $name);
@@ -94,12 +94,13 @@ class NUKIOpener extends IPSModule
         $moduleInfo['date'] = date('d.m.Y', $library['Date']);
         $moduleInfo['time'] = date('H:i', $library['Date']);
         $moduleInfo['developer'] = $library['Author'];
-        $formData['elements'][1]['items'][1]['caption'] = $this->Translate("Instance ID:\t\t") . $this->InstanceID;
+        $formData['elements'][1]['items'][1]['caption'] = "ID:\t\t\t\t" . $this->InstanceID;
         $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
         $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
         $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
         $formData['elements'][1]['items'][5]['caption'] = $this->Translate("Time:\t\t\t") . $moduleInfo['time'];
         $formData['elements'][1]['items'][6]['caption'] = $this->Translate("Developer:\t\t") . $moduleInfo['developer'];
+        $formData['elements'][1]['items'][7]['caption'] = $this->Translate("Prefix:\t\t\t") . 'NUKI';
         return json_encode($formData);
     }
 
@@ -176,9 +177,9 @@ class NUKIOpener extends IPSModule
      */
     public function ToggleRingToOpen(bool $State): bool
     {
-        // Deactivate
+        //Deactivate
         $lockAction = 2;
-        // Activate
+        //Activate
         if ($State) {
             $lockAction = 1;
         }
@@ -193,9 +194,9 @@ class NUKIOpener extends IPSModule
      */
     public function ToggleContinuousMode(bool $State): bool
     {
-        // Deactivate
+        //Deactivate
         $lockAction = 5;
-        // Activate
+        //Activate
         if ($State) {
             $lockAction = 4;
         }
@@ -249,17 +250,17 @@ class NUKIOpener extends IPSModule
 
     private function MaintainVariables()
     {
-        // Buzzer
+        //Buzzer
         $profile = 'NUKI.' . $this->InstanceID . '.DoorBuzzer';
         $this->MaintainVariable('DoorBuzzer', $this->Translate('Door buzzer'), 1, $profile, 10, true);
         $this->EnableAction('DoorBuzzer');
-        // State
+        //State
         $this->MaintainVariable('OpenerState', $this->Translate('State'), 3, '', 20, true);
         IPS_SetIcon($this->GetIDForIdent('OpenerState'), 'Information');
-        // Mode
+        //Mode
         $this->MaintainVariable('OpenerMode', $this->Translate('Mode'), 3, '', 30, true);
         IPS_SetIcon($this->GetIDForIdent('OpenerMode'), 'Information');
-        // Battery
+        //Battery
         $this->MaintainVariable('BatteryState', $this->Translate('Battery'), 0, '~Battery', 40, true);
     }
 
