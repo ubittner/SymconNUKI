@@ -56,7 +56,8 @@
       "Please edit all configuration parameters of the NUKI Bridge": "Bitte alle Konfigurationsparameter der NUKI Bridge eintragen",
       "NUKI Bridge configuration has an error!": "NUKI Bridge Konfiguration hat einen Fehler!",
       "An error has occurred, for further information see messages, log file or debug": "Es ist Fehler aufgetreten, weitere Informationen unter Meldungen, im Log oder Debug",
-      "Please enter the IP address of the IP-Symcon server and the port for the Webhook!": "Bitte geben Sie die IP-Adresse des IP-Symcon Servers und den Port für den Webhook an!"
+      "Please enter the IP address of the IP-Symcon server and the port for the Webhook!": "Bitte geben Sie die IP-Adresse des IP-Symcon Servers und den Port für den Webhook an!",
+      "Function is outdated and will not be available in the next version!": "Funktion ist veraltet und wird in der nächsten Version nicht mehr verfügbar sein!"
     }
   }
 }

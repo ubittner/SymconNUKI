@@ -27,7 +27,7 @@
 declare(strict_types=1);
 
 //Include
-include_once __DIR__ . '/../libs/helper/autoload.php';
+include_once __DIR__ . '/../libs/constants.php';
 
 class NUKISmartLock extends IPSModule
 {
@@ -180,6 +180,9 @@ class NUKISmartLock extends IPSModule
      */
     public function ShowLockStateOfSmartLock(): string
     {
+        $message = 'Function is outdated and will not be available in the next version!';
+        $this->SendDebug(__FUNCTION__, $message, 0);
+        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
         return $this->GetSmartLockState();
     }
 

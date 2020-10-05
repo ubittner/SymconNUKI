@@ -27,7 +27,7 @@
 declare(strict_types=1);
 
 //Include
-include_once __DIR__ . '/../libs/helper/autoload.php';
+include_once __DIR__ . '/../libs/constants.php';
 include_once __DIR__ . '/helper/autoload.php';
 
 class NUKIBridge extends IPSModule

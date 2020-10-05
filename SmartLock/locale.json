@@ -68,7 +68,8 @@
       "lock": "zusperren",
       "unlatch": "entriegeln",
       "Lock ‘n’ go": "Automatisch auf- und wieder zusperren",
-      "Lock ‘n’ go with unlatch ": "Automatisch aufsperren mit entriegeln und wieder zusperren"
+      "Lock ‘n’ go with unlatch ": "Automatisch aufsperren mit entriegeln und wieder zusperren",
+      "Function is outdated and will not be available in the next version!": "Funktion ist veraltet und wird in der nächsten Version nicht mehr verfügbar sein!"
     }
   }
 }

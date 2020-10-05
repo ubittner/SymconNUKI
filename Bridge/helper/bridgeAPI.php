@@ -69,6 +69,9 @@ trait NUKI_bridgeAPI
      */
     public function GetSmartLocks(): string
     {
+        $message = 'Function is outdated and will not be available in the next version!';
+        $this->SendDebug(__FUNCTION__, $message, 0);
+        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
         return $this->GetPairedDevices();
     }
 
@@ -91,6 +94,19 @@ trait NUKI_bridgeAPI
 
         $endpoint = '/lockState?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&token=';
         return $this->SendDataToBridge($endpoint);
+
+        /*
+        //Send data to children
+        $buffer = json_decode($result, true);
+        //Add nuki id
+        $buffer['nukiId'] = $NukiID;
+        $forwardData = [];
+        $forwardData['DataID'] = NUKI_DEVICE_DATA_GUID;
+        $forwardData['Buffer'] = $buffer;
+        $forwardData = json_encode($forwardData);
+        $this->SendDebug(__FUNCTION__ . ' Forward Data: ', $forwardData, 0);
+        $this->SendDataToChildren($forwardData);
+         */
 
         /*
          *  Response example for a locked smart lock
@@ -145,6 +161,9 @@ trait NUKI_bridgeAPI
      */
     public function GetLockStateOfSmartLock(int $SmartLockUniqueID): string
     {
+        $message = 'Function is outdated and will not be available in the next version!';
+        $this->SendDebug(__FUNCTION__, $message, 0);
+        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
         return $this->GetLockState($SmartLockUniqueID, 0);
     }
 
@@ -210,6 +229,9 @@ trait NUKI_bridgeAPI
      */
     public function SetLockActionOfSmartLock(int $SmartLockUniqueID, int $LockAction): string
     {
+        $message = 'Function is outdated and will not be available in the next version!';
+        $this->SendDebug(__FUNCTION__, $message, 0);
+        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
         return $this->SetLockAction($SmartLockUniqueID, $LockAction, 0);
     }
 
@@ -237,6 +259,9 @@ trait NUKI_bridgeAPI
      */
     public function UnpairSmartLockFromBridge(int $SmartLockUniqueID): string
     {
+        $message = 'Function is outdated and will not be available in the next version!';
+        $this->SendDebug(__FUNCTION__, $message, 0);
+        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
         return $this->UnpairDevice($SmartLockUniqueID, 0);
     }
 

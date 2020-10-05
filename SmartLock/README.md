@@ -74,23 +74,27 @@ Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzeln
 
 ##### Statusvariablen
 
-Name                    | Typ       | Beschreibung
------------------------ | --------- | ----------------
-SmartLockSwitch         | Boolean   | Schalter zum auf- und zusperren des NUKI Smart Locks
-SmartLockStatus         | String    | Status des NUKI Smart Locks
-SmartLockMode           | String    | Modus des NUKI Smart Locks
-SmartLockBatteryState   | Boolean   | Batteriezustand des NUKI Smart Locks
-Door                    | Boolean   | Status der Türe (geschlossen/geöffnet)
-DoorSensorState         | Integer   | Türsensorstatus 
+Name                        | Typ       | Beschreibung
+--------------------------- | --------- | ----------------
+SmartLockSwitch             | Boolean   | Schalter zum auf- und zusperren des NUKI Smart Locks
+SmartLockStatus             | String    | Status des NUKI Smart Locks
+SmartLockMode               | String    | Modus des NUKI Smart Locks
+SmartLockBatteryState       | Boolean   | Batteriezustand des NUKI Smart Locks
+SmartLockBatteryCharging    | Boolean   | Zeigt an, ob die Batterie / Akku geladen wird
+SmartLockBatteryChargeState | Integer   | Zeigt die Batterie- / Akkuladung in % an
+KeyPadBatteryCritical       | Boolean   | Batteriezustand des zugeordneten KeyPads
+Door                        | Boolean   | Status der Türe (geschlossen/geöffnet)
+DoorSensorState             | Integer   | Türsensorstatus 
 
 ##### Profile:
 
 Nachfolgende Profile werden zusätzlichen hinzugefügt:
 
 NUKI.InstanzID.SmartLockSwitch
+NUKI.InstanzID.BatteryCharging
+NUKI.InstanzID.BatteryChargeState
 NUKI.InstanzID.Door.Reversed
 NUKI.InstanzID.DoorSensorState
-
 
 Wird die NUKI Smart Lock Instanz gelöscht, so werden automatisch die oben aufgeführten Profile gelöscht.
 
