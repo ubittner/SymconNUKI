@@ -37,6 +37,7 @@ class NUKIOpener extends IPSModule
         parent::Create();
         $this->RegisterProperties();
         $this->CreateProfiles();
+        $this->RegisterVariables();
         //Connect to NUKI bridge (Splitter)
         $this->ConnectParent(NUKI_BRIDGE_GUID);
     }
@@ -58,12 +59,6 @@ class NUKIOpener extends IPSModule
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
-        //Rename instance
-        $name = $this->ReadPropertyString('OpenerName');
-        if ($name != '') {
-            IPS_SetName($this->InstanceID, $name);
-        }
-        $this->MaintainVariables();
         $this->GetOpenerState();
     }
 
@@ -108,7 +103,7 @@ class NUKIOpener extends IPSModule
      * Receives data from the NUKI Bridge (splitter).
      *
      * @param $JSONString
-     * @return bool|void
+     * @throws Exception
      */
     public function ReceiveData($JSONString)
     {
@@ -143,6 +138,7 @@ class NUKIOpener extends IPSModule
      * Gets the actual state of the opener.
      *
      * @return string
+     * @throws Exception
      */
     public function GetOpenerState(): string
     {
@@ -174,6 +170,7 @@ class NUKIOpener extends IPSModule
      *
      * @param bool $State
      * @return bool
+     * @throws Exception
      */
     public function ToggleRingToOpen(bool $State): bool
     {
@@ -191,6 +188,7 @@ class NUKIOpener extends IPSModule
      *
      * @param bool $State
      * @return bool
+     * @throws Exception
      */
     public function ToggleContinuousMode(bool $State): bool
     {
@@ -207,6 +205,7 @@ class NUKIOpener extends IPSModule
      * Opens the door via buzzer.
      *
      * @return bool
+     * @throws Exception
      */
     public function BuzzDoor(): bool
     {
@@ -248,20 +247,20 @@ class NUKIOpener extends IPSModule
         }
     }
 
-    private function MaintainVariables()
+    private function RegisterVariables()
     {
         //Buzzer
         $profile = 'NUKI.' . $this->InstanceID . '.DoorBuzzer';
-        $this->MaintainVariable('DoorBuzzer', $this->Translate('Door buzzer'), 1, $profile, 10, true);
+        $this->RegisterVariableInteger('DoorBuzzer', $this->Translate('Door buzzer'), $profile, 10);
         $this->EnableAction('DoorBuzzer');
         //State
-        $this->MaintainVariable('OpenerState', $this->Translate('State'), 3, '', 20, true);
+        $this->RegisterVariableString('OpenerState', $this->Translate('State'), '', 20);
         IPS_SetIcon($this->GetIDForIdent('OpenerState'), 'Information');
         //Mode
-        $this->MaintainVariable('OpenerMode', $this->Translate('Mode'), 3, '', 30, true);
+        $this->RegisterVariableString('OpenerMode', $this->Translate('Mode'), '', 30);
         IPS_SetIcon($this->GetIDForIdent('OpenerMode'), 'Information');
         //Battery
-        $this->MaintainVariable('BatteryState', $this->Translate('Battery'), 0, '~Battery', 40, true);
+        $this->RegisterVariableBoolean('BatteryState', $this->Translate('Battery'), '~Battery', 40);
     }
 
     /**
@@ -344,6 +343,7 @@ class NUKIOpener extends IPSModule
      *
      * @param int $LockAction
      * @return bool
+     * @throws Exception
      */
     private function SetLockAction(int $LockAction): bool
     {

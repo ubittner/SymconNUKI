@@ -37,6 +37,7 @@ class NUKISmartLock extends IPSModule
         parent::Create();
         $this->RegisterProperties();
         $this->CreateProfiles();
+        $this->RegisterVariables();
         //Connect to NUKI bridge (Splitter)
         $this->ConnectParent(NUKI_BRIDGE_GUID);
     }
@@ -57,11 +58,6 @@ class NUKISmartLock extends IPSModule
         //Check kernel runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
-        }
-        //Rename instance
-        $name = $this->ReadPropertyString('SmartLockName');
-        if ($name != '') {
-            IPS_SetName($this->InstanceID, $name);
         }
         $this->MaintainVariables();
         $this->GetSmartLockState();
@@ -307,35 +303,40 @@ class NUKISmartLock extends IPSModule
         }
     }
 
-    private function MaintainVariables()
+    private function RegisterVariables()
     {
         //Switch
         $profile = 'NUKI.' . $this->InstanceID . '.SmartLockSwitch';
-        $this->MaintainVariable('SmartLockSwitch', $this->Translate('Door lock'), 0, $profile, 10, true);
+        $this->RegisterVariableBoolean('SmartLockSwitch', $this->Translate('Door lock'), $profile, 10);
         $this->EnableAction('SmartLockSwitch');
-        IPS_SetHidden($this->GetIDForIdent('SmartLockSwitch'), $this->ReadPropertyBoolean('HideSmartLockSwitch'));
         //State
-        $this->MaintainVariable('SmartLockStatus', $this->Translate('State'), 3, '', 20, true);
+        $this->RegisterVariableString('SmartLockStatus', $this->Translate('State'), '', 20);
         IPS_SetIcon($this->GetIDForIdent('SmartLockStatus'), 'Information');
         //Mode
-        $this->MaintainVariable('SmartLockMode', $this->Translate('Mode'), 3, '', 30, true);
+        $this->RegisterVariableString('SmartLockMode', $this->Translate('Mode'), '', 30);
         IPS_SetIcon($this->GetIDForIdent('SmartLockMode'), 'Information');
         //Battery
-        $this->MaintainVariable('SmartLockBatteryState', $this->Translate('Battery'), 0, '~Battery', 40, true);
+        $this->RegisterVariableBoolean('SmartLockBatteryState', $this->Translate('Battery'), '~Battery', 40);
         //Battery charging
         $profile = 'NUKI.' . $this->InstanceID . '.BatteryCharging';
-        $this->MaintainVariable('SmartLockBatteryCharging', $this->Translate('Battery charging'), 0, $profile, 42, true);
+        $this->RegisterVariableBoolean('SmartLockBatteryCharging', $this->Translate('Battery charging'), $profile, 42);
         //Battery charge state
         $profile = 'NUKI.' . $this->InstanceID . '.BatteryChargeState';
-        $this->MaintainVariable('SmartLockBatteryChargeState', $this->Translate('Battery charge state'), 1, $profile, 44, true);
+        $this->RegisterVariableInteger('SmartLockBatteryChargeState', $this->Translate('Battery charge state'), $profile, 44);
         //Keypad battery
-        $this->MaintainVariable('KeyPadBatteryCritical', $this->Translate('Keypad Battery'), 0, '~Battery', 46, true);
+        $this->RegisterVariableBoolean('KeyPadBatteryCritical', $this->Translate('Keypad Battery'), '~Battery', 46);
         //Door
         $profile = 'NUKI.' . $this->InstanceID . '.Door.Reversed';
-        $this->MaintainVariable('Door', $this->Translate('Door'), 0, $profile, 50, true);
+        $this->RegisterVariableBoolean('Door', $this->Translate('Door'), $profile, 50);
         //Door sensor
         $profile = 'NUKI.' . $this->InstanceID . '.DoorSensorState';
-        $this->MaintainVariable('DoorSensorState', $this->Translate('Door Sensor State'), 1, $profile, 60, true);
+        $this->RegisterVariableInteger('DoorSensorState', $this->Translate('Door Sensor State'), $profile, 60);
+    }
+
+    private function MaintainVariables()
+    {
+        //Switch
+        IPS_SetHidden($this->GetIDForIdent('SmartLockSwitch'), $this->ReadPropertyBoolean('HideSmartLockSwitch'));
         //Protocol (Deprecated)
         $this->MaintainVariable('Protocol', $this->Translate('Protocol'), 3, '~TextBox', 100, false);
     }

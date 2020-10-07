@@ -112,7 +112,7 @@ class NUKIConfigurator extends IPSModule
                                 'DeviceID'           => $nukiID,
                                 'DeviceType'         => $deviceType,
                                 'ProductDesignation' => 'Smart Lock',
-                                'DeviceName'         => $deviceName,
+                                'name'               => $deviceName,
                                 'instanceID'         => $instanceID,
                                 'create'             => [
                                     'moduleID'      => NUKI_SMARTLOCK_GUID,
@@ -134,7 +134,7 @@ class NUKIConfigurator extends IPSModule
                                 'DeviceID'           => $nukiID,
                                 'DeviceType'         => $deviceType,
                                 'ProductDesignation' => 'Opener',
-                                'DeviceName'         => $deviceName,
+                                'name'               => $deviceName,
                                 'instanceID'         => $instanceID,
                                 'create'             => [
                                     'moduleID'      => NUKI_OPENER_GUID,
