@@ -254,11 +254,17 @@ class NUKIOpener extends IPSModule
         $this->RegisterVariableInteger('DoorBuzzer', $this->Translate('Door buzzer'), $profile, 10);
         $this->EnableAction('DoorBuzzer');
         //State
+        $id = @$this->GetIDForIdent('OpenerState');
         $this->RegisterVariableString('OpenerState', $this->Translate('State'), '', 20);
-        IPS_SetIcon($this->GetIDForIdent('OpenerState'), 'Information');
+        if ($id == false) {
+            IPS_SetIcon($this->GetIDForIdent('OpenerState'), 'Information');
+        }
         //Mode
+        $id = @$this->GetIDForIdent('OpenerMode');
         $this->RegisterVariableString('OpenerMode', $this->Translate('Mode'), '', 30);
-        IPS_SetIcon($this->GetIDForIdent('OpenerMode'), 'Information');
+        if ($id == false) {
+            IPS_SetIcon($this->GetIDForIdent('OpenerMode'), 'Information');
+        }
         //Battery
         $this->RegisterVariableBoolean('BatteryState', $this->Translate('Battery'), '~Battery', 40);
     }
