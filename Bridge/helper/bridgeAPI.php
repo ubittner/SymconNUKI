@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 trait NUKI_bridgeAPI
 {
-    private $apiVersion = '1.9';
+    private $apiVersion = '1.12';
 
     /**
      * Enables the API.
@@ -45,7 +45,7 @@ trait NUKI_bridgeAPI
      */
     public function ToggleConfigAuth(bool $Enable): string
     {
-        $endpoint = '/configAuth?enable=' . $Enable . '&token=';
+        $endpoint = '/configAuth?enable=' . $Enable . '&';
         return $this->SendDataToBridge($endpoint);
     }
 
@@ -56,23 +56,8 @@ trait NUKI_bridgeAPI
      */
     public function GetPairedDevices(): string
     {
-        $endpoint = '/list?token=';
+        $endpoint = '/list?';
         return $this->SendDataToBridge($endpoint);
-    }
-
-    /**
-     * Deprecated !!!
-     *
-     * Returns a list of all available Smart Locks.
-     *
-     * @return string
-     */
-    public function GetSmartLocks(): string
-    {
-        $message = 'Function is outdated and will not be available in the next version!';
-        $this->SendDebug(__FUNCTION__, $message, 0);
-        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
-        return $this->GetPairedDevices();
     }
 
     /**
@@ -92,7 +77,7 @@ trait NUKI_bridgeAPI
          *
          */
 
-        $endpoint = '/lockState?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&token=';
+        $endpoint = '/lockState?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&';
         return $this->SendDataToBridge($endpoint);
 
         /*
@@ -151,23 +136,6 @@ trait NUKI_bridgeAPI
     }
 
     /**
-     * Deprecated !!!
-     *
-     * Returns the current lock state of a given Smart Lock.
-     *
-     * @param int $SmartLockUniqueID
-     *
-     * @return string
-     */
-    public function GetLockStateOfSmartLock(int $SmartLockUniqueID): string
-    {
-        $message = 'Function is outdated and will not be available in the next version!';
-        $this->SendDebug(__FUNCTION__, $message, 0);
-        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
-        return $this->GetLockState($SmartLockUniqueID, 0);
-    }
-
-    /**
      * Set the lock action of a device.
      *
      * @param int $NukiID
@@ -207,7 +175,7 @@ trait NUKI_bridgeAPI
          *
          */
 
-        $endpoint = '/lockAction?nukiId=' . $NukiID . '&action=' . $LockAction . '&deviceType=' . $DeviceType . '&token=';
+        $endpoint = '/lockAction?nukiId=' . $NukiID . '&action=' . $LockAction . '&deviceType=' . $DeviceType . '&';
         return $this->SendDataToBridge($endpoint);
 
         /*
@@ -215,24 +183,6 @@ trait NUKI_bridgeAPI
          *
          *    {“success”: true, “batteryCritical”: false}
          */
-    }
-
-    /**
-     * Deprecated !!!
-     *
-     * Performs a lock operation on the given Smart Lock.
-     *
-     * @param int $SmartLockUniqueID
-     * @param int $LockAction
-     *
-     * @return string
-     */
-    public function SetLockActionOfSmartLock(int $SmartLockUniqueID, int $LockAction): string
-    {
-        $message = 'Function is outdated and will not be available in the next version!';
-        $this->SendDebug(__FUNCTION__, $message, 0);
-        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
-        return $this->SetLockAction($SmartLockUniqueID, $LockAction, 0);
     }
 
     /**
@@ -244,25 +194,8 @@ trait NUKI_bridgeAPI
      */
     public function UnpairDevice(int $NukiID, int $DeviceType = 0): string
     {
-        $endpoint = '/unpair?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&token=';
+        $endpoint = '/unpair?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&';
         return $this->SendDataToBridge($endpoint);
-    }
-
-    /**
-     * Deprecated !!!
-     *
-     * Removes the pairing with a given Smart Lock.
-     *
-     * @param int $SmartLockUniqueID
-     *
-     * @return string
-     */
-    public function UnpairSmartLockFromBridge(int $SmartLockUniqueID): string
-    {
-        $message = 'Function is outdated and will not be available in the next version!';
-        $this->SendDebug(__FUNCTION__, $message, 0);
-        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
-        return $this->UnpairDevice($SmartLockUniqueID, 0);
     }
 
     /**
@@ -274,7 +207,7 @@ trait NUKI_bridgeAPI
      */
     public function GetBridgeInfo(): string
     {
-        $endpoint = '/info?token=';
+        $endpoint = '/info?';
         return $this->SendDataToBridge($endpoint);
     }
 
@@ -289,7 +222,7 @@ trait NUKI_bridgeAPI
         $callbackIP = $this->ReadPropertyString('SocketIP');
         $callbackPort = $this->ReadPropertyInteger('SocketPort');
         if (!empty($callbackIP) && !empty($callbackPort)) {
-            $endpoint = '/callback/add?url=http%3A%2F%2F' . $callbackIP . '%3A' . $callbackPort . '%2Fhook%2Fnuki%2Fbridge%2F' . $this->InstanceID . '%2F&token=';
+            $endpoint = '/callback/add?url=http%3A%2F%2F' . $callbackIP . '%3A' . $callbackPort . '%2Fhook%2Fnuki%2Fbridge%2F' . $this->InstanceID . '%2F&';
             $data = $this->SendDataToBridge($endpoint);
         }
         if (empty($callbackIP) || empty($callbackPort)) {
@@ -305,7 +238,7 @@ trait NUKI_bridgeAPI
      */
     public function ListCallback(): string
     {
-        $endpoint = '/callback/list?token=';
+        $endpoint = '/callback/list?';
         return $this->SendDataToBridge($endpoint);
     }
 
@@ -318,7 +251,7 @@ trait NUKI_bridgeAPI
      */
     public function DeleteCallback(int $CallbackID): string
     {
-        $endpoint = '/callback/remove?id=' . $CallbackID . '&token=';
+        $endpoint = '/callback/remove?id=' . $CallbackID . '&';
         return $this->SendDataToBridge($endpoint);
     }
 
@@ -329,7 +262,7 @@ trait NUKI_bridgeAPI
      */
     public function GetBridgeLog(): string
     {
-        $endpoint = '/log?token=';
+        $endpoint = '/log?';
         return $this->SendDataToBridge($endpoint);
     }
 
@@ -338,7 +271,7 @@ trait NUKI_bridgeAPI
      */
     public function ClearBridgeLog()
     {
-        $endpoint = '/clearlog?token=';
+        $endpoint = '/clearlog?';
         $this->SendDataToBridge($endpoint);
     }
 
@@ -347,7 +280,7 @@ trait NUKI_bridgeAPI
      */
     public function UpdateBridgeFirmware()
     {
-        $endpoint = '/fwupdate?token=';
+        $endpoint = '/fwupdate?';
         $this->SendDataToBridge($endpoint);
     }
 
@@ -356,7 +289,7 @@ trait NUKI_bridgeAPI
      */
     public function RebootBridge()
     {
-        $endpoint = '/reboot?token=';
+        $endpoint = '/reboot?';
         $this->SendDataToBridge($endpoint);
     }
 
@@ -365,7 +298,7 @@ trait NUKI_bridgeAPI
      */
     public function FactoryResetBridge()
     {
-        $endpoint = 'factoryReset?token=';
+        $endpoint = 'factoryReset?';
         $this->sendDataToBridge($endpoint);
     }
 
@@ -387,9 +320,23 @@ trait NUKI_bridgeAPI
             $timeout = 1;
         }
         $token = $this->ReadPropertyString('BridgeAPIToken');
+        if (empty($token)) {
+            $this->SendDebug(__FUNCTION__, $this->Translate('Please enter the API Token of the NUKI Bridge'), 0);
+            return '';
+        }
+        $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . 'token=' . $token;
+        if ($this->ReadPropertyBoolean('UseEncryption')) {
+            $timestamp = gmdate("Y-m-d\TH:i:s\Z");
+            $randomNumber = random_int(0, 65535);
+            $data = (string) $timestamp . ',' . $randomNumber . ',' . $token;
+            $hash = hash('sha256', $data);
+            $token = 'ts=' . $timestamp . '&rnr=' . $randomNumber . '&hash=' . $hash;
+            $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . $token;
+            $this->SendDebug(__FUNCTION__, $url, 0);
+        }
         $ch = curl_init();
         curl_setopt_array($ch, [
-            CURLOPT_URL            => 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . $token,
+            CURLOPT_URL            => $url,
             CURLOPT_HEADER         => 0,
             CURLOPT_RETURNTRANSFER => 1,
             CURLOPT_FAILONERROR    => true,

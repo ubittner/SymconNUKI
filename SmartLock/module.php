@@ -167,22 +167,6 @@ class NUKISmartLock extends IPSModule
     }
 
     /**
-     * Deprecated !!!
-     *
-     * Shows the lock state of the Smart Lock.
-     *
-     * @return string
-     * @throws Exception
-     */
-    public function ShowLockStateOfSmartLock(): string
-    {
-        $message = 'Function is outdated and will not be available in the next version!';
-        $this->SendDebug(__FUNCTION__, $message, 0);
-        $this->LogMessage('ID ' . $this->InstanceID . ', ' . __FUNCTION__ . ', ' . $message, KL_WARNING);
-        return $this->GetSmartLockState();
-    }
-
-    /**
      * Toggles the Smart Lock.
      *
      * @param bool $State
@@ -199,7 +183,7 @@ class NUKISmartLock extends IPSModule
             $lockAction = (int) $this->ReadPropertyString('SwitchOnAction');
         }
         //Send data to bridge
-        $result = $this->SetLockAction($lockAction);
+        $result = $this->SetSmartLockAction($lockAction);
         $this->SendDebug(__FUNCTION__, json_encode($result), 0);
         if ($result) {
             //Set values
@@ -216,6 +200,43 @@ class NUKISmartLock extends IPSModule
             }
         }
         return $result;
+    }
+
+    /**
+     * Sets the lock action of the smart lock.
+     *
+     * @param int $Action
+     * @return bool
+     * @throws Exception
+     */
+    public function SetSmartLockAction(int $Action): bool
+    {
+        $success = false;
+        $nukiID = $this->ReadPropertyString('SmartLockUID');
+        if (empty($nukiID)) {
+            return false;
+        }
+        if (!$this->HasActiveParent()) {
+            return false;
+        }
+        $data = [];
+        $buffer = [];
+        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
+        $buffer['Command'] = 'SetLockAction';
+        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $Action, 'deviceType' => 0];
+        $data['Buffer'] = $buffer;
+        $data = json_encode($data);
+        $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
+        if (empty($result)) {
+            return $success;
+        }
+        if (array_key_exists('success', $result)) {
+            $success = $result['success'];
+        }
+        if (array_key_exists('batteryCritical', $result)) {
+            $this->SetValue('SmartLockBatteryState', $result['batteryCritical']);
+        }
+        return $success;
     }
 
     #################### Private
@@ -486,42 +507,5 @@ class NUKISmartLock extends IPSModule
         }
         $this->SetValue('Door', $doorState);
         $this->SetValue('DoorSensorState', $value);
-    }
-
-    /**
-     * Sets the lock action of the smart lock.
-     *
-     * @param int $LockAction
-     * @return bool
-     * @throws Exception
-     */
-    private function SetLockAction(int $LockAction): bool
-    {
-        $success = false;
-        $nukiID = $this->ReadPropertyString('SmartLockUID');
-        if (empty($nukiID)) {
-            return false;
-        }
-        if (!$this->HasActiveParent()) {
-            return false;
-        }
-        $data = [];
-        $buffer = [];
-        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
-        $buffer['Command'] = 'SetLockAction';
-        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $LockAction, 'deviceType' => 0];
-        $data['Buffer'] = $buffer;
-        $data = json_encode($data);
-        $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
-        if (empty($result)) {
-            return $success;
-        }
-        if (array_key_exists('success', $result)) {
-            $success = $result['success'];
-        }
-        if (array_key_exists('batteryCritical', $result)) {
-            $this->SetValue('SmartLockBatteryState', $result['batteryCritical']);
-        }
-        return $success;
     }
 }

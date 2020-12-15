@@ -180,7 +180,7 @@ class NUKIOpener extends IPSModule
         if ($State) {
             $lockAction = 1;
         }
-        return $this->SetLockAction($lockAction);
+        return $this->SetOpenerAction($lockAction);
     }
 
     /**
@@ -198,7 +198,7 @@ class NUKIOpener extends IPSModule
         if ($State) {
             $lockAction = 4;
         }
-        return $this->SetLockAction($lockAction);
+        return $this->SetOpenerAction($lockAction);
     }
 
     /**
@@ -209,7 +209,44 @@ class NUKIOpener extends IPSModule
      */
     public function BuzzDoor(): bool
     {
-        return $this->SetLockAction(3);
+        return $this->SetOpenerAction(3);
+    }
+
+    /**
+     * Set the action of the opener.
+     *
+     * @param int $Action
+     * @return bool
+     * @throws Exception
+     */
+    public function SetOpenerAction(int $Action): bool
+    {
+        $success = false;
+        $nukiID = $this->ReadPropertyString('OpenerUID');
+        if (empty($nukiID)) {
+            return false;
+        }
+        if (!$this->HasActiveParent()) {
+            return false;
+        }
+        $data = [];
+        $buffer = [];
+        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
+        $buffer['Command'] = 'SetLockAction';
+        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $Action, 'deviceType' => 2];
+        $data['Buffer'] = $buffer;
+        $data = json_encode($data);
+        $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
+        if (empty($result)) {
+            return $success;
+        }
+        if (array_key_exists('success', $result)) {
+            $success = $result['success'];
+        }
+        if (array_key_exists('batteryCritical', $result)) {
+            $this->SetValue('BatteryState', $result['batteryCritical']);
+        }
+        return $success;
     }
 
     #################### Private
@@ -342,42 +379,5 @@ class NUKIOpener extends IPSModule
         if (array_key_exists('batteryCritical', $result)) {
             $this->SetValue('BatteryState', $result['batteryCritical']);
         }
-    }
-
-    /**
-     * Set the lock action of the opener.
-     *
-     * @param int $LockAction
-     * @return bool
-     * @throws Exception
-     */
-    private function SetLockAction(int $LockAction): bool
-    {
-        $success = false;
-        $nukiID = $this->ReadPropertyString('OpenerUID');
-        if (empty($nukiID)) {
-            return false;
-        }
-        if (!$this->HasActiveParent()) {
-            return false;
-        }
-        $data = [];
-        $buffer = [];
-        $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
-        $buffer['Command'] = 'SetLockAction';
-        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $LockAction, 'deviceType' => 2];
-        $data['Buffer'] = $buffer;
-        $data = json_encode($data);
-        $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
-        if (empty($result)) {
-            return $success;
-        }
-        if (array_key_exists('success', $result)) {
-            $success = $result['success'];
-        }
-        if (array_key_exists('batteryCritical', $result)) {
-            $this->SetValue('BatteryState', $result['batteryCritical']);
-        }
-        return $success;
     }
 }

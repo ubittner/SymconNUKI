@@ -104,6 +104,11 @@
           "type": "PasswordTextBox",
           "name": "BridgeAPIToken",
           "caption": "API Token"
+        },
+        {
+          "type": "CheckBox",
+          "name": "UseEncryption",
+          "caption": "Use encryption"
         }
       ]
     },
@@ -327,7 +332,7 @@
     {
       "code": 104,
       "icon": "inactive",
-      "caption": "Please edit all configuration parameters of the NUKI Bridge."
+      "caption": "Please edit all configuration parameters of the NUKI Bridge"
     },
     {
       "code": 201,

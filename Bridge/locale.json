@@ -15,6 +15,7 @@
       "Please enter the port of the NUKI Bridge": "Bitte geben Sie den Port der NUKI Bridge an",
       "Please enter the network timeout in milliseconds": "Bitte geben Sie den Netzwerk-Timeout in Millisekunden an",
       "Please enter the API Token of the NUKI Bridge": "Bitte geben Sie den API Token der NUKI Bridge an",
+      "Use encryption": "Verschlüsselung verwenden",
       "With a callback you can receive information from this NUKI bridge on this IP-Symcon server.": "Mit einem Callback können Sie Informationen von dieser NUKI Bridge auf diesem IP-Symcon Server empfangen.",
       "Please select if you want to use a callback": "Bitte wählen Sie aus, ob Sie einen Callback nutzen wollen",
       "Use Callback": "Callback benutzen",
