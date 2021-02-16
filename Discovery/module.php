@@ -1,32 +1,17 @@
 <?php
 
+/*
+ * @author      Ulrich Bittner
+ * @copyright   (c) 2020, 2021
+ * @license    	CC BY-NC-SA 4.0
+ * @see         https://github.com/ubittner/SymconNUKI
+ */
+
 /** @noinspection DuplicatedCode */
 /** @noinspection PhpUnused */
 
-/*
- * @module      NUKI Discovery
- *
- * @prefix      NUKI
- *
- * @file        module.php
- *
- * @author      Ulrich Bittner
- * @copyright   (c) 2019, 2020
- * @license     CC BY-NC-SA 4.0
- *              https://creativecommons.org/licenses/by-nc-sa/4.0/
- *
- * @see         https://github.com/ubittner/SymconNUKI
- *
- * @guids		Library
- * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
- *
- *              NUKI Bridge Discovery
- *              {29B22B4B-2BBE-4A48-AC96-65AB80EC0CD5}
- */
-
 declare(strict_types=1);
 
-//Include
 include_once __DIR__ . '/../libs/constants.php';
 
 class NUKIDiscovery extends IPSModule
@@ -35,7 +20,6 @@ class NUKIDiscovery extends IPSModule
     {
         //Never delete this line!
         parent::Create();
-        $this->RegisterProperties();
     }
 
     public function Destroy()
@@ -75,34 +59,32 @@ class NUKIDiscovery extends IPSModule
     public function GetConfigurationForm()
     {
         $formData = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
-        $moduleInfo = [];
-        $library = IPS_GetLibrary(NUKI_LIBRARY_GUID);
-        $module = IPS_GetModule(NUKI_DISCOVERY_GUID);
-        $moduleInfo['name'] = $module['ModuleName'];
-        $moduleInfo['version'] = $library['Version'] . '-' . $library['Build'];
-        $moduleInfo['date'] = date('d.m.Y', $library['Date']);
-        $moduleInfo['time'] = date('H:i', $library['Date']);
-        $moduleInfo['developer'] = $library['Author'];
-        $formData['elements'][1]['items'][1]['caption'] = "ID:\t\t\t\t" . $this->InstanceID;
-        $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
-        $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
-        $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
-        $formData['elements'][1]['items'][5]['caption'] = $this->Translate("Time:\t\t\t") . $moduleInfo['time'];
-        $formData['elements'][1]['items'][6]['caption'] = $this->Translate("Developer:\t\t") . $moduleInfo['developer'];
         $bridges = $this->DiscoverBridges();
-        $values = [];
-        foreach ($bridges as $bridgeID => $bridge) {
-            $instanceID = $this->GetBridgeInstances($bridge['bridgeIP']);
-            $addValue = ['BridgeIP' => $bridge['bridgeIP'], 'BridgePort' => $bridge['bridgePort'], 'instanceID' => $instanceID];
-            $addValue['create'] = [['moduleID' => NUKI_BRIDGE_GUID, 'configuration' => ['BridgeIP' => $bridge['bridgeIP'], 'BridgePort' => $bridge['bridgePort']]]];
-            $values[] = $addValue;
+        if (empty($bridges)) {
+            $formData['actions'][] = [
+                'type'  => 'PopupAlert',
+                'popup' => [
+                    'items' => [[
+                        'type'    => 'Label',
+                        'caption' => 'No bridge found! Please enable the HTTP API function of the bridge in the NUKI app (iOS / Android).'
+                    ]]
+                ]
+            ];
+        } else {
+            $values = [];
+            foreach ($bridges as $bridgeID => $bridge) {
+                $instanceID = $this->GetBridgeInstances($bridge['bridgeIP']);
+                $addValue = ['BridgeID' => $bridge['bridgeID'], 'BridgeIP' => $bridge['bridgeIP'], 'BridgePort' => $bridge['bridgePort'], 'instanceID' => $instanceID];
+                $addValue['create'] = [['moduleID' => NUKI_BRIDGE_GUID, 'configuration' => ['BridgeIP' => (string) $bridge['bridgeIP'], 'BridgePort' => (int) $bridge['bridgePort'], 'BridgeID' => (string) $bridge['bridgeID']]]];
+                $values[] = $addValue;
+            }
+            $formData['actions'][1]['values'] = $values;
         }
-        $formData['actions'][1]['values'] = $values;
         return json_encode($formData);
     }
 
     /**
-     * Discovers NUKI bridges and returns the values as an array.
+     * Discovers the NUKI bridges and returns the values as an array.
      *
      * @return array
      */
@@ -119,8 +101,8 @@ class NUKIDiscovery extends IPSModule
         $ch = curl_init();
         curl_setopt_array($ch, [
             CURLOPT_URL            => $endpoint,
-            CURLOPT_HEADER         => 0,
-            CURLOPT_RETURNTRANSFER => 1,
+            CURLOPT_HEADER         => false,
+            CURLOPT_RETURNTRANSFER => true,
             CURLOPT_TIMEOUT, 15]);
         $response = curl_exec($ch);
         if ($response) {
@@ -147,11 +129,6 @@ class NUKIDiscovery extends IPSModule
     private function KernelReady()
     {
         $this->ApplyChanges();
-    }
-
-    private function RegisterProperties()
-    {
-        $this->RegisterPropertyString('Note', '');
     }
 
     private function GetBridgeInstances(string $BridgeIP): int

@@ -5,186 +5,127 @@
       "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAoCAYAAAB6tz31AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOxAAADsQBlSsOGwAABCRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyI+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDx0aWZmOkNvbXByZXNzaW9uPjU8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjk2PC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj45NjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjg4PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT4xPC9leGlmOkNvbG9yU3BhY2U+CiAgICAgICAgIDxleGlmOlBpeGVsWURpbWVuc2lvbj40MDwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAg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"
     },
     {
-      "type": "ExpansionPanel",
-      "caption": "NUKI Bridge",
-      "items": [
-        {
-          "type": "Label",
-          "caption": "This instance integrates the NUKI Bridge into IP-Symcon.\nPlease refer to the documentation for further information.\n"
-        },
-        {
-          "type": "Label",
-          "caption": "ID:"
-        },
-        {
-          "type": "Label",
-          "caption":"Module:"
-        },
-        {
-          "type": "Label",
-          "caption": "Version:"
-        },
-        {
-          "type": "Label",
-          "caption": "Date:"
-        },
-        {
-          "type": "Label",
-          "caption": "Time:"
-        },
-        {
-          "type": "Label",
-          "caption": "Developer:"
-        },
-        {
-          "type": "Label",
-          "caption": "API Version:"
-        },
-        {
-          "type": "Label",
-          "caption": "Prefix:"
-        },
-        {
-          "type": "ValidationTextBox",
-          "name": "Note",
-          "caption": "Note",
-          "width": "600px"
-        }
-      ]
+      "type": "Image",
+      "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAA6hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxOS0wOC0xMFQwODowODo3NTwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+UGl4ZWxtYXRvciAzLjguNTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpDb21wcmVzc2lvbj41PC90aWZmOkNvbXByZXNzaW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzI8L3RpZmY6WFJlc29sdXRpb24+CiAgICAgICAgIDxleGlmOlBpeGVsWERpbWVuc2lvbj4zMjwvZXhpZjpQaXhlbFhEaW1lbnNpb24+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+MTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+MzI8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KWa3+RQAAAjFJREFUSA21lkuO2kAQhmPeCA1CDqtYKCOxhMkRuAoLzsApOAMLrsIZ2CVZIGJYICxknsE85vN0hCYOXW4Ypxeo3FX9//Vs2rpcLp/+58oo8H6/PxgMRqPRx7ksy2o0Gu12u9PpgGYRAejdbvfj0BGEXq8HR4pdfI/oEvlUsGEEtm0nghgBIVeLxSKMwHz9fluG9qp9/hTZ8Ew2mzW0vJrdR5BK3RcxNHcfuLpmKBhFkE6nK5VKuVwuFArg7vd73/eXy+XpdIqliScolUqO44A4m82oMYj5fB6+er3uuu5ms5E5YghAr9Vqk8kErwGiBvRGEATz+Xy9XiuVzCHVgMzgO46DiKxWJpNRwuFwmE6nGPApBCFFQB52ux1AOgiIMcCMgdJxSBFQVcInLcLabreY6dDDrAo6eoY+AZ2hv3JEZAxUa+lwpBRxBjiWEijvTVkHrfalCOicXC73RqH94fJQDaajkQjofdpU3Vm6Xwww06GzLxEwqzhIinXoqDDA7EECCsisVqtVRhcO1vl8VgK/bKLCQL4wYopMm47HY6aJaVitVjS+giYzEKCSx5jIjP7RGLTHLjvP84wIhBTLKgikIsuHbfuzbKC0jxN4nvb+eU8cU2Rl+vLyLTgej0FAyOx8fX523V9PT+WfP76/x7opG0UAOof9lf/FcYJjgFwsFm/C/bsZFrnVaiXyaIygN5vN4XAYRsA7MqJL5FPBhjVQr9SkHr8A4vtfj99E/NWBvALqTzQDV0fASwAAAABJRU5ErkJggg=="
     },
     {
-      "type": "ExpansionPanel",
-      "caption": "Configuration",
+      "type": "ValidationTextBox",
+      "name": "BridgeIP",
+      "caption": "Bridge IP address"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "BridgePort",
+      "caption": "Bridge Port"
+    },
+    {
+      "type": "RowLayout",
       "items": [
-        {
-          "type": "Image",
-          "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAIAAAD8GO2jAAAAAXNSR0IArs4c6QAAAAlwSFlzAAALEwAACxMBAJqcGAAAA6hpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6eG1wPSJodHRwOi8vbnMuYWRvYmUuY29tL3hhcC8xLjAvIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyIKICAgICAgICAgICAgeG1sbnM6ZXhpZj0iaHR0cDovL25zLmFkb2JlLmNvbS9leGlmLzEuMC8iPgogICAgICAgICA8eG1wOk1vZGlmeURhdGU+MjAxOS0wOC0xMFQwODowODo3NTwveG1wOk1vZGlmeURhdGU+CiAgICAgICAgIDx4bXA6Q3JlYXRvclRvb2w+UGl4ZWxtYXRvciAzLjguNTwveG1wOkNyZWF0b3JUb29sPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpDb21wcmVzc2lvbj41PC90aWZmOkNvbXByZXNzaW9uPgogICAgICAgICA8dGlmZjpSZXNvbHV0aW9uVW5pdD4yPC90aWZmOlJlc29sdXRpb25Vbml0PgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj43MjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPHRpZmY6WFJlc29sdXRpb24+NzI8L3RpZmY6WFJlc29sdXRpb24+CiAgICAgICAgIDxleGlmOlBpeGVsWERpbWVuc2lvbj4zMjwvZXhpZjpQaXhlbFhEaW1lbnNpb24+CiAgICAgICAgIDxleGlmOkNvbG9yU3BhY2U+MTwvZXhpZjpDb2xvclNwYWNlPgogICAgICAgICA8ZXhpZjpQaXhlbFlEaW1lbnNpb24+MzI8L2V4aWY6UGl4ZWxZRGltZW5zaW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KWa3+RQAAAjFJREFUSA21lkuO2kAQhmPeCA1CDqtYKCOxhMkRuAoLzsApOAMLrsIZ2CVZIGJYICxknsE85vN0hCYOXW4Ypxeo3FX9//Vs2rpcLp/+58oo8H6/PxgMRqPRx7ksy2o0Gu12u9PpgGYRAejdbvfj0BGEXq8HR4pdfI/oEvlUsGEEtm0nghgBIVeLxSKMwHz9fluG9qp9/hTZ8Ew2mzW0vJrdR5BK3RcxNHcfuLpmKBhFkE6nK5VKuVwuFArg7vd73/eXy+XpdIqliScolUqO44A4m82oMYj5fB6+er3uuu5ms5E5YghAr9Vqk8kErwGiBvRGEATz+Xy9XiuVzCHVgMzgO46DiKxWJpNRwuFwmE6nGPApBCFFQB52ux1AOgiIMcCMgdJxSBFQVcInLcLabreY6dDDrAo6eoY+AZ2hv3JEZAxUa+lwpBRxBjiWEijvTVkHrfalCOicXC73RqH94fJQDaajkQjofdpU3Vm6Xwww06GzLxEwqzhIinXoqDDA7EECCsisVqtVRhcO1vl8VgK/bKLCQL4wYopMm47HY6aJaVitVjS+giYzEKCSx5jIjP7RGLTHLjvP84wIhBTLKgikIsuHbfuzbKC0jxN4nvb+eU8cU2Rl+vLyLTgej0FAyOx8fX523V9PT+WfP76/x7opG0UAOof9lf/FcYJjgFwsFm/C/bsZFrnVaiXyaIygN5vN4XAYRsA7MqJL5FPBhjVQr9SkHr8A4vtfj99E/NWBvALqTzQDV0fASwAAAABJRU5ErkJggg=="
-        },
-        {
-          "type": "Label",
-          "caption": "Please refer to the iOS / Android App for the required data."
-        },
-        {
-          "type": "Label",
-          "caption": " "
-        },
-        {
-          "type": "Label",
-          "caption": "Please enter the IP address of the NUKI Bridge"
-        },
-        {
-          "type": "ValidationTextBox",
-          "name": "BridgeIP",
-          "caption": "IP address"
-        },
-        {
-          "type": "Label",
-          "caption": "Please enter the port of the NUKI Bridge"
-        },
-        {
-          "type": "NumberSpinner",
-          "name": "BridgePort",
-          "caption": "Port"
-        },
-        {
-          "type": "Label",
-          "caption": "Please enter the network timeout in milliseconds"
-        },
-        {
-          "type": "NumberSpinner",
-          "name": "Timeout",
-          "caption": "Timeout",
-          "suffix": "ms"
-        },
-        {
-          "type": "Label",
-          "caption": "Please enter the API Token of the NUKI Bridge"
-        },
         {
           "type": "PasswordTextBox",
           "name": "BridgeAPIToken",
-          "caption": "API Token"
+          "caption": "Bridge API Token"
         },
         {
-          "type": "CheckBox",
-          "name": "UseEncryption",
-          "caption": "Use encryption"
+          "type": "Label",
+          "caption": " "
+        },
+        {
+          "type": "PopupButton",
+          "caption": "Authorize",
+          "popup": {
+            "caption": "Bridge API Token",
+            "items": [
+              {
+                "type": "Label",
+                "caption": "The HTTP API function of the bridge must already be enabled. Please start the authorization and press the button on the NUKI Bridge within 30 seconds."
+              },
+              {
+                "type": "Button",
+                "caption": "Authorize Now",
+                "onClick": "NUKI_EnableAPI($id);"
+              }
+            ]
+          }
         }
       ]
     },
     {
-      "type": "ExpansionPanel",
-      "caption": "Callback",
+      "type": "RowLayout",
       "items": [
         {
-          "type": "Label",
-          "caption": "With a callback you can receive information from this NUKI bridge on this IP-Symcon server."
+          "type": "CheckBox",
+          "name": "UseEncryption",
+          "caption": "Encrypt Bridge API Key",
+          "width": "300px"
         },
         {
           "type": "Label",
           "caption": " "
         },
         {
-          "type": "Label",
-          "caption": "Please select if you want to use a callback"
-        },
+          "type": "PopupButton",
+          "caption": "Info",
+          "popup": {
+            "caption": "Use encryption",
+            "items": [
+              {
+                "type": "Label",
+                "caption": "If the Bridge API token is to be transmitted encrypted, please pay attention to synchronous times of IP-Symcon and the NUKI Bridge."
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "type": "ValidationTextBox",
+      "name": "BridgeID",
+      "caption": "Bridge ID (optional)"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "Timeout",
+      "caption": "Network Timeout",
+      "suffix": "Milliseconds"
+    },
+    {
+      "type": "RowLayout",
+      "items": [
         {
           "type": "CheckBox",
           "name": "UseCallback",
-          "caption": "Use Callback"
+          "caption": "Update State",
+          "width": "300px"
         },
         {
           "type": "Label",
           "caption": " "
         },
         {
-          "type": "Label",
-          "caption": "The information of this IP-Symcon server for the webhook must be registered on the NUKI Bridge."
-        },
-        {
-          "type": "Label",
-          "caption": "Please enter the IP address of this IP-Symcon server"
-        },
-        {
-          "type": "ValidationTextBox",
-          "name": "SocketIP",
-          "caption": "IP address"
-        },
-        {
-          "type": "Label",
-          "caption": "Please enter the port for the Webhook Control (normally 3777) of this IP-Symcon server"
-        },
-        {
-          "type": "NumberSpinner",
-          "name": "SocketPort",
-          "caption": "Port"
-        },
-        {
-          "type": "Label",
-          "caption": "Please enter the callback ID if you want to delete a callback"
-        },
-        {
-          "type": "NumberSpinner",
-          "name": "CallbackID",
-          "caption": "Callback ID"
-        },
-        {
-          "type": "Label",
-          "caption": " "
-        },
-        {
-          "type": "Label",
-          "caption": "After accepting any changes, you can press the CREATE button in the developer area to create a callback on the NUKI Bridge."
-        },
-        {
-          "type": "Label",
-          "caption": "With the button DISPLAY you can display the existing callbacks of the NUKI Bridge."
-        },
-        {
-          "type": "Label",
-          "caption": "With the button DELETE you can delete the callback with the specified ID from the NUKI Bridge."
+          "type": "PopupButton",
+          "caption": "Info",
+          "popup": {
+            "caption": "Use Callback",
+            "items": [
+              {
+                "type": "Label",
+                "caption": "Activate this function to update the status automatically."
+              }
+            ]
+          }
         }
       ]
+    },
+    {
+      "type": "Select",
+      "name": "SocketIP",
+      "caption": "Host IP-Address (IP-Symcon)"
+    },
+    {
+      "type": "NumberSpinner",
+      "name": "SocketPort",
+      "caption": "Host Port (IP-Symcon)"
     }
   ],
   "actions": [
@@ -212,7 +153,7 @@
             {
               "type": "Button",
               "caption": "Delete Log",
-              "onClick": "NUKI_ClearBridgeLog($id);"
+              "onClick": "$data = NUKI_ClearBridgeLog($id); print_r(json_decode($data, true));"
             }
           ]
         },
@@ -225,7 +166,7 @@
               {
                 "type": "Button",
                 "caption": "Update firmware",
-                "onClick": "NUKI_UpdateBridgeFirmware($id);"
+                "onClick": "$data = NUKI_UpdateBridgeFirmware($id); print_r(json_decode($data, true));"
               }
             ]
           }
@@ -239,7 +180,7 @@
               {
                 "type": "Button",
                 "caption": "Reboot",
-                "onClick": "NUKI_RebootBridge($id);"
+                "onClick": "$data = NUKI_RebootBridge($id); print_r(json_decode($data, true));"
               }
             ]
           }
@@ -253,7 +194,7 @@
               {
                 "type": "Button",
                 "caption": "Factory Reset",
-                "onClick": "NUKI_FactoryResetBridge($id);"
+                "onClick": "$data = NUKI_FactoryResetBridge($id); print_r(json_decode($data, true));"
               }
             ]
           }
@@ -273,26 +214,21 @@
           "caption": "Callback"
         },
         {
+          "type": "Button",
+          "caption": "List",
+          "onClick": "$data=NUKI_ListCallback($id); print_r(json_decode($data, true));"
+        },
+        {
           "type": "RowLayout",
           "items": [
             {
-              "type": "PopupButton",
-              "caption": "Add",
-              "popup": {
-                "caption": "Do you really want to add a callback?",
-                "items": [
-                  {
-                    "type": "Button",
-                    "caption": "Add",
-                    "onClick": "$data=NUKI_AddCallback($id);  print_r(json_decode($data, true));"
-                  }
-                ]
-              }
+              "type": "NumberSpinner",
+              "name": "CallbackID",
+              "caption": "Callback ID"
             },
             {
-              "type": "Button",
-              "caption": "List",
-              "onClick": "$data=NUKI_ListCallback($id); print_r(json_decode($data, true));"
+              "type": "Label",
+              "caption": " "
             },
             {
               "type": "PopupButton",
@@ -303,7 +239,7 @@
                   {
                     "type": "Button",
                     "caption": "Delete",
-                    "onClick": "$callbackID = IPS_GetProperty($id,'CallbackID'); $data=NUKI_DeleteCallback($id, $callbackID); print_r(json_decode($data, true));"
+                    "onClick": "$data=NUKI_DeleteCallback($id, $CallbackID); print_r(json_decode($data, true));"
                   }
                 ]
               }

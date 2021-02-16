@@ -25,10 +25,14 @@ trait NUKI_bridgeAPI
         $endpoint = '/auth';
         $data = $this->SendDataToBridge($endpoint);
         if (!empty($data)) {
-            $data = json_decode($data, true);
-            if ($data['success']) {
-                $token = $data['token'];
+            $result = json_decode($data, true);
+            if (array_key_exists('token', $result)) {
+                $token = $result['token'];
                 $this->SendDebug(__FUNCTION__, 'Token: ' . $token, 0);
+                IPS_SetProperty($this->InstanceID, 'BridgeAPIToken', $token);
+                if (IPS_HasChanges($this->InstanceID)) {
+                    IPS_ApplyChanges($this->InstanceID);
+                }
             }
         }
         return $data;
@@ -45,7 +49,7 @@ trait NUKI_bridgeAPI
      */
     public function ToggleConfigAuth(bool $Enable): string
     {
-        $endpoint = '/configAuth?enable=' . $Enable . '&';
+        $endpoint = '/configAuth?enable=' . intval($Enable) . '&';
         return $this->SendDataToBridge($endpoint);
     }
 
@@ -79,19 +83,6 @@ trait NUKI_bridgeAPI
 
         $endpoint = '/lockState?nukiId=' . $NukiID . '&deviceType=' . $DeviceType . '&';
         return $this->SendDataToBridge($endpoint);
-
-        /*
-        //Send data to children
-        $buffer = json_decode($result, true);
-        //Add nuki id
-        $buffer['nukiId'] = $NukiID;
-        $forwardData = [];
-        $forwardData['DataID'] = NUKI_DEVICE_DATA_GUID;
-        $forwardData['Buffer'] = $buffer;
-        $forwardData = json_encode($forwardData);
-        $this->SendDebug(__FUNCTION__ . ' Forward Data: ', $forwardData, 0);
-        $this->SendDataToChildren($forwardData);
-         */
 
         /*
          *  Response example for a locked smart lock
@@ -269,37 +260,37 @@ trait NUKI_bridgeAPI
     /**
      * Clears the log of the bridge.
      */
-    public function ClearBridgeLog()
+    public function ClearBridgeLog(): string
     {
         $endpoint = '/clearlog?';
-        $this->SendDataToBridge($endpoint);
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
      * Immediately checks for a new firmware update and installs it.
      */
-    public function UpdateBridgeFirmware()
+    public function UpdateBridgeFirmware(): string
     {
         $endpoint = '/fwupdate?';
-        $this->SendDataToBridge($endpoint);
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
      * Reboots the bridge.
      */
-    public function RebootBridge()
+    public function RebootBridge(): string
     {
         $endpoint = '/reboot?';
-        $this->SendDataToBridge($endpoint);
+        return $this->SendDataToBridge($endpoint);
     }
 
     /**
      * Performs a factory reset.
      */
-    public function FactoryResetBridge()
+    public function FactoryResetBridge(): string
     {
         $endpoint = 'factoryReset?';
-        $this->sendDataToBridge($endpoint);
+        return $this->sendDataToBridge($endpoint);
     }
 
     //########## Send data
@@ -315,34 +306,58 @@ trait NUKI_bridgeAPI
     {
         $bridgeIP = $this->ReadPropertyString('BridgeIP');
         $bridgePort = $this->ReadPropertyInteger('BridgePort');
-        $timeout = round($this->ReadPropertyInteger('Timeout') / 1000);
-        if ($timeout < 1) {
-            $timeout = 1;
-        }
         $token = $this->ReadPropertyString('BridgeAPIToken');
-        if (empty($token)) {
-            $this->SendDebug(__FUNCTION__, $this->Translate('Please enter the API Token of the NUKI Bridge'), 0);
-            return '';
+        switch ($Endpoint) {
+            case '/auth':
+                $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint;
+                break;
+
+            default:
+                if (empty($token)) {
+                    $this->SendDebug(__FUNCTION__, $this->Translate('Please enter the API Token of the NUKI Bridge'), 0);
+                    return '';
+                }
+                $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . 'token=' . $token;
+                if ($this->ReadPropertyBoolean('UseEncryption')) {
+                    $timestamp = gmdate("Y-m-d\TH:i:s\Z");
+                    $randomNumber = random_int(0, 65535);
+                    $data = (string) $timestamp . ',' . $randomNumber . ',' . $token;
+                    $hash = hash('sha256', $data);
+                    $token = 'ts=' . $timestamp . '&rnr=' . $randomNumber . '&hash=' . $hash;
+                    $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . $token;
+                    $this->SendDebug(__FUNCTION__, $url, 0);
+                }
         }
-        $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . 'token=' . $token;
-        if ($this->ReadPropertyBoolean('UseEncryption')) {
-            $timestamp = gmdate("Y-m-d\TH:i:s\Z");
-            $randomNumber = random_int(0, 65535);
-            $data = (string) $timestamp . ',' . $randomNumber . ',' . $token;
-            $hash = hash('sha256', $data);
-            $token = 'ts=' . $timestamp . '&rnr=' . $randomNumber . '&hash=' . $hash;
-            $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . $token;
-            $this->SendDebug(__FUNCTION__, $url, 0);
-        }
+        $this->SendDebug(__FUNCTION__, $url, 0);
+        $body = '';
         $ch = curl_init();
         curl_setopt_array($ch, [
-            CURLOPT_URL            => $url,
-            CURLOPT_HEADER         => 0,
-            CURLOPT_RETURNTRANSFER => 1,
-            CURLOPT_FAILONERROR    => true,
-            CURLOPT_CONNECTTIMEOUT => $timeout,
-            CURLOPT_TIMEOUT        => 60]);
+            CURLOPT_URL               => $url,
+            CURLOPT_HEADER            => true,
+            CURLOPT_RETURNTRANSFER    => true,
+            CURLOPT_FAILONERROR       => true,
+            CURLOPT_CONNECTTIMEOUT_MS => $this->ReadPropertyInteger('Timeout')]);
         $response = curl_exec($ch);
+        if (!curl_errno($ch)) {
+            switch ($http_code = curl_getinfo($ch, CURLINFO_HTTP_CODE)) {
+                case 200:  # OK
+                    $header_size = curl_getinfo($ch, CURLINFO_HEADER_SIZE);
+                    $header = substr($response, 0, $header_size);
+                    $body = substr($response, $header_size);
+                    $this->SendDebug(__FUNCTION__, 'Header: ' . $header, 0);
+                    $this->SendDebug(__FUNCTION__, 'Body: ' . $body, 0);
+                    break;
+
+                default:
+                    $this->SendDebug(__FUNCTION__, 'HTTP Code: ' . $http_code, 0);
+            }
+        } else {
+            $error_msg = curl_error($ch);
+            $this->SendDebug(__FUNCTION__, 'An error has occurred: ' . json_encode($error_msg), 0);
+        }
+        curl_close($ch);
+        return $body;
+        /*
         if (curl_errno($ch)) {
             $error_msg = curl_error($ch);
         }
@@ -357,5 +372,6 @@ trait NUKI_bridgeAPI
             $this->SendDebug(__FUNCTION__, 'An error has occurred: ' . json_encode($error_msg), 0);
         }
         return $response;
+         */
     }
 }

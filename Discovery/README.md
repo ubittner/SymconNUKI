@@ -4,7 +4,7 @@
 
 [![Image](../imgs/NUKI_Bridge.png)]()  
 
-Diese Instanz kann die mit dem NUKI Server verbundenen NUKI Bridges ermitteln. Es wird eine bestehende Internetverbindung benötigt.  
+Diese Instanz kann die mit dem NUKI Server verbundenen NUKI Bridges ermitteln.  
 
 Für dieses Modul besteht kein Anspruch auf Fehlerfreiheit, Weiterentwicklung, sonstige Unterstützung oder Support.
 Bevor dieses Modul installiert wird, sollte unbedingt ein Backup von IP-Symcon durchgeführt werden.
@@ -29,14 +29,17 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 ### 2. Voraussetzungen
 
 - IP-Symcon ab Version 5.1
-- NUKI Bridge
 - Internetverbindung
+- NUKI Bridge
+- Aktivierte HTTP API Funktion der NUKI Bridge mittels der NUKI iOS / Android App
+
+[![Image](../imgs/NUKI_Bridge_HTTP_API.PNG)]()
 
 ### 3. Software-Installation
 
 - Bei kommerzieller Nutzung (z.B. als Einrichter oder Integrator) wenden Sie sich bitte zunächst an den Autor.
   
-- Bei privater Nutzung wird das Modul über den Modul Store installiert.
+- Bei privater Nutzung wird das Modul über den Module Store installiert.
 
 ### 4. Einrichten der Instanzen in IP-Symcon
 
@@ -60,12 +63,14 @@ __Vorgehensweise__:
 Über die Schaltfläche `AKTUALISIEREN` können Sie die Liste der verfügbaren NUKI Bridges jederzeit aktualisieren.  
 Wählen Sie `ALLE ERSTELLEN` oder wählen Sie eine NUKI Bridge aus der Liste aus und drücken dann die Schaltfläche `ERSTELLEN`, um die NUKI Bridge automatisch anzulegen.  
 Sobald die NUKI Bridge als Splitter Instanz erstellt wurde, nehmen Sie bitte die Konfiguration der NUKI Bridge vor.  
-Ergänzen Sie zur bestehenden NUKI Bridge Konfiguration die Bridge ID und den API Token.  
+Ergänzen Sie zur bestehenden NUKI Bridge Konfiguration den API Token.  
 Bei der Ersteinrichtung der NUKI Bridge mittels der NUKI iOS / Android App auf dem Smartphone wurden Ihnen die Daten angezeigt.  
+Alternativ können Sie den API Key in der NUKI Smart Lock Instanz über `AUTORISIEREN` automatisch ermitteln. 
 
 ### 5. Statusvariablen und Profile
 
-Die Statusvariablen/Kategorien werden automatisch angelegt. Das Löschen einzelner kann zu Fehlfunktionen führen.
+Die Statusvariablen/Kategorien werden automatisch angelegt.  
+Das Löschen einzelner kann zu Fehlfunktionen führen.
 
 ##### Statusvariablen
 
@@ -79,7 +84,7 @@ Es werden keine Profile angelegt.
 
 ### 6. WebFront
 
-Der NUKI Configurator ist im WebFront nicht nutzbar.  
+Die NUKI Discovery Instanz ist im WebFront nicht nutzbar.  
 
 ### 7. PHP-Befehlsreferenz
 

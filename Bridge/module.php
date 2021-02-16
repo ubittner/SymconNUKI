@@ -1,32 +1,17 @@
 <?php
 
+/*
+ * @author      Ulrich Bittner
+ * @copyright   (c) 2020, 2021
+ * @license    	CC BY-NC-SA 4.0
+ * @see         https://github.com/ubittner/SymconNUKI
+ */
+
 /** @noinspection DuplicatedCode */
 /** @noinspection PhpUnused */
 
-/*
- * @module      NUKI Bridge
- *
- * @prefix      NUKI
- *
- * @file        module.php
- *
- * @author      Ulrich Bittner
- * @copyright   (c) 2019, 2020
- * @license     CC BY-NC-SA 4.0
- *              https://creativecommons.org/licenses/by-nc-sa/4.0/
- *
- * @see         https://github.com/ubittner/SymconNUKI/Bridge
- *
- * @guids		Library
- * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
- *
- *				NUKI Bridge (Spliter)
- *				{B41AE29B-39C1-4144-878F-94C0F7EEC725}
- */
-
 declare(strict_types=1);
 
-//Include
 include_once __DIR__ . '/../libs/constants.php';
 include_once __DIR__ . '/helper/autoload.php';
 
@@ -34,6 +19,7 @@ class NUKIBridge extends IPSModule
 {
     //Helper
     use NUKI_bridgeAPI;
+    use NUKI_callback;
     use NUKI_webHook;
 
     public function Create()
@@ -57,20 +43,16 @@ class NUKIBridge extends IPSModule
     {
         //Wait until IP-Symcon is started
         $this->RegisterMessage(0, IPS_KERNELSTARTED);
-        // Never delete this line!
+        //Never delete this line!
         parent::ApplyChanges();
         //Check runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
-        //Callback
-        if ($this->ReadPropertyBoolean('UseCallback')) {
-            $this->RegisterHook('/hook/nuki/bridge/' . $this->InstanceID);
-        } else {
-            $this->UnregisterHook('/hook/nuki/bridge/' . $this->InstanceID);
-        }
         //Validate configuration
-        $this->ValidateBridgeConfiguration();
+        if ($this->ValidateBridgeConfiguration()) {
+            $this->ManageCallback();
+        }
     }
 
     public function MessageSink($TimeStamp, $SenderID, $Message, $Data)
@@ -92,22 +74,21 @@ class NUKIBridge extends IPSModule
     public function GetConfigurationForm()
     {
         $formData = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
-        $moduleInfo = [];
-        $library = IPS_GetLibrary(NUKI_LIBRARY_GUID);
-        $module = IPS_GetModule(NUKI_BRIDGE_GUID);
-        $moduleInfo['name'] = $module['ModuleName'];
-        $moduleInfo['version'] = $library['Version'] . '-' . $library['Build'];
-        $moduleInfo['date'] = date('d.m.Y', $library['Date']);
-        $moduleInfo['time'] = date('H:i', $library['Date']);
-        $moduleInfo['developer'] = $library['Author'];
-        $formData['elements'][1]['items'][1]['caption'] = "ID:\t\t\t\t" . $this->InstanceID;
-        $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
-        $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
-        $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
-        $formData['elements'][1]['items'][5]['caption'] = $this->Translate("Time:\t\t\t") . $moduleInfo['time'];
-        $formData['elements'][1]['items'][6]['caption'] = $this->Translate("Developer:\t\t") . $moduleInfo['developer'];
-        $formData['elements'][1]['items'][7]['caption'] = "API Version:\t\t" . $this->apiVersion;
-        $formData['elements'][1]['items'][8]['caption'] = $this->Translate("Prefix:\t\t\t") . 'NUKI';
+        //Host
+        $options = [];
+        $networkInfo = Sys_GetNetworkInfo();
+        for ($i = 0; $i < count($networkInfo); $i++) {
+            $options[] = [
+                'caption' => $networkInfo[$i]['IP'],
+                'value'   => $networkInfo[$i]['IP']
+            ];
+        }
+        $formData['elements'][9] = [
+            'type'    => 'Select',
+            'name'    => 'SocketIP',
+            'caption' => 'Host IP-Address (IP-Symcon)',
+            'options' => $options
+        ];
         return json_encode($formData);
     }
 
@@ -157,27 +138,31 @@ class NUKIBridge extends IPSModule
         $this->RegisterPropertyString('Note', '');
         $this->RegisterPropertyString('BridgeIP', '');
         $this->RegisterPropertyInteger('BridgePort', 8080);
-        $this->RegisterPropertyInteger('Timeout', 5000);
         $this->RegisterPropertyString('BridgeAPIToken', '');
         $this->RegisterPropertyBoolean('UseEncryption', false);
+        $this->RegisterPropertyString('BridgeID', '');
+        $this->RegisterPropertyInteger('Timeout', 5000);
         $this->RegisterPropertyBoolean('UseCallback', false);
-        $this->RegisterPropertyString('SocketIP', '');
+        $this->RegisterPropertyString('SocketIP', (count(Sys_GetNetworkInfo()) > 0) ? Sys_GetNetworkInfo()[0]['IP'] : '');
         $this->RegisterPropertyInteger('SocketPort', 3777);
         $this->RegisterPropertyInteger('CallbackID', 0);
     }
 
-    private function ValidateBridgeConfiguration()
+    private function ValidateBridgeConfiguration(): bool
     {
         $status = 102;
+        $result = true;
         //Check callback
         if ($this->ReadPropertyBoolean('UseCallback')) {
             if (empty($this->ReadPropertyString('SocketIP')) || empty($this->ReadPropertyInteger('SocketPort'))) {
                 $status = 104;
+                $result = false;
             }
         }
         //Check bridge data
         if (empty($this->ReadPropertyString('BridgeIP')) || empty($this->ReadPropertyInteger('BridgePort')) || empty($this->ReadPropertyString('BridgeAPIToken'))) {
             $status = 104;
+            $result = false;
         } else {
             $reachable = false;
             $timeout = 1000;
@@ -189,8 +174,10 @@ class NUKIBridge extends IPSModule
             }
             if (!$reachable) {
                 $status = 201;
+                $result = false;
             }
         }
         $this->SetStatus($status);
+        return $result;
     }
 }

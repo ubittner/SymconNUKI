@@ -52,21 +52,22 @@ Alternativ könenn Sie das NUKI Smart Lock auch manuell anlegen. Lesen Sie bitte
 
 __Konfigurationsseite__:
 
-Name                                | Beschreibung
------------------------------------ | ---------------------------------
-NUKI Smart Lock                     | Informationen zu NUKI Smart Lock Instanz
-Konfiguration                       | Eigenschaften des NUKI Smart Locks
-Schaltvorgänge                      | Definieren der Schaltvorgänge
+Name                    | Beschreibung
+------------------------| ---------------------------------
+NUKI ID                 | NUKI ID des Smart Locks
+Bezeichnung             | Bezeichnung des Smart Locks
+Aktion für Zusperren    | Aktion die ausgeführt werden soll
+Aktion für Aufsperren   | Aktion die ausgeführt werden soll
 
 __Schaltflächen im Aktionsbereich__:
 
-Name                                | Beschreibung
------------------------------------ | ---------------------------------
-Status anzeigen                     | Zeigt den Status des NUKI Smart Locks an
+Name                    | Beschreibung
+----------------------- | ---------------------------------
+Status aktualisieren    | Aktualisiert den Status
 
 __Vorgehensweise__:  
 
-Geben Sie bei manueller Konfiguration die NUKI ID und einen Namen für den NUKI Opener an.  
+Geben Sie bei manueller Konfiguration die NUKI ID und eine Bezeichnung an.  
 
 ### 5. Statusvariablen und Profile
 

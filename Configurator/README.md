@@ -59,8 +59,8 @@ __Vorgehensweise__:
 Über die Schaltfläche `AKTUALISIEREN` können Sie im NUKI Configurator die Liste der verfügbaren NUKI Geräte jederzeit aktualisieren.  
 Wählen Sie `ALLE ERSTELLEN` oder wählen Sie ein NUKI Gerät aus der Liste aus und drücken dann die Schaltfläche `ERSTELLEN`, um das NUKI Gerät automatisch anzulegen.
 Sofern noch keine NUKI Bridge installiert wurde, muss einmalig beim Erstellen der NUKI Configurator Instanz die Konfiguration der NUKI Bridge vorgenommen werden.  
-Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout, die Bridge ID und den API Token der NUKI Bridge an. 
-Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone werden Ihnen die Daten angezeigt.  
+Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout und den API Token der NUKI Bridge an. 
+Bei der Ersteinrichtung der NUKI Bridge mittels der NUKI iOS / Android App auf dem Smartphone wurde Ihnen die Daten angezeigt.  
 Wählen Sie anschließend `WEITER` aus.  
 
 Sofern Sie mehrere NUKI Bridges verwenden, können Sie in der Instanzkonfiguration unter `GATEWAY ÄNDERN` die entsprechende NUKI Bridge auswählen. Die NUKI Bridge Instanz muss dafür bereits vorhanden sein.  

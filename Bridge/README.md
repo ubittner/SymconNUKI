@@ -25,13 +25,17 @@ Der Nutzer stimmt den o.a. Bedingungen, sowie den Lizenzbedingungen ausdrücklic
 ### 1. Funktionsumfang
 
 * Empfang von Statusinformationen der NUKI Smart Locks via WebHook Control
-* Auf- und Zusperren der Smart Locks 
+* Auf- und Zusperren der NUKI Smart Locks
+* Betätigen des Türsummers mittels NUKI Openers
 
 ### 2. Voraussetzungen
 
 - IP-Symcon ab Version 5.1
 - NUKI Bridge
 - NUKI Smart Lock oder NUKI Opener
+- Aktivierte HTTP API Funktion der NUKI Bridge mittels der NUKI iOS / Android App
+
+[![Image](../imgs/NUKI_Bridge_HTTP_API.PNG)]()
 
 ### 3. Software-Installation
 
@@ -49,11 +53,23 @@ Alternativ können Sie die NUKI Bridge auch manuell anlegen. Lesen Sie bitte daf
 
 __Konfigurationsseite__:
 
-Name                                | Beschreibung
------------------------------------ | --------------------------------------------------------------
-NUKI Bridge                         | Informationen zu der NUKI Bridge Instanz
-Konfiguration                       | Konfiguration der NUKI Bridge
-Callback                            | Eigenschaften zum Callback der NUKI Bridge via WebHook Control
+Name                            | Beschreibung
+--------------------------------| --------------------------------------------------------------
+Bridge IP-Adresse               | IP-Adresse der NUKI Bridge
+Bridge Port                     | Port der NUKI Bridge
+Bridge API Token                | HTTP API Token der NUKI Bridge
+Bridge API Key verschlüsseln    | Verschlüsselt den API Token für die Kommunikation   
+Bridge ID (optional)            | ID der NUKI Bridge
+Netzwerk Timeout                | Netzwerk Timeout
+Status aktualisieren            | Aktualisiert automatisch den Status mittels Webhook
+Host IP-Adresse (IP-Symcon)     | IP-Adresse des IP-Symcon Host für den Webhook
+Host Port (IP-Symcon)           | Port des IP-Symcon Host für den Webhook
+
+Hinweis:
+Bei der Ersteinrichtung der NUKI Bridge mittels der NUKI iOS / Android App auf dem Smartphone wurden Ihnen die Daten angezeigt.  
+Alternativ können Sie den API Key in der NUKI Smart Lock Instanz über `AUTORISIEREN` automatisch ermitteln.  
+Hierfür muss die HTTP API Funktion der NUKI Bridge mittels der NUKI iOS / Android App bereits aktiviert sein.  
+Es muss zwingend der HTTP API Key der NUKI Bridge verwendet werden. Andere API Token, wie z.B. ein NUKI Web-API Key funktionieren nicht.
 
 __Schaltflächen im Entwicklerbereich__:
 
@@ -67,25 +83,23 @@ Firmware aktualisieren              | Führt eine aktualisierung der Firmware du
 Neustart                            | Starte die NUKI Bridge neu
 Werkseinstellungen                  | Setzt die NUKI Brige zurück in die Werkseinstellungen
 Gekoppelte Geräte anzeigen          | Zeigt die gekoppelten NUKI Geräte der NUKI Bridge an
-Callback                            | 
-Anlegen                             | Legt einen Callback auf der NUKI Bridge an
-Anzeigen                            | Zeigt die angelegten Callbacks der NUKI Bridge an
+Callback                            |
+Anzeigen                            | Zeigt die angelegten Callbacks auf der NUKI Bridge an
 Löschen                             | Löscht den Callback mit der definierten ID von der NUKI Bridge
   
 __Vorgehensweise__:
 
-Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout und den API Token der NUKI Bridge an. 
-Bei der Ersteinrichtung der NUKI Bridge mittels der Nuki iOS / Android App auf dem Smartphone wurden Ihnen die Daten angezeigt. 
-Mit der Konfigurator Instanz `NUKI Configurator` können Sie die Smart Locks automatisch anlegen lassen.
+Geben Sie die IP-Adresse, den Port, den Netzwerk-Timeout und den API Token der NUKI Bridge an.
+Mit der Konfigurator Instanz `NUKI Configurator` können Sie die Smart Locks / Opener automatisch anlegen lassen.
 
 __Callback__:
 
 Für die Aktualisierung von Informationen der NUKI Smart Locks wird ein Callback genutzt.  
-Geben Sie unter Punkt (3) Callback die IP-Adresse des IP-Symcon Servers ein und den Port für den WebHook Control (normalerweise 3777).  
-Übernehmen Sie eventuelle Änderungen und drücken Sie anschließend im Aktionsbereich unter Punkt (2) Callback die Schaltfläche `ANLEGEN`.  
-Der Callback wird automatisch auf der NUKI Bridge eingetragen, sofern die Option `Callback benutzen` aktiviert wurde.  
-Über die Schaltfläche `ANZEIGEN` unter Punkt (2) Callback im Aktionsbereich werden die registrierten Callbacks angezeigt.
-Mit der Schaltfläche `LÖSCHEN` im Aktionsbereich unter Punkt (2) Callback kann mittels der definierte Callback ID aus der Instantkonfiguration) der Callback von der NUKI Bridge gelöscht werden.  
+Die Registrierung des Callbacks auf der NUKI Bridge erfolgt automatisch.  
+Sie können die IP-Adresse des IP-Symcon Servers und den Port für den WebHook Control (normalerweise 3777) ändern.  
+Der Callback wird automatisch auf der NUKI Bridge eingetragen, sofern die Option `Status aktualisieren` aktiviert wurde.  
+Über die Schaltfläche `ANZEIGEN` im Entwicklerbereich werden die registrierten Callbacks angezeigt.  
+Mit der Schaltfläche `LÖSCHEN` im Entwicklerbereich kann mittels der definierte Callback ID der Callback von der NUKI Bridge wieder gelöscht werden.  
 
 Callback URL für [WebHook Control](https://www.symcon.de/service/dokumentation/modulreferenz/webhook-control/):  
 
@@ -329,7 +343,7 @@ $InstanzID:     Instanz ID der NUKI Bridge
 
 Beispiel:  
 $update = NUKI_FactoryResetBridge(12345);
-```  
+```
 
 ### 8. Bridge Callback Simulation
 

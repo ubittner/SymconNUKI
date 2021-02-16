@@ -52,10 +52,10 @@ Alternativ könenn Sie den NUKI Opener auch manuell anlegen. Lesen Sie bitte daf
 
 __Konfigurationsseite__:
 
-Name                                | Beschreibung
------------------------------------ | -----------------------------------------------------
-NUKI Opener                         | Informationen zur NUKI Opener Instanz
-Konfiguration                       | Eigenschaften des NUKI Openers
+Name                    | Beschreibung
+------------------------| ---------------------------------
+NUKI ID                 | NUKI ID des Openers
+Bezeichnung             | Bezeichnung des Openers
 
 __Schaltflächen im Aktionsbereich__:
 
@@ -70,7 +70,7 @@ Türsummer betätigen                 | Betätigt den Türsummer, um die Tür zu
 
 __Vorgehensweise__:  
 
-Geben Sie bei manueller Konfiguration die NUKI ID und einen Namen für den NUKI Opener an. 
+Geben Sie bei manueller Konfiguration die NUKI ID und eine Bezeichnung an.
 
 ### 5. Statusvariablen und Profile
 
@@ -95,7 +95,8 @@ Wird die NUKI Opener Instanz gelöscht, so werden automatisch die oben aufgefüh
 
 ### 6. WebFront
 
-Über das WebFront kann der Türsummer zum öffnen der Tür betätigen werden. Informationen über den Modus, Status und den Batteriestatus werden angezeigt.
+Über das WebFront kann der Türsummer zum öffnen der Tür betätigen werden.  
+Informationen über den Modus, Status und den Batteriestatus werden angezeigt.
  
 ### 7. PHP-Befehlsreferenz
 

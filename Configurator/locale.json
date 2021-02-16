@@ -2,12 +2,7 @@
   "translations": {
     "de": {
       "NUKI Configurator": "NUKI Konfigurator",
-      "This instance can determine existing NUKI Devices (Smart Lock / Opener) of the assigned NUKI Bridge (CHANGE GATEWAY).\nPlease refer to the documentation for further information.\n": "Diese Instanz kann bestehende NUKI Geräte (Smart Lock / Opener) der zugeordneten NUKI Bridge (GATEWAY ÄNDERN) ermitteln.\nWeitere Informationen entnehmen Sie bitte der Dokumentation.\n",
-      "Module:\t\t\t": "Modul:\t\t\t",
-      "Date:\t\t\t": "Datum:\t\t\t",
-      "Time:\t\t\t": "Uhrzeit:\t\t\t",
-      "Developer:\t\t": "Entwickler:\t\t",
-      "Note": "Notiz",
+      "This instance can determine existing NUKI Devices of the assigned NUKI Bridge.": "Diese Instanz kann bestehende NUKI Geräte der zugeordneten NUKI Bridge ermitteln.",
       "Please select the category for the NUKI Devices": "Bitte wählen Sie die Kategorie für die NUKI Geräte aus",
       "Category": "Kategorie",
       "NUKI Devices": "NUKI Geräte",

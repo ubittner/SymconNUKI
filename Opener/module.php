@@ -1,32 +1,17 @@
 <?php
 
+/*
+ * @author      Ulrich Bittner
+ * @copyright   (c) 2020, 2021
+ * @license    	CC BY-NC-SA 4.0
+ * @see         https://github.com/ubittner/SymconNUKI
+ */
+
 /** @noinspection DuplicatedCode */
 /** @noinspection PhpUnused */
 
-/*
- * @module      NUKI Opener
- *
- * @prefix      NUKI
- *
- * @file        module.php
- *
- * @author      Ulrich Bittner
- * @copyright   (c) 2019, 2020
- * @license     CC BY-NC-SA 4.0
- *              https://creativecommons.org/licenses/by-nc-sa/4.0/
- *
- * @see         https://github.com/ubittner/SymconNUKI/Opener
- *
- * @guids		Library
- * 				{752C865A-5290-4DBE-AC30-01C7B1C3312F}
- *
- *				NUKI Opener (Device)
- *				{057995F0-F9A9-C6F4-C882-C47A259419CE}
- */
-
 declare(strict_types=1);
 
-//Include
 include_once __DIR__ . '/../libs/constants.php';
 
 class NUKIOpener extends IPSModule
@@ -81,21 +66,6 @@ class NUKIOpener extends IPSModule
     public function GetConfigurationForm()
     {
         $formData = json_decode(file_get_contents(__DIR__ . '/form.json'), true);
-        $moduleInfo = [];
-        $library = IPS_GetLibrary(NUKI_LIBRARY_GUID);
-        $module = IPS_GetModule(NUKI_OPENER_GUID);
-        $moduleInfo['name'] = $module['ModuleName'];
-        $moduleInfo['version'] = $library['Version'] . '-' . $library['Build'];
-        $moduleInfo['date'] = date('d.m.Y', $library['Date']);
-        $moduleInfo['time'] = date('H:i', $library['Date']);
-        $moduleInfo['developer'] = $library['Author'];
-        $formData['elements'][1]['items'][1]['caption'] = "ID:\t\t\t\t" . $this->InstanceID;
-        $formData['elements'][1]['items'][2]['caption'] = $this->Translate("Module:\t\t\t") . $moduleInfo['name'];
-        $formData['elements'][1]['items'][3]['caption'] = "Version:\t\t\t" . $moduleInfo['version'];
-        $formData['elements'][1]['items'][4]['caption'] = $this->Translate("Date:\t\t\t") . $moduleInfo['date'];
-        $formData['elements'][1]['items'][5]['caption'] = $this->Translate("Time:\t\t\t") . $moduleInfo['time'];
-        $formData['elements'][1]['items'][6]['caption'] = $this->Translate("Developer:\t\t") . $moduleInfo['developer'];
-        $formData['elements'][1]['items'][7]['caption'] = $this->Translate("Prefix:\t\t\t") . 'NUKI';
         return json_encode($formData);
     }
 
@@ -258,7 +228,6 @@ class NUKIOpener extends IPSModule
 
     private function RegisterProperties()
     {
-        $this->RegisterPropertyString('Note', '');
         $this->RegisterPropertyString('OpenerUID', '');
         $this->RegisterPropertyString('OpenerName', '');
     }

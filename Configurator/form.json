@@ -5,44 +5,8 @@
       "image": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFgAAAAoCAYAAAB6tz31AAAABGdBTUEAALGPC/xhBQAAAAlwSFlzAAAOxAAADsQBlSsOGwAABCRpVFh0WE1MOmNvbS5hZG9iZS54bXAAAAAAADx4OnhtcG1ldGEgeG1sbnM6eD0iYWRvYmU6bnM6bWV0YS8iIHg6eG1wdGs9IlhNUCBDb3JlIDUuNC4wIj4KICAgPHJkZjpSREYgeG1sbnM6cmRmPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5LzAyLzIyLXJkZi1zeW50YXgtbnMjIj4KICAgICAgPHJkZjpEZXNjcmlwdGlvbiByZGY6YWJvdXQ9IiIKICAgICAgICAgICAgeG1sbnM6dGlmZj0iaHR0cDovL25zLmFkb2JlLmNvbS90aWZmLzEuMC8iCiAgICAgICAgICAgIHhtbG5zOmV4aWY9Imh0dHA6Ly9ucy5hZG9iZS5jb20vZXhpZi8xLjAvIgogICAgICAgICAgICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgICAgICAgICAgIHhtbG5zOnhtcD0iaHR0cDovL25zLmFkb2JlLmNvbS94YXAvMS4wLyI+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDx0aWZmOkNvbXByZXNzaW9uPjU8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgICAgIDx0aWZmOlhSZXNvbHV0aW9uPjk2PC90aWZmOlhSZXNvbHV0aW9uPgogICAgICAgICA8dGlmZjpPcmllbnRhdGlvbj4xPC90aWZmOk9yaWVudGF0aW9uPgogICAgICAgICA8dGlmZjpZUmVzb2x1dGlvbj45NjwvdGlmZjpZUmVzb2x1dGlvbj4KICAgICAgICAgPGV4aWY6UGl4ZWxYRGltZW5zaW9uPjg4PC9leGlmOlBpeGVsWERpbWVuc2lvbj4KICAgICAgICAgPGV4aWY6Q29sb3JTcGFjZT4xPC9leGlmOkNvbG9yU3BhY2U+CiAgICAgICAgIDxleGlmOlBpeGVsWURpbWVuc2lvbj40MDwvZXhpZjpQaXhlbFlEaW1lbnNpb24+CiAgICAg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"
     },
     {
-      "type": "ExpansionPanel",
-      "caption": "NUKI Configurator",
-      "items": [
-        {
-          "type": "Label",
-          "caption": "This instance can determine existing NUKI Devices (Smart Lock / Opener) of the assigned NUKI Bridge (CHANGE GATEWAY).\nPlease refer to the documentation for further information.\n"
-        },
-        {
-          "type": "Label",
-          "caption": "ID:"
-        },
-        {
-          "type": "Label",
-          "caption":"Module:"
-        },
-        {
-          "type": "Label",
-          "caption": "Version:"
-        },
-        {
-          "type": "Label",
-          "caption": "Date:"
-        },
-        {
-          "type": "Label",
-          "caption": "Time:"
-        },
-        {
-          "type": "Label",
-          "caption": "Developer:"
-        },
-        {
-          "type": "ValidationTextBox",
-          "name": "Note",
-          "caption": "Note",
-          "width": "600px"
-        }
-      ]
+      "type": "Label",
+      "caption": "This instance can determine existing NUKI Devices of the assigned NUKI Bridge."
     },
     {
       "type": "Label",
