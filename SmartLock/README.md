@@ -130,3 +130,27 @@ Beispiel:
 Zusperren:      $toggle = NUKI_ToggleSmartLock(12345, false);
 Aufsperren:     $toggle = NUKI_ToggleSmartLock(12345, true);
 ```  
+
+```text
+Smart Lock schalten:  
+
+NUKI_SetSmartLockAction(integer $InstanzID, int $LockAction);  
+
+$InstanzID:     Instanz ID des NUKI Smart Locks
+$NukiID:        UID des NUKI Gerätes
+$LockAction:  
+Führt eine Aktion für das NUKI Smart Lock gemäss Tabelle aus:  
+
+Wert | Smart Lock                   
+-----|------------------------------------------------------------------------------------------
+1    | unlock                       | aufsperren
+2    | lock                         | zusperren
+3    | unlatch                      | entriegeln
+4    | lock ‘n’ go                  | automatisch aufsperren und wieder zusperren
+5    | lock ‘n’ go with unlatch     | automatisch aufsperren mit entriegeln und wieder zusperren
+  
+Beispiel:  
+Smart Lock zusperren:   NUKI_SetLockAction(12345, 2);  
+Smart Lock aufsperren:  NUKI_SetLockAction(12345, 1);  
+Türsummer betätigen:    NUKI_SetLockAction(12345, 987654321, 3, 2);  
+```

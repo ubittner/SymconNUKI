@@ -49,6 +49,12 @@ class NUKIBridge extends IPSModule
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
+        //Check ip address and convert to new version
+        if ($this->ReadPropertyString('SocketIP') == '') {
+            @IPS_SetProperty($this->InstanceID, 'SocketIP', (count(Sys_GetNetworkInfo()) > 0) ? Sys_GetNetworkInfo()[0]['IP'] : '');
+            IPS_ApplyChanges($this->InstanceID);
+            return;
+        }
         //Validate configuration
         if ($this->ValidateBridgeConfiguration()) {
             $this->ManageCallback();
