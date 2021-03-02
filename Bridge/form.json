@@ -19,36 +19,27 @@
       "caption": "Bridge Port"
     },
     {
-      "type": "RowLayout",
-      "items": [
-        {
-          "type": "PasswordTextBox",
-          "name": "BridgeAPIToken",
-          "caption": "Bridge API Token"
-        },
-        {
-          "type": "Label",
-          "caption": " "
-        },
-        {
-          "type": "PopupButton",
-          "caption": "Authorize",
-          "popup": {
-            "caption": "Bridge API Token",
-            "items": [
-              {
-                "type": "Label",
-                "caption": "The HTTP API function of the bridge must already be enabled. Please start the authorization and press the button on the NUKI Bridge within 30 seconds."
-              },
-              {
-                "type": "Button",
-                "caption": "Authorize Now",
-                "onClick": "NUKI_EnableAPI($id);"
-              }
-            ]
+      "type": "PopupButton",
+      "caption": "Get Bridge API Token",
+      "name": "GetToken",
+      "enabled": true,
+      "popup": {
+        "caption": "Bridge API Token",
+        "items": [
+          {
+            "type": "Label",
+            "name": "GetTokenInfo",
+            "caption": "The HTTP API function of the bridge must already be enabled. Please press the button GET TOKEN first and then press the button on the NUKI Bridge within 30 seconds."
+          },
+          {
+            "type": "Button",
+            "caption": "Get Token",
+            "name": "GetTokenButton",
+            "visible": true,
+            "onClick": "NUKI_EnableAPI($id);"
           }
-        }
-      ]
+        ]
+      }
     },
     {
       "type": "RowLayout",
@@ -56,7 +47,7 @@
         {
           "type": "CheckBox",
           "name": "UseEncryption",
-          "caption": "Encrypt Bridge API Key",
+          "caption": "Encrypt Bridge API Token",
           "width": "300px"
         },
         {
@@ -67,7 +58,7 @@
           "type": "PopupButton",
           "caption": "Info",
           "popup": {
-            "caption": "Use encryption",
+            "caption": "Encrypt Bridge API Token",
             "items": [
               {
                 "type": "Label",
@@ -106,7 +97,7 @@
           "type": "PopupButton",
           "caption": "Info",
           "popup": {
-            "caption": "Use Callback",
+            "caption": "Update State",
             "items": [
               {
                 "type": "Label",
@@ -136,6 +127,21 @@
         {
           "type": "Label",
           "caption": "Bridge"
+        },
+        {
+          "type": "RowLayout",
+          "items": [
+            {
+              "name": "NewToken",
+              "caption": "Token",
+              "type": "PasswordTextBox"
+            },
+            {
+              "type": "Button",
+              "caption": "Adopt Token",
+              "onClick": "echo NUKI_UpdateToken($id, $NewToken);"
+            }
+          ]
         },
         {
           "type": "Button",
@@ -268,12 +274,12 @@
     {
       "code": 104,
       "icon": "inactive",
-      "caption": "Please edit all configuration parameters of the NUKI Bridge"
+      "caption": "Please get the Bridge API Token of the NUKI Bridge!"
     },
     {
       "code": 201,
       "icon": "error",
-      "caption": "NUKI Bridge configuration has an error!"
+      "caption": "Please check the configuration of the NUKI Bridge!"
     },
     {
       "code": 299,

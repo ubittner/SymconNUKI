@@ -27,6 +27,8 @@ class NUKIBridge extends IPSModule
         //Never delete this line!
         parent::Create();
         $this->RegisterProperties();
+        //New Bridge API Token attribute
+        $this->RegisterAttributeString('BridgeAPIToken', '');
     }
 
     public function Destroy()
@@ -48,6 +50,16 @@ class NUKIBridge extends IPSModule
         //Check runlevel
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
+        }
+        //Move bridge API token from property to attribute
+        $token = @$this->ReadPropertyString('BridgeAPIToken');
+        if (is_string($token)) {
+            if (!empty($token)) {
+                $this->WriteAttributeString('BridgeAPIToken', $token);
+                IPS_SetProperty($this->InstanceID, 'BridgeAPIToken', '');
+                IPS_ApplyChanges($this->InstanceID);
+                return;
+            }
         }
         //Check ip address and convert to new version
         if ($this->ReadPropertyString('SocketIP') == '') {
@@ -95,6 +107,13 @@ class NUKIBridge extends IPSModule
             'caption' => 'Host IP-Address (IP-Symcon)',
             'options' => $options
         ];
+        $bridgeIP = $this->ReadPropertyString('BridgeIP');
+        $bridgePort = $this->ReadPropertyInteger('BridgePort');
+        $enabled = true;
+        if (empty($bridgeIP) || $bridgePort == 0) {
+            $enabled = false;
+        }
+        $formData['elements'][4]['enabled'] = $enabled;
         return json_encode($formData);
     }
 
@@ -132,6 +151,15 @@ class NUKIBridge extends IPSModule
         return json_encode($result);
     }
 
+    public function UpdateToken(string $NewToken): void
+    {
+        if (!empty($NewToken)) {
+            $this->WriteAttributeString('BridgeAPIToken', $NewToken);
+            $this->ReloadForm();
+            $this->ValidateBridgeConfiguration();
+        }
+    }
+
     #################### Private
 
     private function KernelReady()
@@ -144,6 +172,7 @@ class NUKIBridge extends IPSModule
         $this->RegisterPropertyString('Note', '');
         $this->RegisterPropertyString('BridgeIP', '');
         $this->RegisterPropertyInteger('BridgePort', 8080);
+        //Bridge API token only used for moving an existing refresh token to the new attribute
         $this->RegisterPropertyString('BridgeAPIToken', '');
         $this->RegisterPropertyBoolean('UseEncryption', false);
         $this->RegisterPropertyString('BridgeID', '');
@@ -158,27 +187,27 @@ class NUKIBridge extends IPSModule
     {
         $status = 102;
         $result = true;
-        //Check callback
-        if ($this->ReadPropertyBoolean('UseCallback')) {
-            if (empty($this->ReadPropertyString('SocketIP')) || empty($this->ReadPropertyInteger('SocketPort'))) {
-                $status = 104;
-                $result = false;
-            }
+        //Check token
+        if (empty($this->ReadAttributeString('BridgeAPIToken'))) {
+            $status = 104;
+            $result = false;
         }
         //Check bridge data
-        if (empty($this->ReadPropertyString('BridgeIP')) || empty($this->ReadPropertyInteger('BridgePort')) || empty($this->ReadPropertyString('BridgeAPIToken'))) {
-            $status = 104;
+        if (empty($this->ReadPropertyString('BridgeIP')) || $this->ReadPropertyInteger('BridgePort') == 0) {
+            $status = 201;
             $result = false;
         } else {
             $reachable = false;
             $timeout = 1000;
             if ($timeout && Sys_Ping($this->ReadPropertyString('BridgeIP'), $timeout)) {
-                $data = $this->GetBridgeInfo();
-                if ($data) {
-                    $reachable = true;
+                if (!empty($this->ReadAttributeString('BridgeAPIToken'))) {
+                    $data = $this->GetBridgeInfo();
+                    if ($data) {
+                        $reachable = true;
+                    }
                 }
             }
-            if (!$reachable) {
+            if (!$reachable && !empty($this->ReadAttributeString('BridgeAPIToken'))) {
                 $status = 201;
                 $result = false;
             }

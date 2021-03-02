@@ -29,12 +29,16 @@ trait NUKI_bridgeAPI
             if (array_key_exists('token', $result)) {
                 $token = $result['token'];
                 $this->SendDebug(__FUNCTION__, 'Token: ' . $token, 0);
-                IPS_SetProperty($this->InstanceID, 'BridgeAPIToken', $token);
-                if (IPS_HasChanges($this->InstanceID)) {
-                    IPS_ApplyChanges($this->InstanceID);
+                $this->WriteAttributeString('BridgeAPIToken', $token);
+                if (!empty($token)) {
+                    $this->UpdateFormField('GetTokenInfo', 'caption', 'The token was successfully retrieved!');
+                    $this->UpdateFormField('GetTokenButton', 'visible', false);
                 }
             }
+        } else {
+            $this->UpdateFormField('GetTokenInfo', 'caption', 'An error has occurred!');
         }
+        $this->ValidateBridgeConfiguration();
         return $data;
     }
 
@@ -306,7 +310,7 @@ trait NUKI_bridgeAPI
     {
         $bridgeIP = $this->ReadPropertyString('BridgeIP');
         $bridgePort = $this->ReadPropertyInteger('BridgePort');
-        $token = $this->ReadPropertyString('BridgeAPIToken');
+        $token = $this->ReadAttributeString('BridgeAPIToken');
         switch ($Endpoint) {
             case '/auth':
                 $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint;
@@ -357,21 +361,5 @@ trait NUKI_bridgeAPI
         }
         curl_close($ch);
         return $body;
-        /*
-        if (curl_errno($ch)) {
-            $error_msg = curl_error($ch);
-        }
-        if ($response == false) {
-            $response = '';
-        } else {
-            $this->SendDebug(__FUNCTION__, $response, 0);
-        }
-        curl_close($ch);
-        if (isset($error_msg)) {
-            $response = '';
-            $this->SendDebug(__FUNCTION__, 'An error has occurred: ' . json_encode($error_msg), 0);
-        }
-        return $response;
-         */
     }
 }

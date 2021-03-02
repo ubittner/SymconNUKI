@@ -1,9 +1,9 @@
 [![Image](imgs/NUKI_Logo.png)](https://nuki.io/de/)  
 
 [![IP-Symcon is awesome!](https://img.shields.io/badge/IP--Symcon-5.1-blue.svg)](https://www.symcon.de)
-[![Module Version](https://img.shields.io/badge/Module_Version-1.09-blue.svg)]()
-[![Module Build](https://img.shields.io/badge/Module_Build-1020-blue.svg)]()
-[![Module Date](https://img.shields.io/badge/Module_Date-20210222-blue.svg)]()  
+[![Module Version](https://img.shields.io/badge/Module_Version-1.10-blue.svg)]()
+[![Module Build](https://img.shields.io/badge/Module_Build-1021-blue.svg)]()
+[![Module Date](https://img.shields.io/badge/Module_Date-20210302-blue.svg)]()  
 [![Version](https://img.shields.io/badge/NUKI_API_Version-1.12-yellow.svg)](https://developer.nuki.io/t/bridge-http-api/26)  
 [![Check Style](https://github.com/ubittner/SymconNUKI/workflows/Check%20Style/badge.svg)](https://github.com/ubittner/SymconNUKI/actions)
 [![Run Tests](https://github.com/ubittner/SymconNUKI/workflows/Run%20Tests/badge.svg)](https://github.com/ubittner/SymconNUKI/actions)  

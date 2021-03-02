@@ -57,7 +57,7 @@ Name                            | Beschreibung
 --------------------------------| --------------------------------------------------------------
 Bridge IP-Adresse               | IP-Adresse der NUKI Bridge
 Bridge Port                     | Port der NUKI Bridge
-Bridge API Token                | HTTP API Token der NUKI Bridge
+Bridge API Token abrufen        | Ruft den HTTP API Token der NUKI Bridge ab
 Bridge API Key verschlüsseln    | Verschlüsselt den API Token für die Kommunikation   
 Bridge ID (optional)            | ID der NUKI Bridge
 Netzwerk Timeout                | Netzwerk Timeout
@@ -76,6 +76,7 @@ __Schaltflächen im Entwicklerbereich__:
 Name                                | Beschreibung
 ----------------------------------- | --------------------------------------------------------------
 Bridge                              | 
+Token / Token übernehmen            | Manuelle Eingabe und Übernahme des HTTP API Tokens
 Info anzeigen                       | Zeigt weitere Informationen der NUKI Bridge an
 Logdatei anzeigen                   | Zeigt die Logdatei der NUKI Bridge an
 Logdatei löschen                    | Löscht die Logdatei der NUKI Bridge
