@@ -169,7 +169,7 @@ Gibt als Rückwert eine Liste aller verfügbaren NUKI Geräte (Smart Locks / Ope
 Beispiel:
 $devices = NUKI_GetPairedDevices(12345);  
 
-Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+Nachfolgende Methode ist jetzt abgekündigt und wird nicht mehr unterstützt:  
 NUKI_GetSmartLocks(integer $InstanzID);  
 ````  
 
@@ -186,7 +186,7 @@ $DeviceType:    0 = Smart Lock, 2 = Opener
 Beispiel:  
 $state = NUKI_GetLockState(12345, 987654321, 0);  
 
-Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+Nachfolgende Methode ist jetzt abgekündigt und wird nicht mehr unterstützt:  
 NUKI_GetLockStateOfSmartLock(integer $InstanzID, integer $SmartLockUniqueID);
 ````
 
@@ -216,7 +216,7 @@ Smart Lock zusperren:   NUKI_SetLockAction(12345, 987654321, 2, 0);
 Smart Lock aufsperren:  NUKI_SetLockAction(12345, 987654321, 1, 0);  
 Türsummer betätigen:    NUKI_SetLockAction(12345, 987654321, 3, 2);  
 
-Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+Nachfolgende Methode ist jetzt abgekündigt und wird nicht mehr unterstützt:  
 NUKI_SetLockActionOfSmartLock(integer $BridgeInstanceID, integer $SmarLockUniqueID, integer $LockAction);  
 ```
 
@@ -233,7 +233,7 @@ $DeviceType:    0 = Smart Lock, 2 = Opener
 Beispiel:  
 $unpair = NUKI_UnpairDevice(12345, 987654321, 0);  
 
-Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+Nachfolgende Methode ist jetzt abgekündigt und wird nicht mehr unterstützt:   
 NUKI_UnpairSmartLockFromBridge(integer $BridgeInstanceID, integer $SmarLockUniqueID)
 ```
 

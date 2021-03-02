@@ -115,7 +115,7 @@ Rückgabewert: Die aktuellen Werte als String
 Beispiel:  
 $state = NUKI_GetSmartLockState(12345);  
 
-Nachfolgende Methode ist noch verfügbar, wird aber abgekündigt und zukünftig nicht mehr unterstützt:  
+Nachfolgende Methode ist jetzt abgekündigt und wird nicht mehr unterstützt:   
 NUKI_ShowLockStateOfSmartLock(integer $InstanceID);
 ```  
 
@@ -151,6 +151,5 @@ Wert | Smart Lock
   
 Beispiel:  
 Smart Lock zusperren:   NUKI_SetLockAction(12345, 2);  
-Smart Lock aufsperren:  NUKI_SetLockAction(12345, 1);  
-Türsummer betätigen:    NUKI_SetLockAction(12345, 987654321, 3, 2);  
+Smart Lock aufsperren:  NUKI_SetLockAction(12345, 1);
 ```
