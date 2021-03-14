@@ -62,7 +62,7 @@ class NUKIBridge extends IPSModule
             }
         }
         //Check ip address and convert to new version
-        if ($this->ReadPropertyString('SocketIP') == '') {
+        if ($this->ReadPropertyString('SocketIP') == '' && count(Sys_GetNetworkInfo()) > 0) {
             @IPS_SetProperty($this->InstanceID, 'SocketIP', (count(Sys_GetNetworkInfo()) > 0) ? Sys_GetNetworkInfo()[0]['IP'] : '');
             IPS_ApplyChanges($this->InstanceID);
             return;
