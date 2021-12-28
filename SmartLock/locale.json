@@ -3,6 +3,8 @@
     "de": {
       "If no NUKI ID is available, the NUKI ID can be determined in the NUKI Bridge instance in the developer area under SHOW INFO.": "Sollte keine NUKI ID vorhanden sein, so kann die NUKI ID in der NUKI Bridge Instanz im Entwicklerbereich unter INFO ANZEIGEN ermittelt werden.",
       "Description": "Bezeichnung",
+      "Device type": "Gerätetyp",
+      "Please select": "Bitte auswählen",
       "Switch Action": "Schaltvorgänge",
       "Possible switching operations": "Mögliche Schaltvorgänge",
       "1 - unlock": "1 - aufsperren",

@@ -198,7 +198,7 @@ class NUKIBridge extends IPSModule
             $result = false;
         } else {
             $reachable = false;
-            $timeout = 1000;
+            $timeout = $this->ReadPropertyInteger('Timeout');
             if ($timeout && Sys_Ping($this->ReadPropertyString('BridgeIP'), $timeout)) {
                 if (!empty($this->ReadAttributeString('BridgeAPIToken'))) {
                     $data = $this->GetBridgeInfo();

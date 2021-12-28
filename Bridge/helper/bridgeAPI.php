@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 trait NUKI_bridgeAPI
 {
-    private $apiVersion = '1.12';
+    private string $apiVersion = '1.13.0';
 
     /**
      * Enables the API.
@@ -16,7 +16,7 @@ trait NUKI_bridgeAPI
      *
      * When issuing this API-call the bridge turns on its LED for 30 seconds.
      * The button of the bridge has to be pressed within this timeframe.
-     * Otherwise the bridge returns a negative success and no token.
+     * Otherwise, the bridge returns a negative success and no token.
      *
      * @return string
      */
@@ -325,7 +325,7 @@ trait NUKI_bridgeAPI
                 if ($this->ReadPropertyBoolean('UseEncryption')) {
                     $timestamp = gmdate("Y-m-d\TH:i:s\Z");
                     $randomNumber = random_int(0, 65535);
-                    $data = (string) $timestamp . ',' . $randomNumber . ',' . $token;
+                    $data = $timestamp . ',' . $randomNumber . ',' . $token;
                     $hash = hash('sha256', $data);
                     $token = 'ts=' . $timestamp . '&rnr=' . $randomNumber . '&hash=' . $hash;
                     $url = 'http://' . $bridgeIP . ':' . $bridgePort . $Endpoint . $token;

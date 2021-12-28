@@ -4,7 +4,8 @@
   "type": 4,
   "vendor": "NUKI",
   "aliases": [
-    "NUKI Configurator"
+    "Nuki Configurator Bridge API",
+    "Nuki Konfigurator Bridge API"
   ],
   "url": "https://github.com/ubittner/SymconNUKI",
   "parentRequirements": [

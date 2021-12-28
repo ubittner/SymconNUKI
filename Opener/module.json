@@ -4,7 +4,7 @@
   "type": 3,
   "vendor": "NUKI",
   "aliases": [
-    "NUKI Opener"
+    "NUKI Opener Bridge API"
   ],
   "url": "https://github.com/ubittner/SymconNUKI",
   "parentRequirements": [

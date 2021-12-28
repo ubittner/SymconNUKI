@@ -42,6 +42,30 @@
     },
     {
       "type": "Select",
+      "name": "DeviceType",
+      "caption": "Device type",
+      "width": "600px",
+      "options": [
+        {
+          "caption": "Please select",
+          "value": -1
+        },
+        {
+          "caption": "0 - Nuki Smart Lock 1.0/2.0",
+          "value": 0
+        },
+        {
+          "caption": "3 - Nuki Smart Door",
+          "value": 3
+        },
+        {
+          "caption": "4 - Nuki Smart Lock 3.0 (Pro)",
+          "value": 4
+        }
+      ]
+    },
+    {
+      "type": "Select",
       "name": "SwitchOffAction",
       "caption": "Locking Action",
       "width": "600px",

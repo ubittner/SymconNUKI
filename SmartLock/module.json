@@ -4,7 +4,7 @@
   "type": 3,
   "vendor": "NUKI",
   "aliases": [
-    "NUKI Smart Lock"
+    "NUKI Smart Lock Bridge API"
   ],
   "url": "https://github.com/ubittner/SymconNUKI",
   "parentRequirements": [
