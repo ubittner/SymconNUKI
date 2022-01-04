@@ -103,8 +103,7 @@ class NUKIConfigurator extends IPSModule
                                     'moduleID'      => NUKI_SMARTLOCK_GUID,
                                     'configuration' => [
                                         'SmartLockUID'  => (string) $nukiID,
-                                        'SmartLockName' => (string) $deviceName,
-                                        'DeviceType'    => (int) $deviceType
+                                        'SmartLockName' => (string) $deviceName
                                     ],
                                     'location' => $location
                                 ]
