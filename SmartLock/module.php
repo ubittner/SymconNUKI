@@ -23,6 +23,7 @@ class NUKISmartLock extends IPSModule
         $this->RegisterProperties();
         $this->CreateProfiles();
         $this->RegisterVariables();
+        $this->RegisterAttributeInteger('DeviceType', -1);
         //Connect to NUKI bridge (Splitter)
         $this->ConnectParent(NUKI_BRIDGE_GUID);
     }
@@ -44,32 +45,7 @@ class NUKISmartLock extends IPSModule
         if (IPS_GetKernelRunlevel() != KR_READY) {
             return;
         }
-        //If the property device type is missing, needed for the new Nuki smart lock 3.0 (Pro)
-        $smartLockUID = $this->ReadPropertyString('SmartLockUID');
-        if ($this->ReadPropertyInteger('DeviceType') == -1 && $smartLockUID != '') {
-            if ($this->HasActiveParent()) {
-                $data = [];
-                $buffer = [];
-                $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
-                $buffer['Command'] = 'GetPairedDevices';
-                $buffer['Params'] = '';
-                $data['Buffer'] = $buffer;
-                $data = json_encode($data);
-                $result = json_decode($this->SendDataToParent($data), true);
-                $devices = json_decode($result, true);
-                foreach ($devices as $device) {
-                    if (array_key_exists('nukiId', $device)) {
-                        if ($device['nukiId'] == $smartLockUID) {
-                            if (array_key_exists('deviceType', $device)) {
-                                IPS_SetProperty($this->InstanceID, 'DeviceType', $device['deviceType']);
-                                IPS_ApplyChanges($this->InstanceID);
-                                return;
-                            }
-                        }
-                    }
-                }
-            }
-        }
+        $this->DetermineDeviceType();
         $this->MaintainVariables();
         $this->GetSmartLockState();
     }
@@ -132,6 +108,53 @@ class NUKISmartLock extends IPSModule
     #################### Public
 
     /**
+     * Determines the device type of the smart lock
+     *
+     * @return int
+     * -1   unknown
+     *  0   smartlock   - Nuki Smart Lock 1.0/2.0
+     *  2   opener      - Nuki Opener
+     *  3   smartdoor   - Nuki Smart Door
+     *  4   smartlock3  - Nuki Smart Lock 3.0 (Pro)
+     * @throws Exception
+     */
+    public function DetermineDeviceType(): int
+    {
+        $deviceType = -1;
+        $smartLockUID = $this->ReadPropertyString('SmartLockUID');
+        if ($this->ReadAttributeInteger('DeviceType') == -1 && $smartLockUID != '') {
+            if ($this->HasActiveParent()) {
+                $data = [];
+                $buffer = [];
+                $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
+                $buffer['Command'] = 'GetPairedDevices';
+                $buffer['Params'] = '';
+                $data['Buffer'] = $buffer;
+                $data = json_encode($data);
+                $result = json_decode($this->SendDataToParent($data), true);
+                $devices = json_decode($result, true);
+                foreach ($devices as $device) {
+                    if (array_key_exists('nukiId', $device)) {
+                        if ($device['nukiId'] == $smartLockUID) {
+                            if (array_key_exists('deviceType', $device)) {
+                                $deviceType = $device['deviceType'];
+                                $this->WriteAttributeInteger('DeviceType', $deviceType);
+                                $this->LogMessage('Nuki Smart Lock ID ' . $this->InstanceID . ', set device type attribute to: ' . $deviceType, KL_NOTIFY);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        return $deviceType;
+    }
+
+    public function GetDeviceType(): int
+    {
+        return $this->ReadAttributeInteger('DeviceType');
+    }
+
+    /**
      * Gets the actual state of the smart lock.
      *
      * @return string
@@ -146,7 +169,7 @@ class NUKISmartLock extends IPSModule
         if (!$this->HasActiveParent()) {
             return '';
         }
-        $deviceType = $this->ReadPropertyInteger('DeviceType');
+        $deviceType = $this->ReadAttributeInteger('DeviceType');
         if ($deviceType == -1) {
             return '';
         }
@@ -219,7 +242,7 @@ class NUKISmartLock extends IPSModule
         if (!$this->HasActiveParent()) {
             return false;
         }
-        $deviceType = $this->ReadPropertyInteger('DeviceType');
+        $deviceType = $this->ReadAttributeInteger('DeviceType');
         if ($deviceType == -1) {
             return false;
         }
@@ -254,7 +277,6 @@ class NUKISmartLock extends IPSModule
     {
         $this->RegisterPropertyString('SmartLockUID', '');
         $this->RegisterPropertyString('SmartLockName', '');
-        $this->RegisterPropertyInteger('DeviceType', -1);
         /*
          *  Switch Off / On Action:
          *

@@ -42,30 +42,6 @@
     },
     {
       "type": "Select",
-      "name": "DeviceType",
-      "caption": "Device type",
-      "width": "600px",
-      "options": [
-        {
-          "caption": "Please select",
-          "value": -1
-        },
-        {
-          "caption": "0 - Nuki Smart Lock 1.0/2.0",
-          "value": 0
-        },
-        {
-          "caption": "3 - Nuki Smart Door",
-          "value": 3
-        },
-        {
-          "caption": "4 - Nuki Smart Lock 3.0 (Pro)",
-          "value": 4
-        }
-      ]
-    },
-    {
-      "type": "Select",
       "name": "SwitchOffAction",
       "caption": "Locking Action",
       "width": "600px",
@@ -124,8 +100,27 @@
   "actions": [
     {
       "type": "ExpansionPanel",
-      "caption": "Action area",
+      "caption": "Developer area",
       "items": [
+        {
+          "type": "RowLayout",
+          "items": [
+            {
+              "type": "Button",
+              "caption": "Identify device type",
+              "onClick": "$deviceType=NUKI_DetermineDeviceType($id); echo $deviceType;"
+            },
+            {
+              "type": "Label",
+              "caption": " "
+            },
+            {
+              "type": "Button",
+              "caption": "Show device type",
+              "onClick": "$deviceType=NUKI_GetDeviceType($id); echo $deviceType;"
+            }
+          ]
+        },
         {
           "type": "Button",
           "caption": "Update State",
