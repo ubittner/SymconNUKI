@@ -120,9 +120,9 @@ class NUKISmartLock extends IPSModule
      */
     public function DetermineDeviceType(): int
     {
-        $deviceType = -1;
         $smartLockUID = $this->ReadPropertyString('SmartLockUID');
-        if ($this->ReadAttributeInteger('DeviceType') == -1 && $smartLockUID != '') {
+        $deviceType = $this->ReadAttributeInteger('DeviceType');
+        if ($deviceType == -1 && $smartLockUID != '') {
             if ($this->HasActiveParent()) {
                 $data = [];
                 $buffer = [];
@@ -139,7 +139,7 @@ class NUKISmartLock extends IPSModule
                             if (array_key_exists('deviceType', $device)) {
                                 $deviceType = $device['deviceType'];
                                 $this->WriteAttributeInteger('DeviceType', $deviceType);
-                                $this->LogMessage('Nuki Smart Lock ID ' . $this->InstanceID . ', set device type attribute to: ' . $deviceType, KL_NOTIFY);
+                                $this->LogMessage('Nuki Smart Lock ID ' . $this->InstanceID . ', attribute DeviceType was set to: ' . $device['deviceType'], KL_NOTIFY);
                             }
                         }
                     }
@@ -169,7 +169,7 @@ class NUKISmartLock extends IPSModule
         if (!$this->HasActiveParent()) {
             return '';
         }
-        $deviceType = $this->ReadAttributeInteger('DeviceType');
+        $deviceType = $this->DetermineDeviceType();
         if ($deviceType == -1) {
             return '';
         }
@@ -177,7 +177,7 @@ class NUKISmartLock extends IPSModule
         $buffer = [];
         $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
         $buffer['Command'] = 'GetLockState';
-        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'deviceType' => (int) $deviceType];
+        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'deviceType' => $deviceType];
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
         $result = $this->SendDataToParent($data);
@@ -242,7 +242,7 @@ class NUKISmartLock extends IPSModule
         if (!$this->HasActiveParent()) {
             return false;
         }
-        $deviceType = $this->ReadAttributeInteger('DeviceType');
+        $deviceType = $this->DetermineDeviceType();
         if ($deviceType == -1) {
             return false;
         }
@@ -250,7 +250,7 @@ class NUKISmartLock extends IPSModule
         $buffer = [];
         $data['DataID'] = NUKI_BRIDGE_DATA_GUID;
         $buffer['Command'] = 'SetLockAction';
-        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $Action, 'deviceType' => (int) $deviceType];
+        $buffer['Params'] = ['nukiId' => (int) $nukiID, 'lockAction' => $Action, 'deviceType' => $deviceType];
         $data['Buffer'] = $buffer;
         $data = json_encode($data);
         $result = json_decode(json_decode($this->SendDataToParent($data), true), true);
