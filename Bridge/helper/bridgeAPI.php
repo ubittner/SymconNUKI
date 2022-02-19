@@ -6,7 +6,7 @@ declare(strict_types=1);
 
 trait NUKI_bridgeAPI
 {
-    private string $apiVersion = '1.13.0';
+    //API Version 1.13.0
 
     /**
      * Enables the API.
